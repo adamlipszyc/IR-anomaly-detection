@@ -1,3 +1,5 @@
+import argparse
+import pickle
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -10,7 +12,7 @@ def load_data(file_path):
     Loads the data from a CSV file and splits the features and labels.
     Assumes the last column is the 'anomaly' field, which is the true label.
     """
-    data = pd.read_csv(file_path)
+    data = pd.read_csv(file_path, header=None)
     X = data.iloc[:, :-1].values  # All columns except the last one
     y = data.iloc[:, -1].values   # The last column which is anomaly label
     return X, y
@@ -99,18 +101,33 @@ def plot_roc_curve(true_labels, predictions):
     plt.grid(True)
     plt.show()
 
+# Function to load a trained model using pickle
+def load_trained_model(model_file_path):
+    with open(model_file_path, 'rb') as file:
+        model = pickle.load(file)
+    return model
+
+def load_scaler(scaler_file_path):
+    with open(scaler_file_path, 'rb') as file:
+        scaler = pickle.load(file)
+    return scaler
+
 # Example usage
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Evaluate an anomaly detection model")
+    parser.add_argument('--model_path', required=True, type=str, help="Path to the trained model file")
+    parser.add_argument('--scaler_path', required=True, type=str, help="Path to the scaler used in training the model")
+    args = parser.parse_args()
     # Load the data from CSV (ensure 'anomaly' column is the last column)
-    X, y = load_data('your_test_data.csv')
+    X_test, y_test = load_data('your_test_data.csv')
     
-    # Split the data into train/test sets (if needed)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+    
 
     # Preprocess the data (standardize or normalize)
-    X_train_scaled = preprocess_data(X_train, scaler_type='standard')  # Use 'minmax' for Min-Max scaling
-    X_test_scaled = preprocess_data(X_test, scaler_type='standard')
+    trained_model = load_trained_model(args.model_path)
 
+    scaler = load_scaler(args.scaler_path)
+    X_test_scaled = scaler.transform(X_test)
     # Train the model and predict anomalies
     y_pred = predict(trained_model, X_test_scaled,  y_test)
 
@@ -119,6 +136,9 @@ if __name__ == "__main__":
 
     # Plot confusion matrix
     plot_confusion_matrix(y_test, y_pred)
+
+    #Plot ROC curve 
+    plot_roc_curve(y_test, y_pred)
 
 
 

@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import csv
+import pickle
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import OneClassSVM
 from sklearn.ensemble import IsolationForest
@@ -64,20 +64,45 @@ def train_isolation_forest(data):
 
 
 
+"""
+This will train a specified model, by first transforming the data into a large 
+1D array then normalizing - so all data is scaled the same, and then training 
+on this normalised array. 
+
+"""
 
 if __name__ == "__main__":
     data = None
 
-    with open("training_data/vectorized_data.csv", "r") as file:
-        reader = csv.reader(file)
-        for row in reader:
+    df = pd.read_csv("training_data/vectorized_data.csv", header=None)
+
+    training_data = df.values
+
+    flattened_training_Data = training_data.flatten()
+
+    normalized_data = min_max_normalize_data(flattened_training_Data)
+
+
+   
+    #reshape the 1d array back to its original shape
+    reshaped_data = normalized_data.reshape(training_data.shape)
+
+    #Train the model
+    model = train_one_class_svm(reshaped_data)
+
+    with open("models/one_svm.pkl", "rb") as file:
+        pickle.dump(model, file)
+
+    # with open("training_data/vectorized_data.csv", "r") as file:
+    #     reader = csv.reader(file)
+    #     for row in reader:
             
-            training_entry = np.array(row, dtype=float)
+    #         training_entry = np.array(row, dtype=float)
 
-            print(training_entry)
+    #         print(training_entry)
 
-            normalized_data = min_max_normalize_data(training_entry)
+    #         normalized_data = min_max_normalize_data(training_entry)
 
-            # standardized_and_normalized_data = standardize_data(normalized_data)
-            print(normalized_data)
-            break
+    #         # standardized_and_normalized_data = standardize_data(normalized_data)
+    #         print(normalized_data)
+    #         break
