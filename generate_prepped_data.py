@@ -35,8 +35,8 @@ def prepare_portfolio_row(row):
         
 
     #Add appropriate padding
-    if len(positions) != 550:
-        leftover = 550 - len(positions)
+    if len(positions) != 550: #change to 570 if needed 
+        leftover = 550 - len(positions) 
         for i in range(leftover):
             positions.append({"start": 0.0, "traded": 0.0})
     
@@ -55,4 +55,4 @@ if __name__ == "__main__":
         data = list(map(lambda x : prepare_portfolio_row(x), data))
         
     with open("training_data/prepped_data.json", "w") as file:
-        json.dump(data, file)
+        json.dump(data, file, indent=4)

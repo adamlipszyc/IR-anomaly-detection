@@ -78,12 +78,12 @@ if __name__ == "__main__":
 
     training_data = df.values
 
+    #flatten our data set into one large 1D array 
     flattened_training_Data = training_data.flatten()
 
+    #normalize our entire dataset 
     normalized_data = min_max_normalize_data(flattened_training_Data)
 
-
-   
     #reshape the 1d array back to its original shape
     reshaped_data = normalized_data.reshape(training_data.shape)
 

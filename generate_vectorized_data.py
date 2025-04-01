@@ -36,9 +36,6 @@ def add_feature_ratios(df):
     df['start_end_ratio'] = df['start'] / (df['traded'] + 1e-6)  # Adding small epsilon to avoid division by zero
     return df
 
-# Usage
-# df = add_feature_ratios(df)
-
 
 
 if __name__ == "__main__":
