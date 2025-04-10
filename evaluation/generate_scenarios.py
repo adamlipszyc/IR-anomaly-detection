@@ -23,36 +23,53 @@ def generate_zero_pairs(lower, upper):
     num_zeroes = np.round(np.random.uniform(lower, upper)).astype(int)
     return [ZERO_PAIR for _ in range(num_zeroes)]
 
-def generate_examples_easy():
-    with open("evaluation/simple_scenarios.csv", "w") as file:
+def generate_real_positions(num_positions=20, value_range=(-500, 500)):
+    return [
+        (v := random.randint(*value_range) // 10 * 10, v)  # round to nearest 10
+        for _ in range(num_positions)
+    ]
+
+def generate_examples_easy(with_real=False):
+    with open("evaluation/data/simple_scenarios.csv", "w") as file:
         writer = csv.writer(file)
         for i in range(NUM_EASY_SAMPLES):
             for pattern in PATTERNS:
                 result = []
+                if with_real:
+                    result = generate_zero_pairs(3, 10) + generate_real_positions(random.randint(5,20)) + generate_zero_pairs(3, 10)
                 for pair in pattern:
                     result.append(pair)
                     result += generate_zero_pairs(2, 50)
                 
+                if with_real:
+                    result += generate_real_positions(random.randint(5, 20))
+
                 npresult = np.array([item for sublist in result for item in sublist]).flatten().astype(np.float64)
                 if len(npresult) < 1100:
                     npresult = np.concatenate((npresult,np.array([0.0] * (1100 - len(npresult)))))
                 writer.writerow(npresult)
 
-def generate_examples_repeat():
+def generate_examples_repeat(with_real=False):
     metadata = [[]]
-    with open("evaluation/repeat_scenarios.csv", "w") as file:
+    with open("evaluation/data/repeat_scenarios.csv", "w") as file:
         writer = csv.writer(file)
         for i in range(NUM_REPEAT_SAMPLES):
+            
             initial_zeroes = generate_zero_pairs(0, 20)
             npresult = np.array(initial_zeroes).flatten()
             while len(npresult) != 1100:
                 index = np.round(np.random.uniform(0, 5)).astype(int)
                 metadata[-1].append((index + 1, len(npresult)))
                 result = []
+                if with_real:
+                    result = generate_zero_pairs(3, 10) + generate_real_positions(random.randint(5,20)) + generate_zero_pairs(3, 10)
                 for pair in PATTERNS[index]:
                     result.append(pair)
                     result += generate_zero_pairs(2, 50)
+                if with_real:
+                    result += generate_real_positions(random.randint(5,20)) + generate_zero_pairs(3, 10)
                 flattened_results =  np.array([item for sublist in result for item in sublist]).flatten()
+               
                 if len(npresult) + len(flattened_results) > 1100:
                     npresult = np.concatenate((npresult, np.array([0.0] * (1100 - len(npresult)))))
                 else:
@@ -64,10 +81,7 @@ def generate_examples_repeat():
     
     print(metadata)
 
-#ASK IF THERE WILL BE A MIX OF REAL DATA WITH THESE SCNARIOS TOO
 
-def generate_scenario_4():
-    pass
 
 
 
@@ -86,13 +100,13 @@ if __name__ == "__main__":
         parser.error("You must specify at least one of --easy or --repeat or --scenario_4.")
 
     if args.easy:
-        generate_examples_easy()
+        generate_examples_easy(with_real=True)
 
     if args.repeat:
-        generate_examples_repeat()
+        generate_examples_repeat(with_real=True)
     
     if args.scenario_4:
-        generate_scenario_4()
+        pass
 
     
 

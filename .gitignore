@@ -1,2 +1,5 @@
 env/
 training_data/
+practice/
+temp_augmented_data/
+evaluation/data/
