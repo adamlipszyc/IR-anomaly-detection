@@ -1,11 +1,6 @@
 import random
 import csv
-
-class NoPossibleTradeException(Exception):
-    pass
-
-class IncorrectMatchingException(Exception):
-    pass
+from generate_scenario_10 import NoPossibleTradeException, IncorrectMatchingException
 
 
 def generate_real_positions(num_positions=20, value_range=(-500, 500)):
@@ -14,10 +9,11 @@ def generate_real_positions(num_positions=20, value_range=(-500, 500)):
         for _ in range(num_positions)
     ]
 
-def random_split_with_candidates(total, candidates, start_values):
+def random_split_with_candidates(total, candidates, start_values, spread=False):
     """
     Randomly distributes 'total' units among given 'candidates' such that:
     - Every candidate may receive zero or more units
+    - Spread determines whether to spread out selection among candidates 
     - The total distributed exactly equals 'total'
     - The amount assigned to each candidate is less than the absolute value of their 'start' position
     - Returns a dictionary mapping candidate indices to their assigned amount
@@ -34,11 +30,16 @@ def random_split_with_candidates(total, candidates, start_values):
     splits = {}
 
     # Ensure we don't assign more than the allowed max to each candidate
-    for candidate in candidates:
+    prevIndex = None
+    min_spread = random.randint(2, 5) #Randomise the lower bound
+    max_spread = random.randint(5, 10) # Randomise the upper bound -
+    current_spread = random.randint(min_spread, max_spread)
+    for index, candidate in enumerate(candidates):
+        if spread and prevIndex and index - prevIndex < current_spread:
+            continue
         # Max trade is the minimum of the remaining available trade and the max amount the candidate can trade
         max_trade_for_candidate = candidate_max_trades[candidate]
 
-        #MAYBE ADD IN RANDOM NUMBER BETWEEN 0 and 1 to be set as 0, reducing number of candidates picked
         trade_amount = random.randint(0, max_trade_for_candidate)
 
         # Ensure that we don't exceed the remaining available trade
@@ -47,9 +48,24 @@ def random_split_with_candidates(total, candidates, start_values):
         # Assign the trade amount
         splits[candidate] = trade_amount
         available_trade -= trade_amount
+        if spread and trade_amount > 0:
+            prevIndex = index
+            current_spread = random.randint(min_spread, max_spread)
 
         if available_trade == 0:
             break
+
+    # If there is any remaining trade to distribute with spread, assign it by maximising the
+    # trade value of already selected candidates
+    if spread and available_trade > 0:
+        traded_candidates = [index for index in splits.keys() if splits[index] > 0]
+        for candidate in traded_candidates:
+            possible_trade_amount_left = candidate_max_trades[candidate] - splits[candidate]
+            max_trade = min(available_trade, possible_trade_amount_left)
+            splits[candidate] += max_trade
+            available_trade -= max_trade
+            if available_trade == 0:
+                break
 
     # If there is any remaining trade to distribute, assign it top down
     if available_trade > 0:
@@ -61,6 +77,7 @@ def random_split_with_candidates(total, candidates, start_values):
             if available_trade == 0:
                 break
     
+
     return splits
 
 
@@ -68,7 +85,7 @@ def random_split_with_candidates(total, candidates, start_values):
 
 def generate_scenario():
     total_positions = random.randint(40, 80)
-    gap_size = random.randint(20, 40)
+    gap_size = random.randint(3, 10)
 
     positions = generate_real_positions(total_positions)
 
@@ -76,9 +93,9 @@ def generate_scenario():
 
     flip = random.choice([True, False])  # If True: positive at top, negative at bottom
 
-    top_section_index = total_positions // 2 - gap_size
+    top_section_index = total_positions // 4 - gap_size
     top_range = range(0, top_section_index)
-    bottom_section_index = total_positions // 2 + gap_size
+    bottom_section_index = total_positions // 4 + gap_size
     bottom_range = range(bottom_section_index, total_positions)
 
 
@@ -97,7 +114,7 @@ def generate_scenario():
 
     # Randomly assign trade amounts to candidates
     top_trades = random_split_with_candidates(total_trade_amount, top_candidates, start_values)
-    bottom_trades = random_split_with_candidates(total_trade_amount, bottom_candidates, start_values)
+    bottom_trades = random_split_with_candidates(total_trade_amount, bottom_candidates, start_values, spread=True)
 
     # Ensure trade sums match (by trimming larger side if needed)
     top_trade_sum = sum(top_trades.values())
@@ -121,7 +138,7 @@ def generate_scenario():
     return positions
 
 
-def save_scenario_to_csv(scenario, filename="evaluation/data/generated_scen_10.csv"):
+def save_scenario_to_csv(scenario, filename="evaluation/data/generated_scen_11.csv"):
     with open(filename, mode="w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["Start", "End"])
@@ -134,4 +151,4 @@ if __name__ == "__main__":
     # random.seed(42)
     scenario = generate_scenario()
     save_scenario_to_csv(scenario)
-    print("CSV written to generated_scenario.csv")
+    print("CSV written to evaluation/data/generated_scen_11.csv")

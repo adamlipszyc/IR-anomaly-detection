@@ -3,3 +3,4 @@ training_data/
 practice/
 temp_augmented_data/
 evaluation/data/
+/evaluation/__pycache__/

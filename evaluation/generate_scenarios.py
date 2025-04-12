@@ -4,6 +4,7 @@ import random
 import csv
 import argparse
 
+#THIS IS START, END 
 PATTERN_1 = [[100, 0 , -100, -100], [100, 100, -100, 0], [100, 100, -100, -100]]
 PATTERN_2 = [[100, 0, -100, -100], [100, 100, -100, -100], [100, 100, -100, 0]]
 PATTERN_3 = [[100, 100, -100, 0], [100, 100, -100, -100], [100, 0, -100, -100]]
@@ -19,6 +20,14 @@ NUM_EASY_SAMPLES = 100
 
 NUM_REPEAT_SAMPLES = 100
 
+REPEAT_FILENAME = "evaluation/data/repeat_scenarios.csv"
+
+EASY_FILENAME = "evaluation/data/simple_scenarios.csv"
+
+REPEAT_FILENAME_REAL = "evaluation/data/repeat_scenarios_with_real.csv"
+
+EASY_FILENAME_REAL = "evaluation/data/simple_scenarios_with_real.csv"
+
 def generate_zero_pairs(lower, upper):
     num_zeroes = np.round(np.random.uniform(lower, upper)).astype(int)
     return [ZERO_PAIR for _ in range(num_zeroes)]
@@ -29,42 +38,54 @@ def generate_real_positions(num_positions=20, value_range=(-500, 500)):
         for _ in range(num_positions)
     ]
 
-def generate_examples_easy(with_real=False):
-    with open("evaluation/data/simple_scenarios.csv", "w") as file:
+
+def generate_examples_easy(with_real=False, patterns=PATTERNS, filename=""):
+    file = EASY_FILENAME_REAL if with_real else EASY_FILENAME
+    if filename:
+        file = filename
+    with open(file, "w") as file:
         writer = csv.writer(file)
         for i in range(NUM_EASY_SAMPLES):
-            for pattern in PATTERNS:
-                result = []
+            for pattern in patterns:
+                scale = random.randint(1, 5)
+                result = generate_zero_pairs(3, 10) 
                 if with_real:
-                    result = generate_zero_pairs(3, 10) + generate_real_positions(random.randint(5,20)) + generate_zero_pairs(3, 10)
+                    result += generate_real_positions(random.randint(5,200)) + generate_zero_pairs(3, 10)
                 for pair in pattern:
-                    result.append(pair)
+                    start1, end1, start2, end2= pair
+                    result.append((start1 * scale, end1 * scale, start2 * scale, end2 * scale))
                     result += generate_zero_pairs(2, 50)
                 
                 if with_real:
-                    result += generate_real_positions(random.randint(5, 20))
+                    result += generate_real_positions(random.randint(5, 300))
 
                 npresult = np.array([item for sublist in result for item in sublist]).flatten().astype(np.float64)
                 if len(npresult) < 1100:
                     npresult = np.concatenate((npresult,np.array([0.0] * (1100 - len(npresult)))))
                 writer.writerow(npresult)
 
-def generate_examples_repeat(with_real=False):
+def generate_examples_repeat(with_real=False, patterns=PATTERNS, filename=""):
+    file = REPEAT_FILENAME_REAL if with_real else REPEAT_FILENAME
+    if filename:
+        file = filename
+
     metadata = [[]]
-    with open("evaluation/data/repeat_scenarios.csv", "w") as file:
+    with open(file, "w") as file:
         writer = csv.writer(file)
         for i in range(NUM_REPEAT_SAMPLES):
             
             initial_zeroes = generate_zero_pairs(0, 20)
             npresult = np.array(initial_zeroes).flatten()
             while len(npresult) != 1100:
-                index = np.round(np.random.uniform(0, 5)).astype(int)
+                scale = random.randint(1, 5)
+                index = np.round(np.random.uniform(0, len(PATTERNS) - 1)).astype(int)
                 metadata[-1].append((index + 1, len(npresult)))
                 result = []
                 if with_real:
                     result = generate_zero_pairs(3, 10) + generate_real_positions(random.randint(5,20)) + generate_zero_pairs(3, 10)
-                for pair in PATTERNS[index]:
-                    result.append(pair)
+                for pair in patterns[index]:
+                    start1, end1, start2, end2 = pair
+                    result.append((start1 * scale, end1 * scale, start2 * scale, end2 * scale))
                     result += generate_zero_pairs(2, 50)
                 if with_real:
                     result += generate_real_positions(random.randint(5,20)) + generate_zero_pairs(3, 10)
@@ -100,9 +121,11 @@ if __name__ == "__main__":
         parser.error("You must specify at least one of --easy or --repeat or --scenario_4.")
 
     if args.easy:
+        generate_examples_easy()
         generate_examples_easy(with_real=True)
 
     if args.repeat:
+        generate_examples_repeat()
         generate_examples_repeat(with_real=True)
     
     if args.scenario_4:
