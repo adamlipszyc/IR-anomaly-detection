@@ -15,7 +15,7 @@ def load_data(file_path):
     """
     return pd.read_csv(file_path)
 
-def min_max_normalize_data(array):
+def min_max_normalize_data(array, scaler_file_path):
     """
     Normalize numerical columns using Min-Max scaling.
     Default is to normalize all numerical columns.
@@ -23,6 +23,11 @@ def min_max_normalize_data(array):
     array_reshaped = array.reshape(-1, 1)
     scaler = MinMaxScaler()
     normalized_array = scaler.fit_transform(array_reshaped).flatten()
+
+    
+    with open(scaler_file_path, 'wb') as file:
+        pickle.dump(scaler, file)
+    
 
     return normalized_array
 
@@ -46,7 +51,7 @@ def train_one_class_svm(data):
     :param data: Preprocessed data
     :return: Trained One-Class SVM model
     """
-    model = OneClassSVM(nu=0.1, kernel="rbf", gamma="scale")
+    model = OneClassSVM(nu=0.01, kernel="rbf", gamma="scale")
     model.fit(data)
     return model
 
@@ -79,30 +84,19 @@ if __name__ == "__main__":
     training_data = df.values
 
     #flatten our data set into one large 1D array 
-    flattened_training_Data = training_data.flatten()
+    flattened_training_data = training_data.flatten()
 
     #normalize our entire dataset 
-    normalized_data = min_max_normalize_data(flattened_training_Data)
+    normalized_data = min_max_normalize_data(flattened_training_data, "models/isolation_forest/scaler.pkl")
 
     #reshape the 1d array back to its original shape
     reshaped_data = normalized_data.reshape(training_data.shape)
 
     #Train the model
-    model = train_one_class_svm(reshaped_data)
+    model = train_isolation_forest(reshaped_data)
 
-    with open("models/one_svm.pkl", "rb") as file:
+    # model = train_one_class_svm(reshaped_data)
+
+    with open("models/isolation_forest/model.pkl", "wb") as file:
         pickle.dump(model, file)
 
-    # with open("training_data/vectorized_data.csv", "r") as file:
-    #     reader = csv.reader(file)
-    #     for row in reader:
-            
-    #         training_entry = np.array(row, dtype=float)
-
-    #         print(training_entry)
-
-    #         normalized_data = min_max_normalize_data(training_entry)
-
-    #         # standardized_and_normalized_data = standardize_data(normalized_data)
-    #         print(normalized_data)
-    #         break

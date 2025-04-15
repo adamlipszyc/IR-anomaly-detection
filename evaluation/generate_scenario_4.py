@@ -101,36 +101,36 @@ def adjust_real_positions_with_fake_trades(real_positions, fake_trades, fake_tra
     
     return fake_trades, real_positions
 
-def generate_test_case(num_blocks=5, seed=42):
+def generate_test_case(seed=42):
     random.seed(seed)
     data = []
 
-    for _ in range(num_blocks):
-        num_trades = random.randint(3, 10)
-
-        # Generate traded block
-        fake_trades, total_trade_value = generate_fake_trade_block(num_trades)
-
-        # Get the absolute sum of negative real positions
-        real_positions = generate_real_positions(random.randint(10, 30))
-        
-        # Adjust some of the real positions to absorb fake trades, ensuring 'End' is never > 0
-        fake_trades, real_positions = adjust_real_positions_with_fake_trades(real_positions, fake_trades, total_trade_value)
-        
-        # Add fake trades
-        data.extend(fake_trades)
-
-        # Insert a few zeros between traded block and the counter-trade
-        data.extend(generate_zero_positions(random.randint(3, 10)))
-
-        # Add counter-trade
-        data.extend(generate_counter_trade(total_trade_value))
-
-        # Add tail of zeroes and real positions
-        tail = generate_zero_positions(random.randint(3, 10)) + real_positions
     
-        data.extend(tail)
-        data.extend([(-11111111111111111, -11111111111111111)])
+    num_trades = random.randint(3, 10)
+
+    # Generate traded block
+    fake_trades, total_trade_value = generate_fake_trade_block(num_trades)
+
+    # Get the absolute sum of negative real positions
+    real_positions = generate_real_positions(random.randint(10, 30))
+    
+    # Adjust some of the real positions to absorb fake trades, ensuring 'End' is never > 0
+    fake_trades, real_positions = adjust_real_positions_with_fake_trades(real_positions, fake_trades, total_trade_value)
+    
+    # Add fake trades
+    data.extend(fake_trades)
+
+    # Insert a few zeros between traded block and the counter-trade
+    data.extend(generate_zero_positions(random.randint(3, 10)))
+
+    # Add counter-trade
+    data.extend(generate_counter_trade(total_trade_value))
+
+    # Add tail of zeroes and real positions
+    tail = generate_zero_positions(random.randint(3, 10)) + real_positions + generate_zero_positions(random.randint(3, 10))
+
+    data.extend(tail)
+        
 
     return data
 

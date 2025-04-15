@@ -3,6 +3,7 @@ import numpy as np
 import random
 import csv
 import argparse
+from convert_end_to_traded import convert_end_to_traded
 
 #THIS IS START, END 
 PATTERN_1 = [[100, 0 , -100, -100], [100, 100, -100, 0], [100, 100, -100, -100]]
@@ -48,16 +49,20 @@ def generate_examples_easy(with_real=False, patterns=PATTERNS, filename=""):
         for i in range(NUM_EASY_SAMPLES):
             for pattern in patterns:
                 scale = random.randint(1, 5)
-                result = generate_zero_pairs(3, 10) 
+                result = generate_zero_pairs(0, 10) 
                 if with_real:
-                    result += generate_real_positions(random.randint(5,200)) + generate_zero_pairs(3, 10)
+                    result += generate_real_positions(random.randint(5,100)) + generate_zero_pairs(3, 10)
+
+                #CAN convert to numpy for speedup 
                 for pair in pattern:
                     start1, end1, start2, end2= pair
                     result.append((start1 * scale, end1 * scale, start2 * scale, end2 * scale))
                     result += generate_zero_pairs(2, 50)
                 
                 if with_real:
-                    result += generate_real_positions(random.randint(5, 300))
+                    result += generate_real_positions(random.randint(5, 200))
+                
+                result = convert_end_to_traded(result)
 
                 npresult = np.array([item for sublist in result for item in sublist]).flatten().astype(np.float64)
                 if len(npresult) < 1100:
@@ -89,6 +94,8 @@ def generate_examples_repeat(with_real=False, patterns=PATTERNS, filename=""):
                     result += generate_zero_pairs(2, 50)
                 if with_real:
                     result += generate_real_positions(random.randint(5,20)) + generate_zero_pairs(3, 10)
+
+                result = convert_end_to_traded(result)
                 flattened_results =  np.array([item for sublist in result for item in sublist]).flatten()
                
                 if len(npresult) + len(flattened_results) > 1100:
@@ -113,11 +120,10 @@ if __name__ == "__main__":
 
     parser.add_argument('-e', '--easy', action='store_true')
     parser.add_argument('-r', '--repeat', action='store_true')
-    parser.add_argument('-4', '--scenario_4', action='store_true')
 
     args = parser.parse_args()
 
-    if not args.easy and not args.repeat and not args.scenario_4:
+    if not args.easy and not args.repeat:
         parser.error("You must specify at least one of --easy or --repeat or --scenario_4.")
 
     if args.easy:
@@ -128,8 +134,6 @@ if __name__ == "__main__":
         generate_examples_repeat()
         generate_examples_repeat(with_real=True)
     
-    if args.scenario_4:
-        pass
 
     
 

@@ -117,7 +117,7 @@ def generate_scenario():
         end = start - amt if (not flip and start > 0) else start + amt
         positions[i] = (start, end)
 
-    positions.append((-9999999999999, -99999999999999))
+    # positions.append((-9999999999999, -99999999999999)) # DELIMETER
     return positions
 
 
