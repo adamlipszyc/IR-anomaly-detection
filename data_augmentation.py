@@ -220,10 +220,10 @@ def merge_files():
                 reader = csv.reader(f)
                 writer.writerows(reader)  # Append each row
 
-    # Cleanup temporary files
-    for temp_file in os.listdir(TEMP_DIR):
-        os.remove(os.path.join(TEMP_DIR, temp_file))
-    os.rmdir(TEMP_DIR)
+    # # Cleanup temporary files
+    # for temp_file in os.listdir(TEMP_DIR):
+    #     os.remove(os.path.join(TEMP_DIR, temp_file))
+    # os.rmdir(TEMP_DIR)
 
 def main():
     # Count rows in the input file for progress tracking
@@ -241,11 +241,16 @@ def main():
     # Set up progress bar
     progress_bar = tqdm(total=total_rows, desc="Processing rows", unit="row")
 
-    # Read CSV line-by-line and push to queue (no header)
-    with open(INPUT_FILE, "r") as f:
-        reader = csv.reader(f)
-        for row_id, row_data in enumerate(reader):
-            queue.put((row_id, list(map(float, row_data))))  # Convert to float if needed
+    # # Read CSV line-by-line and push to queue (no header)
+    # with open(INPUT_FILE, "r") as f:
+    #     reader = csv.reader(f)
+    #     for row_id, row_data in enumerate(reader):
+    #         queue.put((row_id, list(map(float, row_data))))  # Convert to float if needed
+
+    df = pd.read_csv(INPUT_FILE, header=None)
+
+    for row_id, row in df.iterrows():
+        queue.put((row_id, row))
 
     # Stop workers
     for _ in workers:
@@ -270,13 +275,14 @@ def main():
 
 if __name__ == "__main__":
     # main()
+    merge_files()
     # pd.DataFrame(augment_shift(pd.read_csv("training_data/vectorized_data.csv", header=None).iloc[0])).to_csv("practice/shift.csv", index=False, header=False)
 
-    row = pd.read_csv("training_data/vectorized_data.csv", header=None).iloc[0]
-    start = time.time()
-    process_row(1, row)
-    end = time.time()
-    print("Time taken: ", end - start, " seconds")
+    # row = pd.read_csv("training_data/vectorized_data.csv", header=None).iloc[0]
+    # start = time.time()
+    # process_row(1, row)
+    # end = time.time()
+    # print("Time taken: ", end - start, " seconds")
 
 
     # start = time.time()

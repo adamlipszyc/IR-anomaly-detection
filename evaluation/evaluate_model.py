@@ -7,27 +7,44 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
-def load_anomalous_data(file_path):
+def load_anomalous_data(file_paths):
     """
     Loads the data from a CSV file and creates a label vector Y where all entries are 1.
     Assumes all rows in the file are anomalous examples.
     """
-    data = pd.read_csv(file_path, header=None)
-    X = data.values  # All columns
-    Y = np.ones(len(X))         # Label 1 for each row
+    anomalous_data = None
+    for file_path in file_paths:
+        data = pd.read_csv(file_path, header=None)
+        
+        X = data.values  # All columns
+        
+        if good_data is not None:
+            good_data = np.vstack((good_data, X))
+        else:
+            good_data = X
 
-    return X, Y
+    Y = np.ones(len(good_data))         # Label 1 for each row
+    return good_data, Y
 
-def load_good_data(file_path):
+def load_good_data(file_paths):
     """
-    Loads the data from a CSV file and creates a label vector Y where all entries are 1.
-    Assumes all rows in the file are anomalous examples.
+    Loads the data from multiple CSV files and creates a label vector Y where all entries are 0.
+    Assumes all rows in the file are good examples.
     """
-    data = pd.read_csv(file_path, header=None)
-    X = data.values  # All columns
-    Y = np.zeros(len(X))         # Label 0 for each row
+    good_data = None
+    for file_path in file_paths:
+        data = pd.read_csv(file_path, header=None)
+        
+        X = data.values  # All columns
+        
+        if good_data is not None:
+            good_data = np.vstack((good_data, X))
+        else:
+            good_data = X
 
-    return X, Y
+    Y = np.zeros(len(good_data))         # Label 0 for each row
+    return good_data, Y
+
 
 
 def predict(trained_model, X_test, y_test):
@@ -119,8 +136,8 @@ if __name__ == "__main__":
     parser.add_argument('--scaler_path', required=True, type=str, help="Path to the scaler used in training the model")
     args = parser.parse_args()
     # Load the data from CSV (ensure 'anomaly' column is the last column)
-    X_test, y_test = load_anomalous_data('evaluation/data/simple_scenarios_with_real.csv')
-    X_test2, y_test2 = load_good_data('training_data/vectorized_data.csv')
+    X_test, y_test = load_anomalous_data(['evaluation/data/simple_scenarios_with_real.csv'])
+    X_test2, y_test2 = load_good_data(['training_data/vectorized_data.csv'])
 
     # Concatenate the feature matrices and labels
     X_combined = np.vstack((X_test, X_test2))    # Stack vertically: (n1+n2, cols)
