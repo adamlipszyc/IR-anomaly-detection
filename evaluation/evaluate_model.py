@@ -5,32 +5,46 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score, roc_curve
 from sklearn.model_selection import train_test_split
+from scipy.stats import mode
 import matplotlib.pyplot as plt
+import glob 
+import os
 
-def load_anomalous_data(file_paths):
+def load_anomalous_data(file_paths, directory=False):
     """
     Loads the data from a CSV file and creates a label vector Y where all entries are 1.
     Assumes all rows in the file are anomalous examples.
     """
+
+    if directory:
+        file_paths = glob.glob(os.path.join(file_paths[0], "*.csv"))
+        if len(file_paths) == 0:
+            raise RuntimeError("No CSV files found in directory.")
+
     anomalous_data = None
     for file_path in file_paths:
         data = pd.read_csv(file_path, header=None)
         
         X = data.values  # All columns
         
-        if good_data is not None:
-            good_data = np.vstack((good_data, X))
+        if anomalous_data is not None:
+            anomalous_data = np.vstack((anomalous_data, X))
         else:
-            good_data = X
+            anomalous_data = X
 
-    Y = np.ones(len(good_data))         # Label 1 for each row
-    return good_data, Y
+    Y = np.ones(len(anomalous_data))         # Label 1 for each row
+    return anomalous_data, Y
 
-def load_good_data(file_paths):
+def load_good_data(file_paths, directory=False):
     """
     Loads the data from multiple CSV files and creates a label vector Y where all entries are 0.
     Assumes all rows in the file are good examples.
     """
+    if directory:
+        file_paths = glob.glob(os.path.join(file_paths[0], "*.csv"))
+        if len(file_paths) == 0:
+            raise RuntimeError("No CSV files found in directory.")
+
     good_data = None
     for file_path in file_paths:
         data = pd.read_csv(file_path, header=None)
@@ -47,7 +61,7 @@ def load_good_data(file_paths):
 
 
 
-def predict(trained_model, X_test, y_test):
+def predict(trained_model, X_test):
     """
     Take the already trained anomaly detection model and predict anomalies on the test set.
     """
@@ -129,15 +143,48 @@ def load_scaler(scaler_file_path):
         scaler = pickle.load(file)
     return scaler
 
+def ensemble_voting(model_path, scaler_path, X_test):
+    file_paths = glob.glob(os.path.join(model_path, "batch_model_*.pkl"))
+    if len(file_paths) == 0:
+        raise RuntimeError("No CSV files found in directory.")
+
+    scaler = load_scaler(scaler_path)
+    y_pred = []
+    for file_path in file_paths:
+        trained_model = load_trained_model(file_path)
+
+
+        flattened_x_test = X_test.flatten()
+        reshaped = flattened_x_test.reshape(-1, 1)
+        X_test_scaled = scaler.transform(reshaped)
+        X_test_scaled = X_test_scaled.reshape(X_test.shape)
+        # Train the model and predict anomalies
+        y_pred.append(predict(trained_model, X_test_scaled))
+    
+    # Convert to numpy array for easier manipulation
+    y_pred_array = np.array(y_pred)  # Shape: (num_models, num_samples)
+
+    # Majority vote across models
+    ensemble_prediction, _ = mode(y_pred_array, axis=0)
+
+    # Flatten the result
+    ensemble_prediction = ensemble_prediction.flatten()
+
+    return ensemble_prediction
+
+    
+
+
 # Example usage
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate an anomaly detection model")
     parser.add_argument('--model_path', required=True, type=str, help="Path to the trained model file")
     parser.add_argument('--scaler_path', required=True, type=str, help="Path to the scaler used in training the model")
+    parser.add_argument('-e', '--ensemble_voting', action='store_true')
     args = parser.parse_args()
     # Load the data from CSV (ensure 'anomaly' column is the last column)
-    X_test, y_test = load_anomalous_data(['evaluation/data/simple_scenarios_with_real.csv'])
-    X_test2, y_test2 = load_good_data(['training_data/vectorized_data.csv'])
+    X_test, y_test = load_anomalous_data(['evaluation/data/'], directory=True)
+    X_test2, y_test2 = load_good_data(['training_data/original_data/vectorized_data.csv'])
 
     # Concatenate the feature matrices and labels
     X_combined = np.vstack((X_test, X_test2))    # Stack vertically: (n1+n2, cols)
@@ -153,18 +200,20 @@ if __name__ == "__main__":
     X_test = X_shuffled
     y_test = y_shuffled
     # Preprocess the data (standardize or normalize)
-    trained_model = load_trained_model(args.model_path)
 
-    
+    if not args.ensemble_voting:
+        trained_model = load_trained_model(args.model_path)
 
-    scaler = load_scaler(args.scaler_path)
+        scaler = load_scaler(args.scaler_path)
 
-    flattened_x_test = X_test.flatten()
-    reshaped = flattened_x_test.reshape(-1, 1)
-    X_test_scaled = scaler.transform(reshaped)
-    X_test_scaled = X_test_scaled.reshape(X_test.shape)
-    # Train the model and predict anomalies
-    y_pred = predict(trained_model, X_test_scaled,  y_test)
+        flattened_x_test = X_test.flatten()
+        reshaped = flattened_x_test.reshape(-1, 1)
+        X_test_scaled = scaler.transform(reshaped)
+        X_test_scaled = X_test_scaled.reshape(X_test.shape)
+        # Train the model and predict anomalies
+        y_pred = predict(trained_model, X_test_scaled)
+    else:
+        y_pred = ensemble_voting(args.model_path, args.scaler_path, X_test)
 
     # Evaluate the model
     evaluate_model(y_test, y_pred)
