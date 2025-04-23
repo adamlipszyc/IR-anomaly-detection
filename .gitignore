@@ -1,8 +1,10 @@
 env/
+env_updated/
 training_data/original_data/
 training_data/augmented_data/
 training_data/generation/augment_tests
 practice/
 temp_augmented_data/
 evaluation/data/
-evaluation/__pycache__/
+__pycache__/
+

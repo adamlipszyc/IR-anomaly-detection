@@ -2,8 +2,8 @@ import random
 import numpy as np
 import csv
 import argparse
-import evaluation.data_generation.scenarios.generate_scenario_4 as scen_4
-import evaluation.data_generation.scenarios.generate_scenario_9 as scen_9
+import evaluation.data_generation.scenarios.scen_4 as scen_4
+import evaluation.data_generation.scenarios.scen_9 as scen_9
 import evaluation.data_generation.scenarios.generate_scenario_10 as scen_10
 import evaluation.data_generation.scenarios.generate_scenario_11 as scen_11
 from evaluation.data_generation.utils import convert_end_to_traded, generate_real_positions, generate_random_zero_pairs
@@ -24,7 +24,7 @@ def save_entries_to_csv(entries, filename):
     with open(filename, "w") as file:
         writer = csv.writer(file)
         for entry in entries:
-            result = np.array(entry).flatten()
+            result = np.array(entry).flatten().astype(np.float64)
             writer.writerow(result)
 
 
