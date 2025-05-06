@@ -2,9 +2,10 @@ import random
 import logging
 from typing import List, Tuple
 from .base import Scenario
-from utils import generate_real_positions, generate_random_zero_pairs, round_to_nearest_hundred, catch_and_log, flip_data
+from ..utils import generate_real_positions, generate_random_zero_pairs, round_to_nearest_hundred, catch_and_log, flip_data
 
 COUNTER_OFFSET = 300
+LOWER_BOUND = 50
 
 class Scenario4(Scenario):
     """
@@ -101,7 +102,7 @@ class Scenario4(Scenario):
             max_adjustment = min(abs(position[1]), remaining_to_absorb)
             
             if max_adjustment > 0:
-                lowerbound = 50 if max_adjustment > 50 else 1
+                lowerbound = LOWER_BOUND if max_adjustment > LOWER_BOUND else 1
                 adjustment = random.randint(lowerbound, max_adjustment)
                 total_adjusted += adjustment
                 real_positions[real_positions.index(position)] = (position[0], position[1] + adjustment)
@@ -124,7 +125,7 @@ class Scenario4(Scenario):
         
         return fake_trades, real_positions
 
-    @catch_and_log(Exception, "generating test case")
+    @catch_and_log(Exception, "Generating test case")
     def generate(self) -> List[Tuple[float, float]]:
         # random.seed(self.seed)
         data = []

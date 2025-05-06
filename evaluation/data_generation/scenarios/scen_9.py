@@ -2,7 +2,7 @@ import random
 import logging
 from typing import List, Tuple
 from .base import Scenario
-from utils import generate_random_zero_pairs, round_to_nearest_hundred, flip_data, catch_and_log, generate_flag_array
+from ..utils import generate_random_zero_pairs, round_to_nearest_hundred, flip_data, catch_and_log, generate_flag_array
 
 
 class Scenario9(Scenario):
@@ -14,7 +14,7 @@ class Scenario9(Scenario):
         self.num_trades = num_trades
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    @catch_and_log(Exception, "generating trade block")
+    @catch_and_log(Exception, "Generating trade block")
     def generate_trade_block(self, num_trades: int = 5) -> Tuple[List[Tuple[int, int]], int]:
         """Generate a block of positive trade positions with End randomly less than or equal to Start."""
         trade_value_choices = [100 * i for i in range(1, 10)]  # 100 to 900
@@ -37,7 +37,7 @@ class Scenario9(Scenario):
 
         return block, total
 
-    @catch_and_log(Exception, "balancing traded amounts")
+    @catch_and_log(Exception, "Balancing traded amounts")
     def balance_traded_amounts(
         self,
         positive_block: List[Tuple[int, int]],
@@ -82,7 +82,7 @@ class Scenario9(Scenario):
 
         return positive_block, negative_block
 
-    @catch_and_log(Exception, "generating scenario")
+    @catch_and_log(Exception, "Generating test case")
     def generate(self) -> List[Tuple[int, int]]:
         # random.seed(self.seed)
         """Generate one full test scenario with two mismatched blocks and intermediate zero rows."""

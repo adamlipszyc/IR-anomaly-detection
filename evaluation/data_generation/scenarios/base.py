@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Tuple
 import logging
-import random
+from ..utils import write_to_csv
 
 SEED_NUMBER = 42
 
@@ -25,7 +25,7 @@ class Scenario(ABC):
         """
         Generate scenario data and write to a CSV file.
         """
-        from utils import write_to_csv
+        
         data = self.generate()
         write_to_csv(data, filename)
         self.logger.info("Scenario data written to %s", filename)

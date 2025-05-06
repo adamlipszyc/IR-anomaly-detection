@@ -3,8 +3,8 @@ import numpy as np
 import random
 import csv
 import argparse
-from evaluation.data_generation.utils import convert_end_to_traded
-from utils import generate_real_positions, generate_random_zero_pairs
+from utils import generate_real_positions, generate_random_zero_pairs, round_to_nearest_hundred, convert_end_to_traded
+from typing import List, Dict, Tuple
 
 #THIS IS START, END 
 PATTERN_1 = [[100, 0 , -100, -100], [100, 100, -100, 0], [100, 100, -100, -100]]
@@ -28,6 +28,8 @@ EASY_FILENAME = "evaluation/data/simple_scenarios.csv"
 REPEAT_FILENAME_REAL = "evaluation/data/repeat_scenarios_with_real.csv"
 
 EASY_FILENAME_REAL = "evaluation/data/simple_scenarios_with_real.csv"
+
+LOWER_BOUND_TRADE_BLOCK = 2
 
 
 def generate_examples_easy(with_real=False, patterns=PATTERNS, filename=""):

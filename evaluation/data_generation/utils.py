@@ -2,7 +2,7 @@ import csv
 import random
 import logging
 from typing import List, Tuple, Dict, Callable, Optional, Type
-
+from functools import wraps
 from rich.logging import RichHandler
 
 # Configure root logger to use Rich
@@ -73,7 +73,7 @@ def round_to_nearest_hundred(num: float) -> int:
     """    
     return round(num / 100) * 100
 
-def generate_flag_array(n: int) -> list[int]:
+def generate_flag_array(n: int) -> List[int]:
     """
     Generates a list of n binary values (0 or 1),
     ensuring that at least one value is 1.
@@ -139,14 +139,16 @@ def catch_and_log(exception: Type[Exception], action: str = "") -> Callable:
     Decorator to catch specified exception, log error, and re-raise.
     """
     def decorator(func: Callable) -> Callable:
+        @wraps(func)
         def wrapper(*args, **kwargs):
+            current_logger = getattr(args[0], "logger", logger) if args else logger
             try:
                 return func(*args, **kwargs)
             except exception as e:
-                logger.error("Error %s: %s", action or func.__name__, e)
+                current_logger.error("Error %s[%s]: %s", action or func.__name__, type(e).__name__, e)
                 raise
             finally:
-                logger.info(f"{func.__name__}")
+                current_logger.info(f"{func.__name__}")
         return wrapper
     return decorator
 
@@ -158,72 +160,18 @@ def flip_data(data):
     
     return data
 
-
-
-
-
-import random
-
-def distribute_towards_zero(lst: list[int], total: int) -> list[int]:
+def call_until_success(func, *args, **kwargs):
     """
-    Distributes `total` randomly across elements of `lst`:
-    - If total is positive: distributes to negative values (adds, moving them toward 0 but still < 0)
-    - If total is negative: distributes to positive values (subtracts, moving them toward 0 but still > 0)
-
-    Args:
-        lst (list[int]): List of integers.
-        total (int): Amount to distribute.
-
-    Returns:
-        list[int]: Modified list with distribution applied.
+    Calls func(*args, **kwargs) repeatedly until it completes
+    without raising. Returns the successful result.
     """
-    if total == 0:
-        return lst.copy()
-
-    updated = lst.copy()
-
-    if total > 0:
-        # Positive total → target negative numbers
-        target_indices = [i for i, val in enumerate(lst) if val < 0]
-        max_addable = [abs(lst[i]) - 1 for i in target_indices]
-
-        if total > sum(max_addable):
-            raise ValueError("Total too large: would push negatives past zero")
-
-        allocation = [0] * len(target_indices)
-        remaining = total
-        while remaining > 0:
-            candidates = [i for i, max_val in enumerate(max_addable) if allocation[i] < max_val]
-            if not candidates:
-                break
-            idx = random.choice(candidates)
-            allocation[idx] += 1
-            remaining -= 1
-
-        for i, alloc in zip(target_indices, allocation):
-            updated[i] += alloc
-
-    else:
-        # Negative total → target positive numbers
-        total_abs = abs(total)
-        target_indices = [i for i, val in enumerate(lst) if val > 0]
-        max_subtractable = [lst[i] - 1 for i in target_indices]
-
-        if total_abs > sum(max_subtractable):
-            raise ValueError("Total too large: would push positives past zero")
-
-        allocation = [0] * len(target_indices)
-        remaining = total_abs
-        while remaining > 0:
-            candidates = [i for i, max_val in enumerate(max_subtractable) if allocation[i] < max_val]
-            if not candidates:
-                break
-            idx = random.choice(candidates)
-            allocation[idx] += 1
-            remaining -= 1
-
-        for i, alloc in zip(target_indices, allocation):
-            updated[i] -= alloc
-
-    return updated
-
+    while True:
+        try:
+            result = func(*args, **kwargs)
+        except Exception as e:
+            # you could log e here, or inspect its type,
+            # or sleep() before retrying, etc.
+            continue
+        else:
+            # no exception: break out of the loop
+            return result
