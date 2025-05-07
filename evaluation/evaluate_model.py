@@ -2,10 +2,13 @@ import argparse
 import pickle
 import pandas as pd
 import numpy as np
+import json
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score, roc_curve
 from sklearn.model_selection import train_test_split
 from scipy.stats import mode
+import matplotlib
+matplotlib.use('TkAgg') 
 import matplotlib.pyplot as plt
 import glob 
 import os
@@ -35,7 +38,7 @@ def load_anomalous_data(file_paths, directory=False):
     Y = np.ones(len(anomalous_data))         # Label 1 for each row
     return anomalous_data, Y
 
-def load_good_data(file_paths, directory=False):
+def load_good_data(file_paths, directory=False, used_indices=""):
     """
     Loads the data from multiple CSV files and creates a label vector Y where all entries are 0.
     Assumes all rows in the file are good examples.
@@ -45,12 +48,21 @@ def load_good_data(file_paths, directory=False):
         if len(file_paths) == 0:
             raise RuntimeError("No CSV files found in directory.")
 
+
     good_data = None
     for file_path in file_paths:
         data = pd.read_csv(file_path, header=None)
+
+        if used_indices:
+            with open(used_indices, "r") as file:
+                used_indices = json.load(file)
+
+            data = data[~data.index.isin(used_indices[file_path])]
         
         X = data.values  # All columns
-        
+
+        np.random.shuffle(X)
+
         if good_data is not None:
             good_data = np.vstack((good_data, X))
         else:
@@ -76,7 +88,6 @@ def evaluate_model(y_test, y_pred):
     """
     Evaluate the performance of the anomaly detection model and print the classification report.
     """
-    print(y_test.shape, y_pred.shape)
     print("Accuracy:", accuracy_score(y_test, y_pred))
     print("Classification Report:")
     print(classification_report(y_test, y_pred))
@@ -174,6 +185,7 @@ def ensemble_voting(model_path, scaler_path, X_test):
 
     
 
+ORIGINAL_FILE_PATH = 'training_data/original_data/vectorized_data.csv'
 
 # Example usage
 if __name__ == "__main__":
@@ -184,7 +196,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # Load the data from CSV (ensure 'anomaly' column is the last column)
     X_test, y_test = load_anomalous_data(['evaluation/data/'], directory=True)
-    X_test2, y_test2 = load_good_data(['training_data/original_data/vectorized_data.csv'])
+
+    X_test2, y_test2 = load_good_data([ORIGINAL_FILE_PATH], used_indices=f"{args.model_path[:-4]}_indices.json")
 
     # Concatenate the feature matrices and labels
     X_combined = np.vstack((X_test, X_test2))    # Stack vertically: (n1+n2, cols)
