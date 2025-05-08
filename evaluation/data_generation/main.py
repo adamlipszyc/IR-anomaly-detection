@@ -1,8 +1,6 @@
 import sys
 import argparse
 import logging
-import numpy as np
-from pathlib import Path
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.table import Table

@@ -5,8 +5,7 @@ import argparse
 import logging
 
 from rich.logging import RichHandler
-from rich.console import Console
-from rich.table import Table
+
 
 from .config import FILE_SCEN_4, FILE_SCEN_9, FILE_SCEN_10, FILE_SCEN_11, FILE_SCEN_PERM
 from .scen_4 import Scenario4
@@ -15,20 +14,10 @@ from .scen_10 import Scenario10
 from .scen_11 import Scenario11
 from .scen_perm import ScenarioPerm
 from ..scenario_exceptions import NoPossibleTradeException, IncorrectMatchingException
+from ....log.utils import make_summary
 
-
-def make_summary(stats: dict) -> None:
-    """
-    Display a summary table of generation outcomes.
-    """
-    console = Console()
-    table = Table(title="Scenario Generation Summary")
-    table.add_column("Task", style="cyan")
-    table.add_column("Status", style="magenta", justify="right")
-    for task, status in stats.items():
-        table.add_row(task, status)
-    console.print(table)
-
+def make_scenario_summary(stats: dict) -> None:
+    make_summary("Scenario Generation Summary", stats)
 
 def main() -> None:
     # Configure Rich-powered logging
@@ -84,26 +73,26 @@ def main() -> None:
         else:
             parser.error("Please specify a scenario (--scenario) or --permutations")
 
-        make_summary(stats)
+        make_scenario_summary(stats)        
     except NoPossibleTradeException as e:
         log.error("Domain error: %s", e)
         stats["Error"] = str(e)
-        make_summary(stats)
+        make_scenario_summary(stats)
         sys.exit(1)
     except IncorrectMatchingException as e:
         log.error("Matching error: %s", e)
         stats["Error"] = str(e)
-        make_summary(stats)
+        make_scenario_summary(stats)
         sys.exit(2)
     except OSError as e:
         log.error("I/O error: %s", e)
         stats["Error"] = str(e)
-        make_summary(stats)
+        make_scenario_summary(stats)
         sys.exit(3)
     except Exception as e:
         log.exception("Unexpected error")
         stats["Error"] = "Unexpected"
-        make_summary(stats)
+        make_scenario_summary(stats)
         sys.exit(99)
 
 

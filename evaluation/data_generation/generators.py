@@ -10,8 +10,8 @@ from .utils import (
     generate_real_positions, 
     convert_end_to_traded,
     call_until_success,
-    catch_and_log
 )
+from ...log.utils import catch_and_log
 
 
 class DataGenerator:

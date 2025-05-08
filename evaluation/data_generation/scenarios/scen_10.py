@@ -2,9 +2,7 @@ import random
 import logging
 from typing import List, Tuple
 from .shared import SharedScenario
-from ..utils import (
-    catch_and_log,
-)
+from ....log.utils import catch_and_log
 
 class Scenario10(SharedScenario):
     """

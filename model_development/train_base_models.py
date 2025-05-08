@@ -100,7 +100,7 @@ def train_lof(data, n_neighbors=20, contamination=0.05):
     Returns:
     - lof_model (LocalOutlierFactor): The trained LOF model.
     """
-    lof_model = LocalOutlierFactor(n_neighbors=n_neighbors, contamination=contamination)
+    lof_model = LocalOutlierFactor(n_neighbors=n_neighbors, contamination=contamination, novelty=True)
     lof_model.fit(data)
     return lof_model
 
@@ -219,7 +219,8 @@ def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = 
 
     #reshape the 1d array back to its original shape
     reshaped_data = normalized_data.reshape(training_data.shape)
-
+    
+    length = len(df)
 
     if isolation_forest:
         #Train the model
@@ -228,7 +229,7 @@ def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = 
         destination = f"models/isolation_forest/{model_path}.pkl"
 
 
-        save_model(model, destination, log, len(df), train_indices)
+        save_model(model, destination, log, length, train_indices)
         
 
         stats["Isolation Forest model build"] = "Success"
@@ -239,7 +240,7 @@ def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = 
 
         destination = f"models/one_svm/{model_path}.pkl"
 
-        save_model(model, destination, log, len(df), train_indices)
+        save_model(model, destination, log, length, train_indices)
 
         stats["One-SVM model build"] = "Success"
         
@@ -250,7 +251,7 @@ def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = 
 
         destination = f"models/LOF/{model_path}.pkl"
 
-        save_model(model, destination, log, len(df), train_indices)
+        save_model(model, destination, log, length, train_indices)
 
         stats["Local Outlier Factor model build"] = "Success"   
 

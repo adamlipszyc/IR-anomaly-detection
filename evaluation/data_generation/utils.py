@@ -1,8 +1,7 @@
 import csv
 import random
 import logging
-from typing import List, Tuple, Dict, Callable, Optional, Type
-from functools import wraps
+from typing import List, Tuple, Dict, Callable, Optional
 from rich.logging import RichHandler
 
 # Configure root logger to use Rich
@@ -134,23 +133,6 @@ def convert_end_to_traded(positions) -> List[Tuple[int, float]]:
 
 
 
-def catch_and_log(exception: Type[Exception], action: str = "") -> Callable:
-    """
-    Decorator to catch specified exception, log error, and re-raise.
-    """
-    def decorator(func: Callable) -> Callable:
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            current_logger = getattr(args[0], "logger", logger) if args else logger
-            try:
-                return func(*args, **kwargs)
-            except exception as e:
-                current_logger.error("Error %s[%s]: %s", action or func.__name__, type(e).__name__, e)
-                raise
-            finally:
-                current_logger.info(f"{func.__name__}")
-        return wrapper
-    return decorator
 
 
 def flip_data(data):
