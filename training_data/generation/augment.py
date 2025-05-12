@@ -170,7 +170,7 @@ def augment_noise(vector, noise_level=0.1, num_augmentations=1):
 
 # File paths
 INPUT_FILE = "training_data/original_data/vectorized_data.csv"   # Your input CSV file
-TEMP_DIR = "augmented_data"   # Temp directory
+TEMP_DIR = "training_data/augmented_data_without_noise"   # Temp directory
 FINAL_OUTPUT_FILE = "training_data/augmented_data/augmented_data.csv"  # Merged output file
 
 os.makedirs(TEMP_DIR, exist_ok=True)
@@ -189,17 +189,17 @@ def process_row(row_id, row_data):
     
     augmented_data = pd.concat([augmented_data, pd.concat(shift_results, ignore_index=True)], ignore_index=True)
 
-    print("adding noise")                             
-    noise_results = []
-    for index, row in augmented_data.iterrows():
-        noise_results.append(pd.DataFrame(augment_noise_vectorized(row)))
+    # print("adding noise")                             
+    # noise_results = []
+    # for index, row in augmented_data.iterrows():
+    #     noise_results.append(pd.DataFrame(augment_noise_vectorized(row)))
     
-    augmented_data = pd.concat([augmented_data, pd.concat(noise_results, ignore_index=True)], ignore_index=True)
+    # augmented_data = pd.concat([augmented_data, pd.concat(noise_results, ignore_index=True)], ignore_index=True)
 
     augmented_data.to_csv(temp_file, index=False, header=False)
 
 
-def worker(queue, progress_queue):
+def worker(queue: mp.Queue, progress_queue: mp.Queue):
     """Worker function: reads from the queue and processes rows."""
     while True:
         task = queue.get()
@@ -210,7 +210,7 @@ def worker(queue, progress_queue):
         progress_queue.put(1)  # Report completion of a task
 
 
-def merge_files():
+def merge_files() -> None:
     """Merge all temporary CSV files into a single output CSV."""
     with open(FINAL_OUTPUT_FILE, "w", newline="") as fout:
         writer = csv.writer(fout)
@@ -220,12 +220,8 @@ def merge_files():
                 reader = csv.reader(f)
                 writer.writerows(reader)  # Append each row
 
-    # # Cleanup temporary files
-    # for temp_file in os.listdir(TEMP_DIR):
-    #     os.remove(os.path.join(TEMP_DIR, temp_file))
-    # os.rmdir(TEMP_DIR)
 
-def main():
+def main() -> None:
     # Count rows in the input file for progress tracking
     total_rows = sum(1 for _ in open(INPUT_FILE))  # Count lines in the CSV
     num_workers = mp.cpu_count() - 1  # Use available CPU cores
@@ -240,12 +236,6 @@ def main():
 
     # Set up progress bar
     progress_bar = tqdm(total=total_rows, desc="Processing rows", unit="row")
-
-    # # Read CSV line-by-line and push to queue (no header)
-    # with open(INPUT_FILE, "r") as f:
-    #     reader = csv.reader(f)
-    #     for row_id, row_data in enumerate(reader):
-    #         queue.put((row_id, list(map(float, row_data))))  # Convert to float if needed
 
     df = pd.read_csv(INPUT_FILE, header=None)
 
@@ -274,57 +264,6 @@ def main():
     progress_bar.close()
 
 if __name__ == "__main__":
-    # main()
-    merge_files()
-    # pd.DataFrame(augment_shift(pd.read_csv("training_data/vectorized_data.csv", header=None).iloc[0])).to_csv("practice/shift.csv", index=False, header=False)
-
-    # row = pd.read_csv("training_data/vectorized_data.csv", header=None).iloc[0]
-    # start = time.time()
-    # process_row(1, row)
-    # end = time.time()
-    # print("Time taken: ", end - start, " seconds")
-
-
-    # start = time.time()
-    # augment_noise(row)
-    # end = time.time()
-    # print("slow took: ", end - start, " seconds")
-    # start = time.time()
-    # pd.DataFrame(augment_noise_vectorized(row)).to_csv("practice/noise_vectorized.csv", index=False, header=False)
-    # end = time.time()
-    # print("fast took: ", end - start, " seconds")
-
-
-
-
-# def augment_data():
-#     """Generates augmented data by applying magnitude, noise and shift transformations."""
-
-#     file_path = "training_data/vectorized_data.csv"
-#     df = pd.read_csv(file_path, header=None) #load data from csv file 
-
-#     augmented_data = df
-#     jobs = [1, 2, 3]
-#     func = None
-#     for i in jobs:
-#         if i == 1:
-#             func = augment_magnitude
-#         elif i == 2:
-#             func = augment_shift 
-#         else:
-#             func = augment_noise
-
-#         new_entries = []
-#         for index, row in augmented_data.iterrows():
-#             new_entries += func(row)
-        
-#         augmented_data = pd.concat([augmented_data, pd.DataFrame(new_entries)], ignore_index=True)
-
-#     output_file_path = "training_data/augmented_data.csv"
-#     augmented_data.to_csv(output_file_path, index=False, header=False)    
+    main()
     
-
-
-# if __name__ == "__main__":
-#     augment_data()
 

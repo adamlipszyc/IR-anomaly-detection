@@ -20,21 +20,19 @@ from tqdm import tqdm
 from multiprocessing import Process, Queue, cpu_count
 from .config import ORIGINAL_DATA_FILE_PATH
 
-def load_data(file_path: str, directory: bool =False) -> pd.DataFrame:
-    """
-    Load data from a CSV file.
-    :param file_path: Path to the CSV file
-    :return: Pandas DataFrame containing the data
-    """
-    if not directory:
-        return pd.read_csv(file_path)
+# Configure root logger to use Rich
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s [%(name)s]: %(message)s",
+    datefmt="[%H:%M:%S]",
+    handlers=[RichHandler(rich_tracebacks=True)]
+)
 
-    if directory:
-        #Trains in batches with ensemble voting 
-        # TODO
-        pass 
+logger = logging.getLogger(__name__)
 
-def min_max_normalize_data(array, scaler_file_paths, log):
+    
+
+def min_max_normalize_data(array, scaler_file_paths):
     """
     Normalize numerical columns using Min-Max scaling.
     Default is to normalize all numerical columns.
@@ -47,7 +45,7 @@ def min_max_normalize_data(array, scaler_file_paths, log):
         with open(scaler_file_path, 'wb') as file:
             pickle.dump(scaler, file)
         
-        log.info("Scaler saved: %s", scaler_file_path)
+        logger.info("Scaler saved: %s", scaler_file_path)
     
 
     return normalized_array
@@ -104,14 +102,14 @@ def train_lof(data, n_neighbors=20, contamination=0.05):
     lof_model.fit(data)
     return lof_model
 
-def save_model(model, filepath, log, num_rows, train_indices = {}):
+def save_model(model, filepath, num_rows, train_indices = {}):
     """
     Save the model to the specified file path using pickle
     """
     with open(filepath, "wb") as file:
             pickle.dump(model, file)
     
-    log.info("Saved model: %s | Trained on %s rows", filepath, num_rows)
+    logger.info("Saved model: %s | Trained on %s rows", filepath, num_rows)
 
     if train_indices:
         indices_destination = filepath[:-4] + "_indices.json"
@@ -119,17 +117,17 @@ def save_model(model, filepath, log, num_rows, train_indices = {}):
         with open(indices_destination, 'w') as file:
             json.dump(train_indices, file)
         
-        log.info("Saved model indices: %s", indices_destination)
+        logger.info("Saved model indices: %s", indices_destination)
 
 # === CONFIG ===
-DATA_DIR = "training_data/augmented_data/"  # <-- CHANGE THIS
+DATA_DIR = "training_data/augmented_data_without_noise/" 
 SAMPLES_PER_FILE = 10                   # Rows to sample per file
 NUM_BATCHES = 10                         # Total number of models to train
 OUTPUT_MODEL_PREFIX = "batch_model"      # Prefix for saved models
 SEED = 42                                # Reproducibility
 
 
-def worker(input_queue: Queue, output_queue: Queue):
+def worker(input_queue: Queue, output_queue: Queue, first_row_sampled_set: set[str]):
     """Worker function to read and sample CSV files from the input queue."""
     while True:
         file_path = input_queue.get()
@@ -140,6 +138,10 @@ def worker(input_queue: Queue, output_queue: Queue):
             if len(df) > SAMPLES_PER_FILE:
                 df = df.sample(SAMPLES_PER_FILE, random_state=random.randint(0, 99999))
             output_queue.put(df)
+
+            # Check if first row (index 0) is in the sampled dataframe
+            if 0 in df.index:
+                first_row_sampled_set.add(file_path)
         except Exception as e:
             print(f"Skipping {file_path} due to error: {e}")
         finally:
@@ -151,12 +153,13 @@ def process_files_in_parallel(csv_files, num_workers=None):
 
     input_queue = Queue()
     output_queue = Queue()
+    first_row_sampled_set = set()
     batch_data = []
 
     # Start workers
     workers = []
     for _ in range(num_workers):
-        p = Process(target=worker, args=(input_queue, output_queue))
+        p = Process(target=worker, args=(input_queue, output_queue, first_row_sampled_set))
         p.start()
         workers.append(p)
 
@@ -182,26 +185,21 @@ def process_files_in_parallel(csv_files, num_workers=None):
     # Clean up
     for p in workers:
         p.join()
+    
 
     print("Done with files")
-    return batch_data
+    return (batch_data, first_row_sampled_set)
 
 
-def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = False, lof = False, regular = False, data_file_path = "") -> None: 
+def train_model(stats, df, model_path, isolation_forest = False, one_svm = False, lof = False, train_indices: dict = {}) -> None: 
     
-    train_indices = {}
-    if regular:
-        indices = np.random.choice(df.index, size=int(0.8 * len(df)), replace=False)
-        train_data = df.loc[indices]
-        train_indices[data_file_path] = indices.tolist()
-        df = train_data
+    
 
     training_data = df.values.copy() 
 
     np.random.shuffle(training_data)
 
-    #flatten our data set into one large 1D array 
-    flattened_training_data = training_data.flatten()
+    
 
     scaler_name = f"scaler_{model_path}.pkl"
     scaler_destinations = []
@@ -214,8 +212,11 @@ def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = 
     if lof:
         scaler_destinations.append(f"models/LOF/{scaler_name}")
     
+    #flatten our data set into one large 1D array 
+    flattened_training_data = training_data.flatten()
+    
     #normalize our entire dataset 
-    normalized_data = min_max_normalize_data(flattened_training_data, scaler_destinations, log)
+    normalized_data = min_max_normalize_data(flattened_training_data, scaler_destinations)
 
     #reshape the 1d array back to its original shape
     reshaped_data = normalized_data.reshape(training_data.shape)
@@ -229,7 +230,7 @@ def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = 
         destination = f"models/isolation_forest/{model_path}.pkl"
 
 
-        save_model(model, destination, log, length, train_indices)
+        save_model(model, destination, length, train_indices)
         
 
         stats["Isolation Forest model build"] = "Success"
@@ -240,7 +241,7 @@ def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = 
 
         destination = f"models/one_svm/{model_path}.pkl"
 
-        save_model(model, destination, log, length, train_indices)
+        save_model(model, destination, length, train_indices)
 
         stats["One-SVM model build"] = "Success"
         
@@ -251,7 +252,7 @@ def train_model(log, stats, df, model_path, isolation_forest = False, one_svm = 
 
         destination = f"models/LOF/{model_path}.pkl"
 
-        save_model(model, destination, log, length, train_indices)
+        save_model(model, destination, length, train_indices)
 
         stats["Local Outlier Factor model build"] = "Success"   
 
@@ -300,6 +301,7 @@ def main() -> None:
 
     try:
         stats = {}
+        train_indices = {}
 
         if args.train_augmented:
             # === GATHER FILES ===
@@ -315,8 +317,12 @@ def main() -> None:
 
                 batch_data = []
 
-                batch_data = process_files_in_parallel(csv_files)
+                batch_data, first_row_set = process_files_in_parallel(csv_files)
                 
+                indexes = [int(str(os.path.basename(file_path)).removeprefix("row_").removesuffix(".csv")) for file_path in first_row_set]
+
+                train_indices[ORIGINAL_DATA_FILE_PATH] = indexes
+
                 print("Done with files")
                 if not batch_data:
                     print(f"No data collected for batch {batch_idx}")
@@ -326,18 +332,24 @@ def main() -> None:
 
                 model_path = f"{OUTPUT_MODEL_PREFIX}_{batch_idx:03d}"
 
-                train_model(log, stats, df, model_path, args.isolation_forest, args.one_svm, args.local_outlier)
+                train_model(stats, df, model_path, args.isolation_forest, args.one_svm, args.local_outlier, train_indices)
                 
                 make_summary(stats)
 
-                return
+            return
         
 
         df = pd.read_csv(ORIGINAL_DATA_FILE_PATH, header=None)
 
+        #Randomly select 80% of the rows and leave 20% as a held-out test set
+        indices = np.random.choice(df.index, size=int(0.8 * len(df)), replace=False)
+        train_data = df.loc[indices]
+        train_indices[ORIGINAL_DATA_FILE_PATH] = indices.tolist()
+        df = train_data
+
         model_path = "model"
 
-        train_model(log, stats, df, model_path, args.isolation_forest, args.one_svm, args.local_outlier, regular=True, data_file_path=ORIGINAL_DATA_FILE_PATH)
+        train_model(stats, df, model_path, args.isolation_forest, args.one_svm, args.local_outlier, train_indices)
 
         make_summary(stats)
        

@@ -22,15 +22,9 @@ from sklearn.metrics import (
 from scipy.stats import mode
 from rich.logging import RichHandler
 from log.utils import make_summary, catch_and_log
+from .config import BASE_OUTPUT_FILE_PATH, GOOD_DATA, ANOMALOUS_DATA, CLASS_SIZE
 
 
-ORIGINAL_FILE_PATH = 'training_data/original_data/vectorized_data.csv'
-
-GOOD_DATA = [ORIGINAL_FILE_PATH]
-
-ANOMALOUS_DATA = ['evaluation/data/']
-
-BASE_OUTPUT_FILE_PATH = "evaluation/results"
 
 class AnomalyDetectionEvaluator():
     def __init__(self, model_path: str, ensemble: bool = False, logger: logging.Logger = None):
@@ -48,7 +42,7 @@ class AnomalyDetectionEvaluator():
         self.stats = {}
 
     @catch_and_log(Exception, "Loading anomalous data")
-    def load_anomalous_data(self, file_paths, directory=False):
+    def load_anomalous_data(self, file_paths, directory=False, num_samples=None):
         """
         Loads the data from a CSV file and creates a label vector Y where all entries are 1.
         Assumes all rows in the file are anomalous examples.
@@ -71,19 +65,24 @@ class AnomalyDetectionEvaluator():
                 anomalous_data = np.vstack((anomalous_data, X))
             else:
                 anomalous_data = X
+        
+        # If num_samples is set and smaller than total, randomly select subset
+        if num_samples is not None and num_samples < len(anomalous_data):
+            indices = np.random.choice(len(anomalous_data), size=num_samples, replace=False)
+            anomalous_data = anomalous_data[indices]
 
-        Y = np.ones(len(anomalous_data))         # Label 1 for each row
+
+        Y = np.ones(len(anomalous_data)) # Label 1 for each row
         return anomalous_data, Y
 
     @catch_and_log(Exception, "Loading good data")
-    def load_good_data(self, file_paths, directory=False, used_indices=""):
+    def load_good_data(self, file_paths, directory=False, used_indices={}):
         """
         Loads the data from multiple CSV files and creates a label vector Y where all entries are 0.
         Assumes all rows in the file are good examples.
         """
 
         if directory:
-            #Ensemble voting here, so we find all models within this file
             file_paths = glob.glob(os.path.join(file_paths[0], "*.csv"))
             if len(file_paths) == 0:
                 raise RuntimeError("No CSV files found in directory.")
@@ -92,10 +91,7 @@ class AnomalyDetectionEvaluator():
         for file_path in file_paths:
             data = pd.read_csv(file_path, header=None)
 
-            if used_indices:
-                with open(used_indices, "r") as file:
-                    used_indices = json.load(file)
-
+            if file_path in used_indices:
                 data = data[~data.index.isin(used_indices[file_path])]
             
             X = data.values  # All columns
@@ -106,6 +102,10 @@ class AnomalyDetectionEvaluator():
                 good_data = np.vstack((good_data, X))
             else:
                 good_data = X
+        
+        if self.ensemble:
+            indices = np.random.choice(len(good_data), size=CLASS_SIZE, replace=False)
+            good_data = good_data[indices]
 
         Y = np.zeros(len(good_data))         # Label 0 for each row
         return good_data, Y
@@ -245,12 +245,13 @@ class AnomalyDetectionEvaluator():
         return scaler
 
     @catch_and_log(Exception, "Getting scaler path")
-    def get_scaler_path(self) -> str:
+    def get_scaler_path(self, file_path="") -> str:
         """
         Given a model path like 'models/one_svm/batch_model_....pkl',
         return the corresponding scaler path with 'scaler_' prefixed to the filename.
         """
-        dir_path, filename = os.path.split(self.model_path)
+        path = file_path if file_path else self.model_path
+        dir_path, filename = os.path.split(path)
         scaler_filename = f"scaler_{filename}"
         scaler_path = os.path.join(dir_path, scaler_filename)
         self.logger.info("Scaler path found: %s", scaler_path)
@@ -281,23 +282,44 @@ class AnomalyDetectionEvaluator():
         y_pred_array = np.array(y_pred)  # Shape: (num_models, num_samples)
 
         # Majority vote across models
-        ensemble_prediction, _ = mode(y_pred_array, axis=0)
+        ensemble_prediction = np.max(y_pred_array, axis=0)
+        # ensemble_prediction, _ = mode(y_pred_array, axis=0)
+
 
         # Flatten the result
         ensemble_prediction = ensemble_prediction.flatten()
 
         return ensemble_prediction
+    
+    @catch_and_log(Exception, "Retrieving used indices")
+    def get_used_indices(self):
+        used_indices = {}
+        if not self.ensemble:
+            used_indices_file_path = f"{self.model_path[:-4]}_indices.json"
+            with open(used_indices_file_path, "r") as file:
+                used_indices = json.load(file)
+        else:
+            file_paths = glob.glob(os.path.join(self.model_path, "batch_model_*.json"))
+            for used_indices_file_path in file_paths:
+                with open(used_indices_file_path, "r") as file:
+                    data: dict[str, list[int]] = json.load(file)
+                    for path, indices in data.items():
+                        if path in used_indices:
+                            used_indices[path] = list(set(used_indices[path]) | set(indices))
+                        else:
+                            used_indices[path] = indices
+        
+        return used_indices
 
     @catch_and_log(Exception, "Evaluating model")
     def evaluate_model(self):
-        # Load the data from CSV (ensure 'anomaly' column is the last column)
-        X_test, y_test = self.load_anomalous_data(ANOMALOUS_DATA, directory=True)
         
-        used_indices = ""
-        if not self.ensemble:
-            used_indices = f"{self.model_path[:-4]}_indices.json"
-    
+        used_indices = self.get_used_indices()
+
         X_test2, y_test2 = self.load_good_data(GOOD_DATA, used_indices=used_indices)
+
+        # Load the data from CSV (ensure 'anomaly' column is the last column)
+        X_test, y_test = self.load_anomalous_data(ANOMALOUS_DATA, directory=True, num_samples=len(X_test2))
 
         # Concatenate the feature matrices and labels
         X_combined = np.vstack((X_test, X_test2))    # Stack vertically: (n1+n2, cols)
