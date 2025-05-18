@@ -30,11 +30,12 @@ class MetricsEvaluator:
 
     
     @catch_and_log(Exception, "Generating evaluation metrics")
-    def generate_evaluation_metrics(self):
+    def generate_evaluation_metrics(self, return_metrics: bool = False):
         """
         Evaluate the performance of the anomaly detection model and print the classification report.
         """
-        print("Accuracy:", accuracy_score(self.y_test, self.y_pred))
+        accuracy = accuracy_score(self.y_test, self.y_pred)
+        print("Accuracy:", accuracy)
         print("Classification Report:")
         print(classification_report(self.y_test, self.y_pred))
         # beta > 1 means recall is weighted more than precision
@@ -46,8 +47,20 @@ class MetricsEvaluator:
         print(confusion_matrix(self.y_test, self.y_pred))
         
         # If available, compute ROC AUC
+        roc = None
         if len(np.unique(self.y_test)) == 2:
-            print("ROC AUC:", roc_auc_score(self.y_test, self.y_pred))
+            roc = roc_auc_score(self.y_test, self.y_pred)
+            print("ROC AUC:", roc)
+
+        if return_metrics:
+            return pd.DataFrame([{
+                "accuracy": accuracy,
+                "f2_score": fbeta2,
+                "f5_score": fbeta5,
+                "roc_auc": roc
+            }])
+
+        return None
 
     @catch_and_log(Exception, "Exporting evaluation to excel")
     def export_evaluation_to_excel(self):

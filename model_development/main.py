@@ -5,7 +5,27 @@ from .training_manager import TrainingManager
 
 from rich.logging import RichHandler
 
+def parse_list_and_int(values):
+    if len(values) < 2:
+        raise argparse.ArgumentTypeError(
+            "You must provide at least one string followed by an integer."
+        )
 
+    *str_values, last = values
+
+    try:
+        int_value = int(last)
+    except ValueError:
+        raise argparse.ArgumentTypeError(
+            f"The last value must be an integer, but got: '{last}'"
+        )
+
+    if not all(isinstance(s, str) and not s.isdigit() for s in str_values):
+        raise argparse.ArgumentTypeError(
+            f"All values except the last must be strings (got: {str_values})"
+        )
+
+    return str_values, int_value
 
 def main() -> None:
 
@@ -22,10 +42,20 @@ def main() -> None:
     parser.add_argument('-o', '--one_svm', action='store_true')
     parser.add_argument('-i', '--isolation_forest', action='store_true')
     parser.add_argument('-l', '--local_outlier', action='store_true')
-    parser.add_argument('-a', '--train_augmented', action='store_true')
+    parser.add_argument(
+        '--train_augmented',
+        nargs='+',
+        type=str,
+        help='A list of strings followed by an integer',
+    )
+
     parser.add_argument('-s', '--split', type=int, choices=range(1,6), required=True, help="Which data split to use (1-5)")
+    parser.add_argument('-e', '--train_ensemble', action='store_true')
 
     args = parser.parse_args()
+
+    # Convert the last element to int, rest stay as str
+    args.augment_techniques, args.augment_factor = parse_list_and_int(args.train_augmented)
 
     if not args.one_svm and not args.isolation_forest and not args.local_outlier:
         parser.error("You must specify at least one of -o, -i or -l")

@@ -37,7 +37,7 @@ class DataAugmenter:
         return augmented_results
 
     @catch_and_log(Exception, "Shifting vector")
-    def augment_shift(self, vector: pd.Series) -> List[np.ndarray]:
+    def augment_shift(self, vector: pd.Series, max_results: int = 99999999) -> List[np.ndarray]:
         """ 
         Shifts vector according to first non-zero value and last-non zero 
         ensuring time frame between positions is preserved 
@@ -50,12 +50,12 @@ class DataAugmenter:
         augmented_results = []
         possible_left_shifts = first_nonzero_index
         if possible_left_shifts:       
-            for val in range(2, possible_left_shifts, 2):
+            for val in range(2, min(possible_left_shifts, 2* max_results) + 1, 2):
                 augmented_results.append(np.roll(vector, -val))
 
         possible_right_shifts = len(vector) - last_nonzero_index - 1
         if possible_right_shifts:
-            for val in range(2, possible_right_shifts, 2):
+            for val in range(2, min(possible_right_shifts, 2 * max_results) + 1, 2):
                 augmented_results.append(np.roll(vector, val))
         
         return augmented_results
@@ -194,6 +194,41 @@ class DataAugmenter:
         # augmented_data = pd.concat([augmented_data, pd.concat(noise_results, ignore_index=True)], ignore_index=True)
         
         return augmented_data
+    
 
-       
+    @catch_and_log(Exception, "Augmenting dataset")
+    def augment_dataset(
+        self,
+        data: pd.DataFrame,
+        techniques: List[str],
+        factor: int
+    ) -> pd.DataFrame:
+        """
+        Augments the dataset using the specified techniques until target_size is reached.
+        """
+        augmented = [data]
+        target_size = len(data) * factor
+        num_needed = target_size - len(data)
+        per_sample = num_needed // len(data)
+        
+        for index, row in data.iterrows():
+            augmented_samples = []
+
+            if "magnitude" in techniques:
+                augmented_samples += self.augment_magnitude(row)
+
+            if "shift" in techniques:
+                augmented_samples += [pd.Series(x) for x in self.augment_shift(row, max_results=per_sample)]
+
+            if "noise" in techniques:
+                augmented_samples += self.augment_noise_vectorized(row)
+
+            # Only keep what we need
+            sampled = random.sample(augmented_samples, min(per_sample, len(augmented_samples)))
+            augmented.append(pd.DataFrame(sampled))
+
+        return pd.concat(augmented, ignore_index=True).iloc[:target_size]
+
+
+        
 

@@ -4,6 +4,7 @@ import json
 import glob 
 import os
 import logging
+import sys
 from rich.logging import RichHandler
 from log.utils import make_summary, catch_and_log
 from .config import OUTPUT_DIR, MODELS_DIR
@@ -13,26 +14,26 @@ from .model_handler import ModelHandler
 
 
 class AnomalyDetectionEvaluator():
-    def __init__(self, model_name: str, split: int, fifty_fifty: bool, ensemble: bool = False, augmented_data: bool = False, logger: logging.Logger = None):
+    def __init__(self, args, logger: logging.Logger = None):
         
 
-        self.model_path = MODELS_DIR / model_name
-        if augmented_data:
-            self.model_path = self.model_path / "augmented"
-        if ensemble:
+        self.model_path = MODELS_DIR / args.model_name
+        if args.augmented_dir_name:
+            self.model_path = self.model_path / "augmented" / args.augmented_dir_name
+        if args.ensemble_voting:
             self.model_path = self.model_path / "ensemble"
 
-        self.model_path = self.model_path / f"split_{split}" 
-        if not ensemble:
+        self.model_path = self.model_path / f"split_{args.split}" 
+        if not args.ensemble_voting:
             self.model_path = self.model_path / "model.pkl"
 
-        self.ensemble = ensemble
-        self.model_name = model_name
-        self.data_loader = DataLoader(split, fifty_fifty)
+        self.ensemble = args.ensemble_voting
+        self.model_name = args.model_name
+        self.data_loader = DataLoader(args.split, args.fifty_fifty)
         self.logger = logger or logging.getLogger(self.__class__.__name__)
         self.stats = {}
-        self.split = split 
-        self.fifty_fifty = fifty_fifty
+        self.split = args.split 
+        self.fifty_fifty = args.fifty_fifty
 
     @catch_and_log(Exception, "Rebasing directory")
     def rebase_dir_path(self, original_path, old_root, new_root, remove_file_name: bool = False):
@@ -116,7 +117,7 @@ class AnomalyDetectionEvaluator():
         return used_indices
 
     @catch_and_log(Exception, "Evaluating model")
-    def evaluate_model(self):
+    def evaluate_model(self, return_metrics: bool = False):
         
         # used_indices = self.get_used_indices()
 
@@ -165,7 +166,7 @@ class AnomalyDetectionEvaluator():
         metrics_evaluator = MetricsEvaluator(y_test, y_pred, output_dir)
 
         # Evaluate the model
-        metrics_evaluator.generate_evaluation_metrics()
+        metrics = metrics_evaluator.generate_evaluation_metrics(return_metrics)
 
         #Save evaluation metrics to excel file
         metrics_evaluator.export_evaluation_to_excel()
@@ -176,8 +177,12 @@ class AnomalyDetectionEvaluator():
         #Plot ROC curve 
         metrics_evaluator.plot_roc_curve()
 
+        if return_metrics:
+            return metrics
 
         make_summary("Model Evaluation Summary", self.stats)
+
+        return None
 
 
         
@@ -192,21 +197,27 @@ def main() -> None:
         handlers=[RichHandler(rich_tracebacks=True)]
     )
 
+    log = logging.getLogger(__name__)
     parser = argparse.ArgumentParser(description="Evaluate an anomaly detection model")
     parser.add_argument('--model_name', required=True, type=str, choices=["one_svm", "LOF", "isolation_forest"], help="Name of model algorithm")
     # parser.add_argument('--scaler_path', required=True, type=str, help="Path to the scaler used in training the model")
     parser.add_argument('--split', required=True, type=int, choices=range(1,6), help="Which test data split")
     parser.add_argument('-50/50', "--fifty_fifty", action='store_true')
     parser.add_argument('-e', '--ensemble_voting', action='store_true')
-    parser.add_argument('-a', '--augmented_data', action='store_true')
+    parser.add_argument('-a', '--augmented_dir_name', type=str, default='', help="Augmented directory name specifying technique and factor")
     args = parser.parse_args()
 
-    if args.ensemble_voting and not args.augmented_data:
-        parser.error("Must use augmented data for ensemble voting")
+    # if args.ensemble_voting and not args.augment_data:
+    #     parser.error("Must use augmented data for ensemble voting")
 
-    evaluator = AnomalyDetectionEvaluator(args.model_name, args.split, args.fifty_fifty, args.ensemble_voting, args.augmented_data)
+    evaluator = AnomalyDetectionEvaluator(args)
 
-    evaluator.evaluate_model()
+
+    try:
+        evaluator.evaluate_model()
+    except Exception as e:
+        log.exception("Unexpected failure")
+        sys.exit(99)
 
     
 
