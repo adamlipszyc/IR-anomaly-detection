@@ -42,12 +42,13 @@ def augment_shift(vector):
     last_nonzero_index = vector.where(vector != 0).last_valid_index()
     
     augmented_results = []
-    if first_nonzero_index:
-        possible_left_shifts = first_nonzero_index
-        possible_right_shifts = len(vector) - last_nonzero_index - 1
+    possible_left_shifts = first_nonzero_index
+    if possible_left_shifts:       
         for val in range(2, possible_left_shifts, 2):
             augmented_results.append(np.roll(vector, -val))
 
+    possible_right_shifts = len(vector) - last_nonzero_index - 1
+    if possible_right_shifts:
         for val in range(2, possible_right_shifts, 2):
             augmented_results.append(np.roll(vector, val))
     
@@ -170,7 +171,7 @@ def augment_noise(vector, noise_level=0.1, num_augmentations=1):
 
 # File paths
 INPUT_FILE = "training_data/original_data/vectorized_data.csv"   # Your input CSV file
-TEMP_DIR = "training_data/augmented_data_without_noise"   # Temp directory
+TEMP_DIR = "training_data/augmented_data_without_noise_shift"   # Temp directory
 FINAL_OUTPUT_FILE = "training_data/augmented_data/augmented_data.csv"  # Merged output file
 
 os.makedirs(TEMP_DIR, exist_ok=True)

@@ -8,5 +8,7 @@ training_data/generation/augment_tests
 practice/
 temp_augmented_data/
 evaluation/anomalous_data/
+evaluation/results_old/
 __pycache__/
 
+old_tests/
