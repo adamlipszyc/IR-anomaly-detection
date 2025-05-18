@@ -1,10 +1,10 @@
 env/
 env_updated/
 training_data/original_data/
-training_data/augmented_data/
-training_data/augmented_data_without_noise/
-training_data/augmented_data_without_noise_shift/
-training_data/generation/augment_tests
+data_augmentation/augmented_data/
+data_augmentation/augmented_data_without_noise/
+data_augmentation/augmented_data_without_noise_shift/
+data_augmentation/augment_tests
 practice/
 temp_augmented_data/
 evaluation/anomalous_data/

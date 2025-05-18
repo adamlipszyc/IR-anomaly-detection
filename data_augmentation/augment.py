@@ -171,8 +171,8 @@ def augment_noise(vector, noise_level=0.1, num_augmentations=1):
 
 # File paths
 INPUT_FILE = "training_data/original_data/vectorized_data.csv"   # Your input CSV file
-TEMP_DIR = "training_data/augmented_data_without_noise_shift"   # Temp directory
-FINAL_OUTPUT_FILE = "training_data/augmented_data/augmented_data.csv"  # Merged output file
+TEMP_DIR = "data_augmentation/augmented_data_without_noise_shift"   # Temp directory
+FINAL_OUTPUT_FILE = "data_augmentation/augmented_data/augmented_data.csv"  # Merged output file
 
 os.makedirs(TEMP_DIR, exist_ok=True)
 

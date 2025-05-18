@@ -120,7 +120,7 @@ def save_model(model, filepath, num_rows, train_indices = {}):
         logger.info("Saved model indices: %s", indices_destination)
 
 # === CONFIG ===
-DATA_DIR = "training_data/augmented_data_without_noise/" 
+DATA_DIR = "data_augmentation/augmented_data_without_noise/" 
 SAMPLES_PER_FILE = 20                # Rows to sample per file
 NUM_BATCHES = 10                         # Total number of models to train
 OUTPUT_MODEL_PREFIX = "batch_model"      # Prefix for saved models
