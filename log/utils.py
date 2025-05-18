@@ -24,7 +24,7 @@ def make_summary(title: str, stats: dict) -> None:
     table.add_column("Task", style="cyan")
     table.add_column("Status", style="magenta", justify="right")
     for task, status in stats.items():
-        table.add_row(task, status)
+        table.add_row(str(task), status)
     console.print(table)
 
 

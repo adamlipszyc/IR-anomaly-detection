@@ -13,10 +13,18 @@
       "args": "${command:pickArgs}"
     },
     {
-      "name": "Debug script as module",
+      "name": "Debug evaluation script as module",
       "type": "debugpy",
       "request": "launch",
       "module": "evaluation.evaluate_model",  // Import-style path
+      "cwd": "${workspaceFolder}",
+      "args": "${command:pickArgs}"
+    },
+    {
+      "name": "Debug training script as module",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "model_development.base_main",  // Import-style path
       "cwd": "${workspaceFolder}",
       "args": "${command:pickArgs}"
     }

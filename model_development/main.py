@@ -23,6 +23,7 @@ def main() -> None:
     parser.add_argument('-i', '--isolation_forest', action='store_true')
     parser.add_argument('-l', '--local_outlier', action='store_true')
     parser.add_argument('-a', '--train_augmented', action='store_true')
+    parser.add_argument('-s', '--split', type=int, choices=range(1,6), required=True, help="Which data split to use (1-5)")
 
     args = parser.parse_args()
 

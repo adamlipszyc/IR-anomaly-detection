@@ -5,11 +5,13 @@ from multiprocessing import Process, Queue, cpu_count
 from tqdm import tqdm
 import random
 from log.utils import catch_and_log
+import logging
 
 class DataLoader:
     def __init__(self, data_dir: str, samples_per_file: int):
         self.data_dir = data_dir
         self.samples_per_file = samples_per_file
+        self.logger = logging.getLogger(self.__class__.__name__)
 
     def _worker(self, input_queue: Queue, output_queue: Queue, shared_set: set):
         """
@@ -79,7 +81,7 @@ class DataLoader:
             p.join()
         
 
-        print("Done with files")
+        self.logger.info("Done with files")
         return (batch_data, first_row_sampled_set)
 
     @staticmethod

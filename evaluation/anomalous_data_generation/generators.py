@@ -35,7 +35,7 @@ class DataGenerator:
         self.num_simple = num_simple
         self.complex_iterations = complex_iterations
         self.complex_samples = complex_samples
-        self.logger = logger or logging.getLogger(__name__)
+        self.logger = logger or logging.getLogger(self.__class__.__name__)
 
     @catch_and_log(Exception, "Saving entries to csv")
     def _save_entries_to_csv(self, entries, filename):

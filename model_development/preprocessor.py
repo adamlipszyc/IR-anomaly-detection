@@ -1,4 +1,5 @@
 import numpy as np
+import os 
 import pickle
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import logging
@@ -19,7 +20,8 @@ class Preprocessor:
         Flattens, scales, and reshapes data using the selected scaler.
         Returns preprocessed data with the same shape.
         """
-         #flatten our data set into one large 1D array 
+
+        #flatten our data set into one large 1D array 
         flattened_training_data = data.flatten()
         
         #Normalize the data 
@@ -36,15 +38,16 @@ class Preprocessor:
 
 
     @catch_and_log(Exception, "Saving scaler")
-    def save(self, scaler_file_paths: str) -> None:
+    def save(self, scaler_file_path: str) -> None:
         """
         Saves the fitted scaler to a file using pickle.
         """
         if self.scaler is None:
             raise RuntimeError("Scaler not fitted yet.")
         
-        for scaler_file_path in scaler_file_paths:
-            with open(scaler_file_path, 'wb') as file:
-                pickle.dump(self.scaler, file)
+        os.makedirs(os.path.dirname(scaler_file_path), exist_ok=True)
+        
+        with open(scaler_file_path, 'wb') as file:
+            pickle.dump(self.scaler, file)
             
         self.logger.info("Scaler saved: %s", scaler_file_path)

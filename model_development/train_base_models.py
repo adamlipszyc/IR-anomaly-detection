@@ -121,7 +121,7 @@ def save_model(model, filepath, num_rows, train_indices = {}):
 
 # === CONFIG ===
 DATA_DIR = "training_data/augmented_data_without_noise/" 
-SAMPLES_PER_FILE = 10                   # Rows to sample per file
+SAMPLES_PER_FILE = 20                # Rows to sample per file
 NUM_BATCHES = 10                         # Total number of models to train
 OUTPUT_MODEL_PREFIX = "batch_model"      # Prefix for saved models
 SEED = 42                                # Reproducibility

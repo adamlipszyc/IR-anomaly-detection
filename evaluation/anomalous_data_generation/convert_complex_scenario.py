@@ -2,11 +2,11 @@ import random
 import numpy as np
 import csv
 import argparse
-import evaluation.data_generation.scenarios.scen_4 as scen_4
-import evaluation.data_generation.scenarios.scen_9 as scen_9
-import evaluation.data_generation.scenarios.scen_10 as scen_10
-import evaluation.data_generation.scenarios.scen_11 as scen_11
-from evaluation.data_generation.utils import convert_end_to_traded, generate_real_positions, generate_random_zero_pairs
+import evaluation.anomalous_data_generation.scenarios.scen_4 as scen_4
+import evaluation.anomalous_data_generation.scenarios.scen_9 as scen_9
+import evaluation.anomalous_data_generation.scenarios.scen_10 as scen_10
+import evaluation.anomalous_data_generation.scenarios.scen_11 as scen_11
+from evaluation.anomalous_data_generation.utils import convert_end_to_traded, generate_real_positions, generate_random_zero_pairs
 
 CHOICES = [(4,scen_4.generate_test_case), (9,scen_9.generate_scenario), 
            (10,scen_10.generate_scenario), (11,scen_11.generate_scenario)]
