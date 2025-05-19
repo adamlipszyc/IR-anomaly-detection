@@ -10,7 +10,9 @@ GOOD_DATA = [ORIGINAL_FILE_PATH]
 
 ANOMALOUS_DATA = ['evaluation/data/']
 
-OUTPUT_DIR = "evaluation/results"
+RESULTS_DIR = "evaluation/results"
+
+COMPARISON_DIR = "evaluation/model_comparison_results/"
 
 CLASS_SIZE = 534
 

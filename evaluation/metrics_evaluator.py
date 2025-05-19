@@ -17,7 +17,7 @@ import matplotlib
 matplotlib.use('TkAgg') 
 import matplotlib.pyplot as plt
 from log.utils import catch_and_log
-from .config import OUTPUT_DIR
+from .config import RESULTS_DIR
 
 
 class MetricsEvaluator:
@@ -80,7 +80,7 @@ class MetricsEvaluator:
         tn, fp, fn, tp = confusion_matrix(self.y_test, self.y_pred).ravel()
 
         summary_df = pd.DataFrame([{
-            "Model": os.path.relpath(self.output_dir, start=OUTPUT_DIR),
+            "Model": os.path.relpath(self.output_dir, start=RESULTS_DIR),
             "Accuracy": accuracy,
             "Precision": precision,
             "Recall": recall,

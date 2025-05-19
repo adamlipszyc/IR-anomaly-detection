@@ -49,13 +49,16 @@ def main() -> None:
         help='A list of strings followed by an integer',
     )
 
-    parser.add_argument('-s', '--split', type=int, choices=range(1,6), required=True, help="Which data split to use (1-5)")
+    # parser.add_argument('-s', '--split', type=int, choices=range(1,6), required=True, help="Which data split to use (1-5)")
     parser.add_argument('-e', '--train_ensemble', action='store_true')
 
     args = parser.parse_args()
 
     # Convert the last element to int, rest stay as str
-    args.augment_techniques, args.augment_factor = parse_list_and_int(args.train_augmented)
+    if args.train_augmented is not None:
+        args.augment_techniques, args.augment_factor = parse_list_and_int(args.train_augmented)
+    else:
+        args.augment_techniques, args.augment_factor = None, None
 
     if not args.one_svm and not args.isolation_forest and not args.local_outlier:
         parser.error("You must specify at least one of -o, -i or -l")

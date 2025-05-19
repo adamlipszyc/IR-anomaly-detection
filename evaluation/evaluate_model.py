@@ -7,33 +7,32 @@ import logging
 import sys
 from rich.logging import RichHandler
 from log.utils import make_summary, catch_and_log
-from .config import OUTPUT_DIR, MODELS_DIR
+from .config import RESULTS_DIR, MODELS_DIR
 from .data_loader import DataLoader
 from .metrics_evaluator import MetricsEvaluator
 from .model_handler import ModelHandler
-
+from training_test_splits.data_split_generation.config import NUM_SPLITS
 
 class AnomalyDetectionEvaluator():
     def __init__(self, args, logger: logging.Logger = None):
         
-
         self.model_path = MODELS_DIR / args.model_name
         if args.augmented_dir_name:
             self.model_path = self.model_path / "augmented" / args.augmented_dir_name
         if args.ensemble_voting:
             self.model_path = self.model_path / "ensemble"
 
-        self.model_path = self.model_path / f"split_{args.split}" 
-        if not args.ensemble_voting:
-            self.model_path = self.model_path / "model.pkl"
+        # self.model_path = self.model_path / f"split_{args.split}" 
+        # if not args.ensemble_voting:
+        #     self.model_path = self.model_path / "model.pkl"
 
         self.ensemble = args.ensemble_voting
         self.model_name = args.model_name
-        self.data_loader = DataLoader(args.split, args.fifty_fifty)
+        # self.data_loader = DataLoader(args.split, args.fifty_fifty)
         self.logger = logger or logging.getLogger(self.__class__.__name__)
         self.stats = {}
-        self.split = args.split 
-        self.fifty_fifty = args.fifty_fifty
+        # self.split = args.split 
+        # self.fifty_fifty = args.fifty_fifty
 
     @catch_and_log(Exception, "Rebasing directory")
     def rebase_dir_path(self, original_path, old_root, new_root, remove_file_name: bool = False):
@@ -117,7 +116,7 @@ class AnomalyDetectionEvaluator():
         return used_indices
 
     @catch_and_log(Exception, "Evaluating model")
-    def evaluate_model(self, return_metrics: bool = False):
+    def evaluate_model(self):
         
         # used_indices = self.get_used_indices()
 
@@ -130,55 +129,57 @@ class AnomalyDetectionEvaluator():
         # X_combined = np.vstack((X_test, X_test2))    # Stack vertically: (n1+n2, cols)
         # y_combined = np.concatenate((y_test, y_test2))  # (n1+n2,)
 
-        
-        X_test, y_test = self.data_loader.load_labeled_test_data()
+        for split in range(1, NUM_SPLITS + 1):
+            model_dir = self.model_path / f"split_{split}" 
+            for fifty_fifty in [True, False]:
+                data_loader = DataLoader(split, fifty_fifty)
 
-       
-        # Generate a shuffled index array
-        indices = np.random.permutation(len(X_test))
+                X_test, y_test = data_loader.load_labeled_test_data()
 
-        # Shuffle both X and y using the same indices to preserve alignment
-        X_shuffled = X_test[indices]
-        y_shuffled = y_test[indices]
+                # Generate a shuffled index array
+                indices = np.random.permutation(len(X_test))
 
-        X_test = X_shuffled
-        y_test = y_shuffled
-        # Preprocess the data (standardize or normalize)
-       
-        if not self.ensemble:
+                # Shuffle both X and y using the same indices to preserve alignment
+                X_shuffled = X_test[indices]
+                y_shuffled = y_test[indices]
+
+                X_test = X_shuffled
+                y_test = y_shuffled
+                # Preprocess the data (standardize or normalize)
             
-            model_handler = ModelHandler(self.model_path)
+                if not self.ensemble:
+                    model_path = model_dir / "model.pkl"
+                    
+                    model_handler = ModelHandler(model_path)
 
-            X_test_scaled = model_handler.prepare_data(X_test)
+                    X_test_scaled = model_handler.prepare_data(X_test)
 
-            # Predict anomalies
-            y_pred = model_handler.predict(X_test_scaled)
+                    # Predict anomalies
+                    y_pred = model_handler.predict(X_test_scaled)
 
-            self.stats[self.model_path] = "Success"
-        else:
-            #Carry out ensemble voting
-            y_pred = self.ensemble_voting(X_test)
+                    self.stats[self.model_path] = "Success"
+                else:
+                    #Carry out ensemble voting
+                    y_pred = self.ensemble_voting(X_test)
 
-        output_dir = self.rebase_dir_path(self.model_path, MODELS_DIR, OUTPUT_DIR, remove_file_name=(not self.ensemble))
-        output_dir = os.path.join(output_dir, "test_50_50" if self.fifty_fifty else "test_95_5")
+                output_dir = self.rebase_dir_path(model_path, MODELS_DIR, RESULTS_DIR, remove_file_name=(not self.ensemble))
+                output_dir = os.path.join(output_dir, "test_50_50" if fifty_fifty else "test_95_5")
 
 
-        metrics_evaluator = MetricsEvaluator(y_test, y_pred, output_dir)
+                metrics_evaluator = MetricsEvaluator(y_test, y_pred, output_dir)
 
-        # Evaluate the model
-        metrics = metrics_evaluator.generate_evaluation_metrics(return_metrics)
+                # Evaluate the model
+                metrics_evaluator.generate_evaluation_metrics()
 
-        #Save evaluation metrics to excel file
-        metrics_evaluator.export_evaluation_to_excel()
+                #Save evaluation metrics to excel file
+                metrics_evaluator.export_evaluation_to_excel()
 
-        # Plot confusion matrix
-        metrics_evaluator.plot_confusion_matrix()
+                # Plot confusion matrix
+                metrics_evaluator.plot_confusion_matrix()
 
-        #Plot ROC curve 
-        metrics_evaluator.plot_roc_curve()
+                #Plot ROC curve 
+                metrics_evaluator.plot_roc_curve()
 
-        if return_metrics:
-            return metrics
 
         make_summary("Model Evaluation Summary", self.stats)
 
@@ -201,8 +202,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate an anomaly detection model")
     parser.add_argument('--model_name', required=True, type=str, choices=["one_svm", "LOF", "isolation_forest"], help="Name of model algorithm")
     # parser.add_argument('--scaler_path', required=True, type=str, help="Path to the scaler used in training the model")
-    parser.add_argument('--split', required=True, type=int, choices=range(1,6), help="Which test data split")
-    parser.add_argument('-50/50', "--fifty_fifty", action='store_true')
+    # parser.add_argument('--split', required=True, type=int, choices=range(1,6), help="Which test data split")
+    # parser.add_argument('-50/50', "--fifty_fifty", action='store_true')
     parser.add_argument('-e', '--ensemble_voting', action='store_true')
     parser.add_argument('-a', '--augmented_dir_name', type=str, default='', help="Augmented directory name specifying technique and factor")
     args = parser.parse_args()
