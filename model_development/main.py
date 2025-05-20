@@ -6,6 +6,7 @@ from .training_manager import TrainingManager
 from rich.logging import RichHandler
 
 def parse_list_and_int(values):
+    allowed_str_values = {"none", "shift", "noise", "magnitude"}
     if len(values) < 2:
         raise argparse.ArgumentTypeError(
             "You must provide at least one string followed by an integer."
@@ -19,11 +20,16 @@ def parse_list_and_int(values):
         raise argparse.ArgumentTypeError(
             f"The last value must be an integer, but got: '{last}'"
         )
-
-    if not all(isinstance(s, str) and not s.isdigit() for s in str_values):
-        raise argparse.ArgumentTypeError(
-            f"All values except the last must be strings (got: {str_values})"
-        )
+    
+    for s in str_values:
+        if not isinstance(s, str) or s.isdigit():
+            raise argparse.ArgumentTypeError(
+                f"All values except the last must be strings (got: {str_values})"
+            )
+        if s.lower() not in allowed_str_values:
+            raise argparse.ArgumentTypeError(
+                f"Invalid string value: '{s}'. Allowed values are: {sorted(allowed_str_values)}"
+            )
 
     return str_values, int_value
 
@@ -49,10 +55,17 @@ def main() -> None:
         help='A list of strings followed by an integer',
     )
 
+    parser.add_argument('--encoder', type=str, choices=["auto-encoder", "pca"], help="Which encoder to use for hybrid models")
+    parser.add_argument('--encoding_dim', type=int, help="Number of dimensions to encode the data to")
     # parser.add_argument('-s', '--split', type=int, choices=range(1,6), required=True, help="Which data split to use (1-5)")
     parser.add_argument('-e', '--train_ensemble', action='store_true')
 
+
     args = parser.parse_args()
+
+    # Ensure both --encoder and --encoding_dim are specified together
+    if (args.encoder is not None) != (args.encoding_dim is not None):
+        parser.error("Both --encoder and --encoding_dim must be specified together.")
 
     # Convert the last element to int, rest stay as str
     if args.train_augmented is not None:

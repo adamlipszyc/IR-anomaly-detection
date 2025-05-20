@@ -23,6 +23,8 @@ class TrainingManager:
         if self.args.local_outlier:
             self.models.append("LOF")
 
+        self.encoder = self.args.encoder
+        self.encoding_dim = self.args.encoding_dim
         self.stats = {}
         self.train_indices = {}
         self.data_loader = DataLoader(AUGMENTED_DATA_DIR, SAMPLES_PER_FILE)
@@ -69,11 +71,12 @@ class TrainingManager:
             dir_suffix = augmented_dir + f"split_{split}/"
             # Train each selected model
             for model_type in self.models:
-                model_dir = f"models/{model_type}/{dir_suffix}"
+                model_dir = f"models/{f"hybrid/{self.encoder}" if self.encoder is not None else ""}{model_type}/{dir_suffix}"
                 preprocessor.save(model_dir + f"scaler_{model_name}.pkl")
-                trainer = BaseModelTrainer(model_type, self.stats)
+                trainer = BaseModelTrainer(model_type, self.stats, self.encoder, self.encoding_dim)
                 model_path = model_dir + f"{model_name}.pkl"
-                trainer.run(X_scaled, model_path, self.train_indices)
+                encoder_path = model_dir + f"{self.encoder}.pkl"
+                trainer.run(X_scaled, model_path, encoder_path, self.train_indices)
 
     @catch_and_log(Exception, "Training ensemble models")
     def train_ensemble_batches(self):
