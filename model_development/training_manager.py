@@ -6,6 +6,7 @@ import pandas as pd
 import logging
 from .preprocessor import Preprocessor
 from .base_model_trainer import BaseModelTrainer
+from .encoder_trainer import EncoderTrainer
 from .data_loader import DataLoader 
 from data_augmentation.data_augmenter import DataAugmenter
 from .config import AUGMENTED_DATA_DIR, OUTPUT_MODEL_PREFIX, SAMPLES_PER_FILE, NUM_BATCHES, SEED, TRAINING_TESTS_SPLITS_DIRECTORY
@@ -23,7 +24,7 @@ class TrainingManager:
         if self.args.local_outlier:
             self.models.append("LOF")
 
-        self.encoder = self.args.encoder
+        self.encoder_name = self.args.encoder
         self.encoding_dim = self.args.encoding_dim
         self.stats = {}
         self.train_indices = {}
@@ -62,21 +63,37 @@ class TrainingManager:
             # train_data = df.loc[indices]
             # self.train_indices[ORIGINAL_DATA_FILE_PATH] = indices.tolist()
 
+            dir_suffix = augmented_dir + f"split_{split}/"
+
+            dir_prefix = "models/"
+
+            X_train = train_data.values.copy()
+
 
             # Preprocess once
             preprocessor = Preprocessor()
-            X_scaled = preprocessor.fit_transform(train_data.values.copy())
+            X_scaled = preprocessor.fit_transform(X_train)
+
+            if self.encoder_name is not None:
+                dir_prefix += f"hybrid/{self.encoder_name}_{self.encoding_dim}/"
+                encoder_model_dir = dir_prefix + f"shared_encoder/split_{split}/"
+                encoder_path = os.path.join(encoder_model_dir, "encoder.pkl")
+                encoder = EncoderTrainer(self.encoder_name, self.encoding_dim, self.stats)
+                encoded_data = encoder.run(X_scaled, encoder_path)
+                X_scaled = encoded_data
             
+            ######TODO change the scaler to be per data-set not model
             
-            dir_suffix = augmented_dir + f"split_{split}/"
+            scaler_path = "scalers/" + dir_suffix + "scaler.pkl"
+            preprocessor.save(scaler_path)
+
             # Train each selected model
             for model_type in self.models:
-                model_dir = f"models/{f"hybrid/{self.encoder}" if self.encoder is not None else ""}{model_type}/{dir_suffix}"
-                preprocessor.save(model_dir + f"scaler_{model_name}.pkl")
-                trainer = BaseModelTrainer(model_type, self.stats, self.encoder, self.encoding_dim)
+                model_dir = dir_prefix + f"{model_type}/{dir_suffix}"
+                # preprocessor.save(model_dir + f"scaler_{model_name}.pkl")
+                trainer = BaseModelTrainer(model_type, self.stats)
                 model_path = model_dir + f"{model_name}.pkl"
-                encoder_path = model_dir + f"{self.encoder}.pkl"
-                trainer.run(X_scaled, model_path, encoder_path, self.train_indices)
+                trainer.run(X_scaled, model_path, self.train_indices)
 
     @catch_and_log(Exception, "Training ensemble models")
     def train_ensemble_batches(self):

@@ -1,0 +1,1 @@
+COMPARISON_DIR = "evaluation/model_results_comparison/model_comparison_results/"

@@ -7,25 +7,41 @@ import logging
 import sys
 from rich.logging import RichHandler
 from log.utils import make_summary, catch_and_log
-from .config import RESULTS_DIR, MODELS_DIR
+from .config import RESULTS_DIR, MODELS_DIR, SCALERS_DIR
 from .data_loader import DataLoader
 from .metrics_evaluator import MetricsEvaluator
 from .model_handler import ModelHandler
+from .encoder_handler import EncoderHandler
 from training_test_splits.data_split_generation.config import NUM_SPLITS
 
 class AnomalyDetectionEvaluator():
     def __init__(self, args, logger: logging.Logger = None):
         
-        self.model_path = MODELS_DIR / args.model_name
+        self.model_path = MODELS_DIR 
+        
+        self.encoder_path = None
+        if args.encoder is not None:
+            self.model_path = self.model_path / "hybrid" / f"{args.encoder}_{args.encoding_dim}"
+
+            self.encoder_path = self.model_path / "shared_encoder"
+
+        self.model_path = self.model_path / args.model_name
+
+        self.scaler_path = SCALERS_DIR 
         if args.augmented_dir_name:
             self.model_path = self.model_path / "augmented" / args.augmented_dir_name
+            self.scaler_path = self.scaler_path / "augmented" / args.augmented_dir_name
+
         if args.ensemble_voting:
             self.model_path = self.model_path / "ensemble"
+        
 
         # self.model_path = self.model_path / f"split_{args.split}" 
         # if not args.ensemble_voting:
         #     self.model_path = self.model_path / "model.pkl"
 
+        self.encoder_name = args.encoder
+        self.encoding_dim = args.encoding_dim 
         self.ensemble = args.ensemble_voting
         self.model_name = args.model_name
         # self.data_loader = DataLoader(args.split, args.fifty_fifty)
@@ -130,7 +146,12 @@ class AnomalyDetectionEvaluator():
         # y_combined = np.concatenate((y_test, y_test2))  # (n1+n2,)
 
         for split in range(1, NUM_SPLITS + 1):
-            model_dir = self.model_path / f"split_{split}" 
+            split_dir = f"split_{split}" 
+            model_dir = self.model_path / split_dir
+            scaler_dir = self.scaler_path / split_dir
+            if self.encoder_name is not None:
+                encoder_dir = self.encoder_path / split_dir
+
             for fifty_fifty in [True, False]:
                 data_loader = DataLoader(split, fifty_fifty)
 
@@ -149,10 +170,21 @@ class AnomalyDetectionEvaluator():
             
                 if not self.ensemble:
                     model_path = model_dir / "model.pkl"
+                   
+                    scaler_path = scaler_dir / "scaler.pkl"
                     
-                    model_handler = ModelHandler(model_path)
+                    model_handler = ModelHandler(model_path, scaler_path)
 
                     X_test_scaled = model_handler.prepare_data(X_test)
+
+                    if self.encoder_name is not None:
+                        self.logger.info("Hybrid model detected")
+
+                        encoder_path = encoder_dir / "encoder.pkl"
+
+                        encoder_handler = EncoderHandler(encoder_path, self.encoder_name)
+
+                        X_test_scaled = encoder_handler.encode(X_test_scaled)
 
                     # Predict anomalies
                     y_pred = model_handler.predict(X_test_scaled)
@@ -204,12 +236,19 @@ def main() -> None:
     # parser.add_argument('--scaler_path', required=True, type=str, help="Path to the scaler used in training the model")
     # parser.add_argument('--split', required=True, type=int, choices=range(1,6), help="Which test data split")
     # parser.add_argument('-50/50', "--fifty_fifty", action='store_true')
+    parser.add_argument('--encoder', type=str, choices=["autoencoder", "pca"], help="Which encoder to use for hybrid models")
+    parser.add_argument('--encoding_dim', type=int, help="Number of dimensions to encode the data to")
+
     parser.add_argument('-e', '--ensemble_voting', action='store_true')
     parser.add_argument('-a', '--augmented_dir_name', type=str, default='', help="Augmented directory name specifying technique and factor")
     args = parser.parse_args()
 
     # if args.ensemble_voting and not args.augment_data:
     #     parser.error("Must use augmented data for ensemble voting")
+
+    # Ensure both --encoder and --encoding_dim are specified together
+    if (args.encoder is not None) != (args.encoding_dim is not None):
+        parser.error("Both --encoder and --encoding_dim must be specified together.")
 
     evaluator = AnomalyDetectionEvaluator(args)
 

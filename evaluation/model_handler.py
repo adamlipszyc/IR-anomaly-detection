@@ -5,18 +5,16 @@ import numpy as np
 from log.utils import catch_and_log
 
 
-
 class ModelHandler:
-    def __init__(self, model_file_path):
-       self.model_path = model_file_path
-       self.logger = logging.getLogger(self.__class__.__name__)
+    def __init__(self, model_file_path, scaler_file_path):
+        self.model_path = model_file_path
+        self.logger = logging.getLogger(self.__class__.__name__)
 
+        #Load the trained model
+        self.model = self.load_trained_model()
 
-       #Load the trained model
-       self.model = self.load_trained_model()
-
-       #Load the corresponding scaler
-       self.scaler = self.load_scaler(self.get_scaler_path())
+        #Load the corresponding scaler
+        self.scaler = self.load_scaler(scaler_file_path)
 
 
 
@@ -34,6 +32,7 @@ class ModelHandler:
         with open(scaler_file_path, 'rb') as file:
             scaler = pickle.load(file)
         
+        self.logger.info("Scaler found: %s", scaler_file_path)
         return scaler
 
     @catch_and_log(Exception, "Getting scaler path")

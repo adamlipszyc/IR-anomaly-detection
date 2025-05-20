@@ -55,7 +55,7 @@ def main() -> None:
         help='A list of strings followed by an integer',
     )
 
-    parser.add_argument('--encoder', type=str, choices=["auto-encoder", "pca"], help="Which encoder to use for hybrid models")
+    parser.add_argument('--encoder', type=str, choices=["autoencoder", "pca"], help="Which encoder to use for hybrid models")
     parser.add_argument('--encoding_dim', type=int, help="Number of dimensions to encode the data to")
     # parser.add_argument('-s', '--split', type=int, choices=range(1,6), required=True, help="Which data split to use (1-5)")
     parser.add_argument('-e', '--train_ensemble', action='store_true')

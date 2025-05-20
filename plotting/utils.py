@@ -8,12 +8,14 @@ from rich.logging import RichHandler
 from log.utils import catch_and_log
 
 
-
+BOX_WIDTH = 0.5
 
 @catch_and_log(Exception, "Plotting boxplot")
 def boxplot(results_df: pd.DataFrame, x: str, y: str, dir_path: str = None, fifty_fifty: bool = True):
     
-    plt.figure(figsize=(10, 6))
+    num_x = results_df[x].nunique()
+    width = max(10, num_x * BOX_WIDTH)
+    plt.figure(figsize=(width, 6))
     sns.boxplot(
         data=results_df,
         x=x,

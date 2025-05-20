@@ -12,7 +12,6 @@ ANOMALOUS_DATA = ['evaluation/data/']
 
 RESULTS_DIR = "evaluation/results"
 
-COMPARISON_DIR = "evaluation/model_comparison_results/"
 
 CLASS_SIZE = 534
 
@@ -21,3 +20,5 @@ TEST_DATA_DIR = "training_test_splits/"
 
 # Base directory for generated scenarios
 MODELS_DIR: Path = Path("models")
+
+SCALERS_DIR: Path = Path("scalers")

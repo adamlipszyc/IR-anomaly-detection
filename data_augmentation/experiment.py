@@ -104,7 +104,7 @@ def load_results_from_excels(results_dir: str) -> Tuple[pd.DataFrame, pd.DataFra
                 path = os.path.join(root, file)
 
                 # Extract metadata from path
-                # e.g. "evaluation/results/isolation_forest/augmented/magnitude_shift_2/50-50/evaluation_metrics.xlsx"
+                # e.g. "evaluation/results/isolation_forest/augmented/magnitude_shift_2/split_1/test_50_50/evaluation_metrics.xlsx"
                 rel_path = os.path.relpath(path, results_dir)
                 parts = rel_path.split(os.sep)
 
