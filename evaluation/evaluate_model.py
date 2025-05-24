@@ -18,7 +18,7 @@ class AnomalyDetectionEvaluator():
     def __init__(self, args, logger: logging.Logger = None):
         
         self.model_path = MODELS_DIR 
-        
+        self.threshold = args.threshold
         self.encoder_path = None
         if args.encoder is not None:
             self.model_path = self.model_path / "hybrid" / f"{args.encoder}_{args.encoding_dim}"
@@ -26,6 +26,10 @@ class AnomalyDetectionEvaluator():
             self.encoder_path = self.model_path / "shared_encoder"
 
         self.model_path = self.model_path / args.model_name
+
+        if args.hyperparameter_dir:
+            self.model_path = self.model_path / args.hyperparameter_dir
+        
 
         self.scaler_path = SCALERS_DIR 
         if args.augmented_dir_name:
@@ -187,30 +191,37 @@ class AnomalyDetectionEvaluator():
                         X_test_scaled = encoder_handler.encode(X_test_scaled)
 
                     # Predict anomalies
-                    y_pred = model_handler.predict(X_test_scaled)
+                    results = model_handler.predict(X_test_scaled, self.threshold)
 
                     self.stats[self.model_path] = "Success"
                 else:
                     #Carry out ensemble voting
-                    y_pred = self.ensemble_voting(X_test)
+                    # results = self.ensemble_voting(X_test)
+                    self.logger.error("Not implemented")
 
                 output_dir = self.rebase_dir_path(model_path, MODELS_DIR, RESULTS_DIR, remove_file_name=(not self.ensemble))
                 output_dir = os.path.join(output_dir, "test_50_50" if fifty_fifty else "test_95_5")
+                for y_pred, threshold in results:
+                    if self.threshold and self.model_name == "autoencoder":
+                        output_path = os.path.join(output_dir, f"threshold_{str(threshold)}")
+                    else:
+                        output_path = output_dir
+                    
 
 
-                metrics_evaluator = MetricsEvaluator(y_test, y_pred, output_dir)
+                    metrics_evaluator = MetricsEvaluator(y_test, y_pred, output_path)
 
-                # Evaluate the model
-                metrics_evaluator.generate_evaluation_metrics()
+                    # Evaluate the model
+                    metrics_evaluator.generate_evaluation_metrics()
 
-                #Save evaluation metrics to excel file
-                metrics_evaluator.export_evaluation_to_excel()
+                    #Save evaluation metrics to excel file
+                    metrics_evaluator.export_evaluation_to_excel()
 
-                # Plot confusion matrix
-                metrics_evaluator.plot_confusion_matrix()
+                    # Plot confusion matrix
+                    metrics_evaluator.plot_confusion_matrix()
 
-                #Plot ROC curve 
-                metrics_evaluator.plot_roc_curve()
+                    #Plot ROC curve 
+                    metrics_evaluator.plot_roc_curve()
 
 
         make_summary("Model Evaluation Summary", self.stats)
@@ -241,6 +252,8 @@ def main() -> None:
 
     parser.add_argument('-e', '--ensemble_voting', action='store_true')
     parser.add_argument('-a', '--augmented_dir_name', type=str, default='', help="Augmented directory name specifying technique and factor")
+    parser.add_argument('--hyperparameter_dir', type=str, help="Hyperparameter directory for complex models")
+    parser.add_argument('--threshold', type=bool, help="Whether to test different thresholds for complex models")
     args = parser.parse_args()
 
     # if args.ensemble_voting and not args.augment_data:

@@ -7,10 +7,14 @@ from .pipeline_config import PipelineConfig
 from .evaluation_pipeline_runner import EvaluationPipelineRunner
 
 
-def launch_pipelines():
-    base_models = ["isolation_forest", "one_svm", "LOF"]
-    encoders = ["autoencoder", "pca"]
+def autoencoder_parameters():
+    base_models = ["autoencoder"] #"isolation_forest", "one_svm", "LOF"]
+    lrs = [0.1, 0.01, 0.001]
+    batch_sizes = [32, 64, 128, 256]
+    num_epochs_choices = [10, 20, 50]
+    encoders = [None] #"autoencoder", "pca"]
     encoding_dims = [16, 32, 64, 128, 256]  # If None, will be ignored
+    thresholds = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
     augment_techniques_list = [
         None,
         # ["none"],
@@ -21,22 +25,44 @@ def launch_pipelines():
     ]
     augment_factors = [None] #1, 2, 3, 4, 5]
 
-    configs = []
-    for encoder, encoding_dim, techniques, factor in product(
-        encoders, encoding_dims, augment_techniques_list, augment_factors
-    ):
-        if encoder is None and encoding_dim is not None:
-            continue  # skip invalid combo
+def launch_pipelines():
+    base_models = ["autoencoder"] #"isolation_forest", "one_svm", "LOF"]
+    lrs = [0.1, 0.01, 0.001]
+    batch_sizes = [32, 64, 128, 256]
+    num_epochs_choices = [10, 20, 50]
+    encoders = [None] #"autoencoder", "pca"]
+    encoding_dims = [16, 32, 64, 128, 256]  # If None, will be ignored
+    augment_techniques_list = [
+        None,
+        # ["none"],
+        # ["magnitude"],
+        # ["shift"],
+        # ["noise"],
+        # ["magnitude", "shift"]
+    ]
+    augment_factors = [None] #1, 2, 3, 4, 5]
+    threshold = True
 
-        if techniques is None and factor is not None:
-            continue  # skip invalid combo
+    configs = []
+    for encoder, encoding_dim, techniques, factor, lr, batch_size, num_epochs in product(
+        encoders, encoding_dims, augment_techniques_list, augment_factors, lrs, batch_sizes, num_epochs_choices
+    ):
+        # if encoder is None and encoding_dim is not None:
+        #     continue  # skip invalid combo
+
+        # if techniques is None and factor is not None:
+        #     continue  # skip invalid combo
 
         config = PipelineConfig(
             base_models=base_models,
             encoder=encoder,
-            encoding_dim=encoding_dim if encoder else None,
+            encoding_dim=encoding_dim,
             augment_techniques=techniques,
-            augment_factor=factor
+            augment_factor=factor,
+            lr=lr,
+            batch_size=batch_size,
+            num_epochs=num_epochs,
+            threshold=threshold
         )
         configs.append(config)
 

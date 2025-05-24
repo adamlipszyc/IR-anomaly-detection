@@ -26,6 +26,7 @@ class MetricsEvaluator:
        self.y_test = y_test
        self.y_pred = y_pred 
        self.output_dir = output_dir
+       #TODO add way to store result of best threshold think of metric that really encompasses this i.e 2:1 -> f2:f5
 
 
     

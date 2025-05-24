@@ -12,8 +12,9 @@ from .models.pca import PCAencoder
 from .models.encoder import Encoder
 
 class BaseModelTrainer:
-    def __init__(self, model_type: str, stats: dict):
+    def __init__(self, model_type: str, model_args: dict, stats: dict):
         self.model_type = model_type
+        self.model_args: dict = model_args
         self.stats = stats
         self.logger = logging.getLogger(self.__class__.__name__)
 
@@ -33,7 +34,7 @@ class BaseModelTrainer:
         elif self.model_type == "LOF":
             model = LocalOutlierFactor(n_neighbors=20, contamination=0.05, novelty=True)
         elif self.model_type == "autoencoder":
-            pass # TODO
+            model = Autoencoder(**self.model_args)
         else:
             raise ValueError(f"Unknown model type: {self.model_type}")
 
@@ -48,6 +49,9 @@ class BaseModelTrainer:
         Saves the trained model and optionally the indices used to train it.
         """
         os.makedirs(os.path.dirname(model_path), exist_ok=True)
+
+        if self.model_type == "autoencoder":
+            model.save(model_path)
 
         with open(model_path, "wb") as file:
             pickle.dump(model, file)

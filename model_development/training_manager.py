@@ -17,12 +17,15 @@ class TrainingManager:
     def __init__(self, args):
         self.args = args
         self.models = []
+        self.model_args = args.model_args
         if self.args.one_svm:
             self.models.append("one_svm")
         if self.args.isolation_forest:
             self.models.append("isolation_forest")
         if self.args.local_outlier:
             self.models.append("LOF")
+        if self.args.autoencoder is not None:
+            self.models.append("autoencoder")
 
         self.encoder_name = self.args.encoder
         self.encoding_dim = self.args.encoding_dim
@@ -82,16 +85,19 @@ class TrainingManager:
                 encoded_data = encoder.run(X_scaled, encoder_path)
                 X_scaled = encoded_data
             
-            ######TODO change the scaler to be per data-set not model
+        
             
             scaler_path = "scalers/" + dir_suffix + "scaler.pkl"
             preprocessor.save(scaler_path)
 
             # Train each selected model
             for model_type in self.models:
-                model_dir = dir_prefix + f"{model_type}/{dir_suffix}"
+                model_dir = dir_prefix + f"{model_type}/"
+                if model_type == "autoencoder":
+                    model_dir += f"{self.model_args["lr"]}_{self.model_args["batch_size"]}_{self.model_args["num_epochs"]}_{self.model_args["encoding_dim"]}/"
+                model_dir += dir_suffix
                 # preprocessor.save(model_dir + f"scaler_{model_name}.pkl")
-                trainer = BaseModelTrainer(model_type, self.stats)
+                trainer = BaseModelTrainer(model_type, self.model_args, self.stats)
                 model_path = model_dir + f"{model_name}.pkl"
                 trainer.run(X_scaled, model_path, self.train_indices)
 

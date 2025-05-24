@@ -48,6 +48,10 @@ def main() -> None:
     parser.add_argument('-o', '--one_svm', action='store_true')
     parser.add_argument('-i', '--isolation_forest', action='store_true')
     parser.add_argument('-l', '--local_outlier', action='store_true')
+    parser.add_argument('-a', '--autoencoder', action='store_true')
+    parser.add_argument('--lr', type=float, help="Learning rate for the model")
+    parser.add_argument('--batch_size', type=int, help="Batch size for training the model")
+    parser.add_argument('--num_epochs', type=int, help="Number of epochs for training the model")
     parser.add_argument(
         '--train_augmented',
         nargs='+',
@@ -63,8 +67,19 @@ def main() -> None:
 
     args = parser.parse_args()
 
+    args.model_args = {}
+
+    if args.lr:
+        args.model_args["lr"] = args.lr
+    if args.encoding_dim:
+        args.model_args["encoding_dim"] = args.encoding_dim
+    if args.batch_size:
+        args.model_args["batch_size"] = args.batch_size
+    if args.num_epochs:
+        args.model_args["num_epochs"] = args.num_epochs
+
     # Ensure both --encoder and --encoding_dim are specified together
-    if (args.encoder is not None) != (args.encoding_dim is not None):
+    if (args.encoder is not None) and (args.encoding_dim is None):
         parser.error("Both --encoder and --encoding_dim must be specified together.")
 
     # Convert the last element to int, rest stay as str
@@ -73,8 +88,8 @@ def main() -> None:
     else:
         args.augment_techniques, args.augment_factor = None, None
 
-    if not args.one_svm and not args.isolation_forest and not args.local_outlier:
-        parser.error("You must specify at least one of -o, -i or -l")
+    if not args.one_svm and not args.isolation_forest and not args.local_outlier and not args.autoencoder:
+        parser.error("You must specify at least one of -o, -i, -l or -a(int)")
 
     try:
         manager = TrainingManager(args)

@@ -9,3 +9,8 @@ class PipelineConfig:
     augment_techniques: Optional[List[str]] = None  # e.g. ["shift", "magnitude"]
     augment_factor: Optional[int] = None     # Integer size factor
     train_ensemble: bool = False
+    lr: Optional[float] = None 
+    batch_size: Optional[int] = None
+    num_epochs: Optional[int] = None
+    threshold: Optional[bool] = False
+
