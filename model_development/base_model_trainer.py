@@ -85,7 +85,7 @@ class BaseModelTrainer:
         except (IndexError, ValueError) as e:
             raise ValueError(f"Invalid path format for extracting encoder info: {path}") from e
 
-    def run(self, X: np.ndarray, model_path: str, train_indices: dict = None) -> None:
+    def run(self, X: np.ndarray, model_path: str, train_indices: dict = None, return_model: bool = False):
         """
         Complete model pipeline: train and save.
         """
@@ -99,3 +99,6 @@ class BaseModelTrainer:
             task = f"{self.model_type} model build (using encoder {encoder})"
 
         self.stats[task] = "Success"
+
+        if return_model:
+            return model

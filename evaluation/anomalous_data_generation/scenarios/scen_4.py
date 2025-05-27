@@ -3,7 +3,7 @@ import logging
 from typing import List, Tuple
 from .base import Scenario
 from ..utils import generate_real_positions, generate_random_zero_pairs, round_to_nearest_hundred, flip_data
-from ....log.utils import catch_and_log
+from log.utils import catch_and_log
 
 COUNTER_OFFSET = 300
 LOWER_BOUND = 50

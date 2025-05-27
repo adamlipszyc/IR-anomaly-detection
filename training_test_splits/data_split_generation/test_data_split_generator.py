@@ -10,7 +10,7 @@ from .config import NORMAL_PATH, OUTPUT_DIR, ANOMALY_DIR
 
 class TestDataSplitGenerator:
 
-    def __init__(self, stats: dict):
+    def __init__(self, stats: dict = {}):
         self.stats = stats
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -30,18 +30,15 @@ class TestDataSplitGenerator:
     
 
     @catch_and_log(Exception, "Generating splits")
-    def generate_splits(self, normal_df, anomaly_df, output_dir, n_splits=5, seed=42):
+    def generate_splits(self, normal_df, anomaly_df, output_dir = None, n_splits=5, seed=42, train_size=0.8):
         np.random.seed(seed)
-        os.makedirs(output_dir, exist_ok=True)
-
+        
         for i in range(1, n_splits + 1):
 
-            # Create subdirectory for each split
-            split_dir = os.path.join(output_dir , f"split_{i}")
-            os.makedirs(split_dir, exist_ok=True)
+           
 
             # Split normal data into 80% train, 20% test (534 exact)
-            normal_train, normal_test = train_test_split(normal_df, train_size=0.8, random_state=seed + i, shuffle=True)
+            normal_train, normal_test = train_test_split(normal_df, train_size=train_size, random_state=seed + i, shuffle=True)
             normal_test_labeled = normal_test.copy()
             normal_test_labeled["label"] = 0
             test_normal_size = len(normal_test)
@@ -65,15 +62,23 @@ class TestDataSplitGenerator:
             test_95_5 = pd.concat([normal_test_labeled, anomalies_5_labeled], axis=0).sample(frac=1, random_state=seed + i)
 
             # === Save splits ===
-            train_path = os.path.join(split_dir, "train.csv")
-            test_50_path = os.path.join(split_dir, "test_50_50.csv")
-            test_95_path = os.path.join(split_dir, "test_95_5.csv")
+            if output_dir is not None:
+                # Create subdirectory for each split
+                split_dir = os.path.join(output_dir , f"split_{i}")
+                os.makedirs(split_dir, exist_ok=True)
+                train_path = os.path.join(split_dir, "train.csv")
+                test_50_path = os.path.join(split_dir, "test_50_50.csv")
+                test_95_path = os.path.join(split_dir, "test_95_5.csv")
 
-            normal_train.to_csv(train_path, header=False, index=False)
-            test_50_50.to_csv(test_50_path, header=False, index=False)
-            test_95_5.to_csv(test_95_path, header=False, index=False)
+                normal_train.to_csv(train_path, header=False, index=False)
+                test_50_50.to_csv(test_50_path, header=False, index=False)
+                test_95_5.to_csv(test_95_path, header=False, index=False)
+            
 
-            self.logger.info(f"Split {i} saved: train ({len(normal_train)}), test_50_50 ({len(test_50_50)}), test_95_5 ({len(test_95_5)})")
+                self.logger.info(f"Split {i} saved: train ({len(normal_train)}), test_50_50 ({len(test_50_50)}), test_95_5 ({len(test_95_5)})")
+
+            else:
+                return normal_train, test_50_50, test_95_5
 
             self.stats[f"Split {i}"] = "Success"
     

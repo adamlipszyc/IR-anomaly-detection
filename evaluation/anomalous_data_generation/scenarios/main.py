@@ -14,7 +14,7 @@ from .scen_10 import Scenario10
 from .scen_11 import Scenario11
 from .scen_perm import ScenarioPerm
 from ..scenario_exceptions import NoPossibleTradeException, IncorrectMatchingException
-from ....log.utils import make_summary
+from log.utils import make_summary
 
 def make_scenario_summary(stats: dict) -> None:
     make_summary("Scenario Generation Summary", stats)

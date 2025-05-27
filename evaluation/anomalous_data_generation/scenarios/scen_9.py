@@ -3,7 +3,7 @@ import logging
 from typing import List, Tuple
 from .base import Scenario
 from ..utils import generate_random_zero_pairs, round_to_nearest_hundred, flip_data, generate_flag_array
-from ....log.utils import catch_and_log
+from log.utils import catch_and_log
 
 
 class Scenario9(Scenario):

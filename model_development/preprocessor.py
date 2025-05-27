@@ -35,6 +35,29 @@ class Preprocessor:
     
 
         return reshaped_data
+    
+    @catch_and_log(Exception, "Scaling data")
+    def transform(self, data: np.ndarray) -> np.ndarray:
+        """
+        Flattens, scales, and reshapes data using the selected scaler.
+        Returns preprocessed data with the same shape. Without altering scaler
+        """
+
+        #flatten our data set into one large 1D array 
+        flattened_training_data = data.flatten()
+        
+        #Normalize the data 
+        array_reshaped = flattened_training_data.reshape(-1, 1)
+        self.scaler = MinMaxScaler()
+        normalized_array = self.scaler.transform(array_reshaped).flatten()
+        
+        #reshape the 1d array back to its original shape
+        reshaped_data = normalized_array.reshape(data.shape)
+    
+
+        return reshaped_data
+
+
 
 
     @catch_and_log(Exception, "Saving scaler")

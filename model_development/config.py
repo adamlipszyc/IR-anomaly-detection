@@ -7,3 +7,7 @@ SAMPLES_PER_FILE = 20                # Rows to sample per file
 NUM_BATCHES = 10                         # Total number of models to train
 OUTPUT_MODEL_PREFIX = "batch_model"      # Prefix for saved models
 SEED = 42                                # Reproducibility
+
+HYPERPARAMETER_FILEPATH = "model_development/hyperparameters.json"
+
+VALIDATION_DATA_DIR = "evaluation/anomalous_data/"

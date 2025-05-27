@@ -11,7 +11,7 @@ from .utils import (
     convert_end_to_traded,
     call_until_success,
 )
-from ...log.utils import catch_and_log
+from log.utils import catch_and_log
 
 
 class DataGenerator:
@@ -160,7 +160,6 @@ class DataGenerator:
         Generate "complex" entries by shuffling through scenario patterns.
 
         Args:
-            num_iterations: how many times to shuffle-and-generate.
             patterns_per_batch: how many distinct scenarios per iteration.
         """
         all_entries: List[List[float]] = []

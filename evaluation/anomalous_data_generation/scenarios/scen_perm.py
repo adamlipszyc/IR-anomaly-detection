@@ -6,7 +6,7 @@ from ..utils import (
     generate_random_zero_pairs,
     round_to_nearest_hundred,
 )
-from ....log.utils import catch_and_log
+from log.utils import catch_and_log
 
 class ScenarioPerm(Scenario):
     """

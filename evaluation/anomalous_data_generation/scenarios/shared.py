@@ -2,7 +2,7 @@ import random
 from typing import List, Tuple, Dict
 from .base import Scenario
 from ..utils import generate_real_positions, apply_trades
-from ....log.utils import catch_and_log
+from log.utils import catch_and_log
 from ..scenario_exceptions import NoPossibleTradeException, IncorrectMatchingException
 
 class SharedScenario(Scenario):

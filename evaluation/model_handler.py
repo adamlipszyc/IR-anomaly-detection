@@ -49,7 +49,7 @@ class ModelHandler:
         return scaler_path
     
     @catch_and_log(Exception, "Carrying out prediction")
-    def predict(self, X_test, threshold: bool = False):
+    def predict(self, X_test, threshold: bool = False, return_scores: bool = False):
         """
         Take the already trained anomaly detection model and predict anomalies on the test set.
         Output: 1 for anomaly, 0 for normal.
@@ -58,17 +58,15 @@ class ModelHandler:
         # Predict anomalies in the test data
         y_pred = self.model.predict(X_test)
 
+        if return_scores:
+            return y_pred
         
 
         if threshold:
             sorted_errors = np.sort(y_pred)
             # Choose 10 quantiles from 10% to 100%
-            quantile_thresholds = np.quantile(sorted_errors, np.linspace(0.0, 1.0, 10))            
-            results = []
-            for t in quantile_thresholds:
-                binary_preds = np.where(y_pred < t, 0.0, 1.0)
-                results.append((binary_preds, t))
-            return results
+            quantile_thresholds = np.quantile(sorted_errors, np.linspace(0.0, 1.0, 10))  
+            return [(np.where(y_pred < t, 0.0, 1.0), t) for t in quantile_thresholds]          
         else:
             y_pred = np.where(y_pred == 1, 0.0, 1.0)  # OneClassSVM returns 1 for normal and -1 for anomaly. We need to map to 0 and 1.
         

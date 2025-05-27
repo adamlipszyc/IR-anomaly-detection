@@ -49,6 +49,7 @@ def main() -> None:
     parser.add_argument('-i', '--isolation_forest', action='store_true')
     parser.add_argument('-l', '--local_outlier', action='store_true')
     parser.add_argument('-a', '--autoencoder', action='store_true')
+    parser.add_argument('-h', '--hyperparameter_tuning', action='store_true')
     parser.add_argument('--lr', type=float, help="Learning rate for the model")
     parser.add_argument('--batch_size', type=int, help="Batch size for training the model")
     parser.add_argument('--num_epochs', type=int, help="Number of epochs for training the model")

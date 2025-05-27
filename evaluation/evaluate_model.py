@@ -244,9 +244,6 @@ def main() -> None:
     log = logging.getLogger(__name__)
     parser = argparse.ArgumentParser(description="Evaluate an anomaly detection model")
     parser.add_argument('--model_name', required=True, type=str, choices=["one_svm", "LOF", "isolation_forest"], help="Name of model algorithm")
-    # parser.add_argument('--scaler_path', required=True, type=str, help="Path to the scaler used in training the model")
-    # parser.add_argument('--split', required=True, type=int, choices=range(1,6), help="Which test data split")
-    # parser.add_argument('-50/50', "--fifty_fifty", action='store_true')
     parser.add_argument('--encoder', type=str, choices=["autoencoder", "pca"], help="Which encoder to use for hybrid models")
     parser.add_argument('--encoding_dim', type=int, help="Number of dimensions to encode the data to")
 
@@ -256,8 +253,6 @@ def main() -> None:
     parser.add_argument('--threshold', type=bool, help="Whether to test different thresholds for complex models")
     args = parser.parse_args()
 
-    # if args.ensemble_voting and not args.augment_data:
-    #     parser.error("Must use augmented data for ensemble voting")
 
     # Ensure both --encoder and --encoding_dim are specified together
     if (args.encoder is not None) != (args.encoding_dim is not None):

@@ -23,7 +23,6 @@ class AutoencoderBase(nn.Module):
         return x
 
 
-
 class Autoencoder(BaseModel, Encoder):
     def __init__(
         self,
@@ -33,7 +32,8 @@ class Autoencoder(BaseModel, Encoder):
         batch_size: int = 64,
         num_epochs: int = 20,
         device: str = "cuda" if torch.cuda.is_available() else "cpu",
-        model_path: Optional[str] = None
+        model_path: Optional[str] = None,
+        threshold: Optional[float] = None,
     ):
         self.model = AutoencoderBase(input_dim, encoding_dim).to(device)
         self.input_dim = input_dim
@@ -45,6 +45,11 @@ class Autoencoder(BaseModel, Encoder):
         self.device = device
         self.loss_history: List[float] = []
         self.model_path = model_path
+        self.threshold = threshold
+        self.lr = lr
+        self.batch_size = batch_size
+        self.num_epochs = num_epochs
+        self.threshold = threshold
 
     @catch_and_log(Exception, "Training autoencoder")
     def fit(self, X_train: np.ndarray, y_train = None) -> None:
@@ -78,7 +83,7 @@ class Autoencoder(BaseModel, Encoder):
             print(f"Epoch {epoch+1}/{self.num_epochs} | Loss: {epoch_loss:.6f}")
 
         if self.model_path:
-            self.save_pickle(self.model_path)
+            self.save(self.model_path)
 
 
     @catch_and_log(Exception, "Encoding data")
@@ -99,14 +104,19 @@ class Autoencoder(BaseModel, Encoder):
             return outputs.cpu().numpy()
 
     @catch_and_log(Exception, "Predicting")
-    def predict(self, X: np.ndarray) -> np.ndarray:
+    def predict(self, X: np.ndarray, threshold: bool = False) -> np.ndarray:
         self.model.eval()
         with torch.no_grad():
             inputs = torch.tensor(X, dtype=torch.float32).to(self.device)
             outputs = self.model(inputs)
             errors = F.mse_loss(outputs, inputs, reduction='none')
             per_sample_errors = errors.mean(dim=1)
-            return per_sample_errors.cpu().numpy()
+            result = per_sample_errors.cpu().numpy()
+            if threshold:
+                if self.threshold is None:
+                    raise ValueError("Threshold must be added for thresholding")
+                result = (result > self.threshold).astype(int)
+            return result
 
     @catch_and_log(Exception, "Saving model")
     def save(self, path: str):
@@ -116,7 +126,11 @@ class Autoencoder(BaseModel, Encoder):
         state = {
             "model_state": self.model.state_dict(),
             "input_dim": self.input_dim,
-            "encoding_dim": self.encoding_dim
+            "encoding_dim": self.encoding_dim,
+            "lr": self.lr,
+            "batch_size": self.batch_size,
+            "num_epochs": self.num_epochs,
+            "threshold": self.threshold
         }
         torch.save(state, path)
         print(f"Model saved to {path}")
@@ -129,9 +143,13 @@ class Autoencoder(BaseModel, Encoder):
         state = torch.load(path)
         input_dim = state["input_dim"]
         encoding_dim = state["encoding_dim"]
+        threshold = state["threshold"]
+        lr = state["lr"]
+        batch_size = state["batch_size"]
+        num_epochs = state["num_epochs"]
 
         # Create a new instance of the model
-        instance = cls(input_dim=input_dim, encoding_dim=encoding_dim)
+        instance = cls(input_dim=input_dim, encoding_dim=encoding_dim, lr=lr, batch_size=batch_size, num_epochs=num_epochs, threshold=threshold)
         
         # Load the saved weights into the model
         instance.model.load_state_dict(state["model_state"])
