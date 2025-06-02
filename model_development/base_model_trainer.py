@@ -10,6 +10,14 @@ from log.utils import catch_and_log
 from .models.autoencoder import Autoencoder
 from .models.pca import PCAencoder
 from .models.encoder import Encoder
+from .models.anoGAN import AnoGAN
+from .models.CNN_anoGAN import CNN_AnoGAN
+from .models.CNN_supervised_1d import CNN1DSupervisedAnomalyDetector
+from .models.CNN_supervised_2d import CNN2DAnomalyDetector
+from .models.lstm import LSTMAnomalyDetector
+
+from .config import base_models
+
 
 class BaseModelTrainer:
     def __init__(self, model_type: str, model_args: dict, stats: dict):
@@ -19,12 +27,27 @@ class BaseModelTrainer:
         self.logger = logging.getLogger(self.__class__.__name__)
 
     @catch_and_log(Exception, "Training model")
-    def train(self, X: np.ndarray):
+    def train(self, X: np.ndarray, y: np.ndarray = None):
         """
         Trains a model based on type.
         """
 
         self.logger.info("Training model")
+
+        if y is not None:
+            if self.model_type == "cnn_supervised_1d":
+                model = CNN1DSupervisedAnomalyDetector(**self.model_args)
+            elif self.model_type == "cnn_supervised_2d":
+                model = CNN2DAnomalyDetector(**self.model_args)
+            elif self.model_type == "lstm":
+                model = LSTMAnomalyDetector(**self.model_args)
+            else:
+                raise ValueError(f"Unknown supervised model type: {self.model_type}")
+            
+            model.fit(X, y_train=y)
+            self.logger.info("Supervised model trained")
+            return model
+
         if self.model_type == "one_svm":
             model = OneClassSVM(nu=0.01, kernel="rbf", gamma="scale")
         elif self.model_type == "isolation_forest":
@@ -35,6 +58,10 @@ class BaseModelTrainer:
             model = LocalOutlierFactor(n_neighbors=20, contamination=0.05, novelty=True)
         elif self.model_type == "autoencoder":
             model = Autoencoder(**self.model_args)
+        elif self.model_type == "anogan":
+            model = AnoGAN(**self.model_args)
+        elif self.model_type == "cnn_anogan":
+            model = CNN_AnoGAN(**self.model_args)
         else:
             raise ValueError(f"Unknown model type: {self.model_type}")
 
@@ -50,8 +77,9 @@ class BaseModelTrainer:
         """
         os.makedirs(os.path.dirname(model_path), exist_ok=True)
 
-        if self.model_type == "autoencoder":
-            model.save(model_path)
+        if self.model_type not in base_models:
+            model.save(model_path, num_rows)
+            return
 
         with open(model_path, "wb") as file:
             pickle.dump(model, file)
@@ -59,20 +87,14 @@ class BaseModelTrainer:
 
         self.logger.info("Saved model: %s | Trained on %s rows", model_path, num_rows)
 
-        # if train_indices:
-        #     indices_path = filepath[:-4] + "_indices.json" #replace .pkl 
-        #     with open(indices_path, "w") as file:
-        #         json.dump(train_indices, file)
-            
-        #     self.logger.info("Saved model indices: %s", indices_path)
     
     def extract_encoder_info(self, path):
         """
         Extracts encoder name and dimension from a path of the form:
-        'models/hybrid/{encoder_name}_{encoder_dim}/...'
+        'models/hybrid/{encoder_name}/...'
 
         Returns:
-            (encoder_name: str, encoder_dim: int)
+            (encoder_name: str)
         Raises:
             ValueError if the path does not match the expected format.
         """
@@ -85,11 +107,11 @@ class BaseModelTrainer:
         except (IndexError, ValueError) as e:
             raise ValueError(f"Invalid path format for extracting encoder info: {path}") from e
 
-    def run(self, X: np.ndarray, model_path: str, train_indices: dict = None, return_model: bool = False):
+    def run(self, X: np.ndarray, model_path: str, y = None, train_indices: dict = None, return_model: bool = False):
         """
         Complete model pipeline: train and save.
         """
-        model = self.train(X)
+        model = self.train(X, y)
         self.save(model, model_path, len(X), train_indices)
         
         task = f"{self.model_type} model build"

@@ -8,10 +8,10 @@
         "max_samples": [0.5, 0.7, 1.0]
     },
     "autoencoder": {
-        "lr": [0.001, 0.01, 0.1],
-        "batch_size": [32, 64, 128, 256],
-        "num_epochs": [10, 20, 50],
-        "encoding_dim": [16, 32, 64, 128, 256]
+        "lr": [0.0001, 0.001, 0.01],
+        "batch_size": [32, 64],
+        "num_epochs": [10, 20],
+        "encoding_dim": [64, 128, 256]
     },
     "LOF": {
         "n_neighbors": [5, 10, 20],
@@ -19,5 +19,23 @@
     },
     "hybrid": {
         "encoding_dim": [8, 16, 32, 64, 128]
+    },
+    "anogan": {
+        "lr": [0.0002],
+        "latent_dim": [100]
+    },
+    "cnn_anogan": {
+        "lr": [0.0002],
+        "latent_dim": [100]
+    },
+    "cnn_supervised_2d": {
+        "lr": [0.0001, 0.001, 0.01],
+        "num_epochs": [10, 20, 50],
+        "kernel_size": [5, 10, 20, 50]
+    },
+    "cnn_supervised_1d": {
+        "lr": [0.0001, 0.001, 0.01],
+        "num_epochs": [10, 20, 50],
+        "kernel_size": [5, 10, 20, 50]
     }
 }

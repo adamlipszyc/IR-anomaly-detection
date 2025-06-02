@@ -27,6 +27,13 @@
       "module": "model_development.base_main",  // Import-style path
       "cwd": "${workspaceFolder}",
       "args": "${command:pickArgs}"
+    },
+    {
+      "name": "Debug pipeline script as module",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "evaluation.pipeline.launch_pipelines",  // Import-style path
+      "cwd": "${workspaceFolder}",
     }
   ]
 }

@@ -49,16 +49,23 @@ def main() -> None:
     parser.add_argument('-i', '--isolation_forest', action='store_true')
     parser.add_argument('-l', '--local_outlier', action='store_true')
     parser.add_argument('-a', '--autoencoder', action='store_true')
-    parser.add_argument('-h', '--hyperparameter_tuning', action='store_true')
+    parser.add_argument('--anogan', action='store_true')
+    parser.add_argument('--cnn_anogan', action='store_true')
+    parser.add_argument('--cnn_supervised_1d', action='store_true')
+    parser.add_argument('--cnn_supervised_2d', action='store_true')
     parser.add_argument('--lr', type=float, help="Learning rate for the model")
     parser.add_argument('--batch_size', type=int, help="Batch size for training the model")
     parser.add_argument('--num_epochs', type=int, help="Number of epochs for training the model")
+    parser.add_argument('--kernel_size', type=int, help="Kernel size for CNN supervised models")
+    parser.add_argument('--threshold', type=float, help="Threshold to use for evaluation purposes")
     parser.add_argument(
         '--train_augmented',
         nargs='+',
         type=str,
         help='A list of strings followed by an integer',
     )
+
+    parser.add_argument('--hyperparameter_tuning', action='store_true')
 
     parser.add_argument('--encoder', type=str, choices=["autoencoder", "pca"], help="Which encoder to use for hybrid models")
     parser.add_argument('--encoding_dim', type=int, help="Number of dimensions to encode the data to")
@@ -78,6 +85,10 @@ def main() -> None:
         args.model_args["batch_size"] = args.batch_size
     if args.num_epochs:
         args.model_args["num_epochs"] = args.num_epochs
+    if args.kernel_size:
+        args.model_args["kernel_size"] = args.kernel_size
+    if args.threshold:
+        args.model_args["threshold"] = args.threshold
 
     # Ensure both --encoder and --encoding_dim are specified together
     if (args.encoder is not None) and (args.encoding_dim is None):
@@ -89,8 +100,9 @@ def main() -> None:
     else:
         args.augment_techniques, args.augment_factor = None, None
 
-    if not args.one_svm and not args.isolation_forest and not args.local_outlier and not args.autoencoder:
-        parser.error("You must specify at least one of -o, -i, -l or -a(int)")
+    models = [args.one_svm, args.isolation_forest, args.local_outlier, args.autoencoder, args.anogan, args.cnn_anogan, args.cnn_supervised_1d, args.cnn_supervised_2d]
+    if not any(models):
+        parser.error("You must specify at least one of -o, -i, -l -a, --anogan, --cnn_anogan, --cnn_supervised_2d, --cnn_supervised_1d")
 
     try:
         manager = TrainingManager(args)

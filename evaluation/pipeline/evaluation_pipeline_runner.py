@@ -28,12 +28,17 @@ class EvaluationPipelineRunner:
             "isolation_forest": "isolation_forest" in self.config.base_models,
             "local_outlier": "LOF" in self.config.base_models,
             "autoencoder": "autoencoder" in self.config.base_models,
+            "anogan": "anogan" in self.config.base_models,
+            "cnn_anogan": "cnn_anogan" in self.config.base_models,
+            "cnn_supervised_2d": "cnn_supervised_2d" in self.config.base_models,
+            "cnn_supervised_1d": "cnn_supervised_1d" in self.config.base_models,
             "train_ensemble": self.config.train_ensemble,
             "encoder": self.config.encoder,
             "encoding_dim": self.config.encoding_dim,
             "augment_techniques": self.config.augment_techniques,
             "augment_factor": self.config.augment_factor,
-            "model_args": model_args
+            "model_args": model_args,
+            "hyperparameter_tuning": True
         }
 
         manager = TrainingManager(Namespace(**train_args))
@@ -45,13 +50,6 @@ class EvaluationPipelineRunner:
             else None
         )
 
-        hyper_parameters = [self.config.lr, self.config.batch_size, self.config.num_epochs, self.config.encoding_dim]
-        if any(param is None for param in hyper_parameters):
-            hyperparameter_dir = None
-        else:
-            hyper_parameters = [str(hyperparameter) for hyperparameter in hyper_parameters]
-            hyperparameter_dir = "_".join(hyper_parameters) 
-
         
         for base_model in self.config.base_models:
             
@@ -60,9 +58,6 @@ class EvaluationPipelineRunner:
                 "ensemble_voting": self.config.train_ensemble,
                 "augmented_dir_name": augmented_dir_name,
                 "encoder": self.config.encoder,
-                "encoding_dim": self.config.encoding_dim,
-                "hyperparameter_dir": hyperparameter_dir,
-                "threshold": self.config.threshold
             }
 
             evaluator = AnomalyDetectionEvaluator(Namespace(**eval_args))

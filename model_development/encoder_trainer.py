@@ -61,7 +61,7 @@ class EncoderTrainer:
             
         #     self.logger.info("Saved model indices: %s", indices_path)
 
-    def run(self, X: np.ndarray, encoder_path: str, train_indices: dict = None):
+    def run(self, X: np.ndarray, encoder_path: str, train_indices: dict = None, return_encoder = False):
         """
         Complete model pipeline: train and save.
         """
@@ -72,4 +72,7 @@ class EncoderTrainer:
         task = f"{self.encoder_name} -{self.encoding_dim} dimensions build"
         self.stats[task] = "Success"
 
+        if return_encoder:
+            return encoded_data, encoder
         return encoded_data
+

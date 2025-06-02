@@ -12,5 +12,4 @@ class PipelineConfig:
     lr: Optional[float] = None 
     batch_size: Optional[int] = None
     num_epochs: Optional[int] = None
-    threshold: Optional[bool] = False
 

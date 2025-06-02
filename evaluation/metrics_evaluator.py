@@ -21,10 +21,11 @@ from .config import RESULTS_DIR
 
 
 class MetricsEvaluator:
-    def __init__(self, y_test, y_pred, output_dir):
+    def __init__(self, y_test, y_pred, y_scores, output_dir):
        self.logger = logging.getLogger(self.__class__.__name__)
        self.y_test = y_test
        self.y_pred = y_pred 
+       self.y_scores = y_scores
        self.output_dir = output_dir
        #TODO add way to store result of best threshold think of metric that really encompasses this i.e 2:1 -> f2:f5
 
@@ -50,7 +51,7 @@ class MetricsEvaluator:
         # If available, compute ROC AUC
         roc = None
         if len(np.unique(self.y_test)) == 2:
-            roc = roc_auc_score(self.y_test, self.y_pred)
+            roc = roc_auc_score(self.y_test, self.y_scores)
             print("ROC AUC:", roc)
 
         if return_metrics:
@@ -77,7 +78,7 @@ class MetricsEvaluator:
         f1 = f1_score(self.y_test, self.y_pred, zero_division=0)
         fbeta2 = fbeta_score(self.y_test, self.y_pred, beta=2, pos_label=1)
         fbeta5 = fbeta_score(self.y_test, self.y_pred, beta=5, pos_label=1)
-        auc = roc_auc_score(self.y_test, self.y_pred) if len(np.unique(self.y_test)) == 2 else None
+        auc = roc_auc_score(self.y_test, self.y_scores) if len(np.unique(self.y_test)) == 2 else None
         tn, fp, fn, tp = confusion_matrix(self.y_test, self.y_pred).ravel()
 
         summary_df = pd.DataFrame([{
@@ -139,10 +140,10 @@ class MetricsEvaluator:
         - self.y_pred: The predicted probabilities for the positive class (anomalies)
         """
         # Compute ROC curve
-        fpr, tpr, thresholds = roc_curve(self.y_test, self.y_pred)
+        fpr, tpr, thresholds = roc_curve(self.y_test, self.y_scores)
         
         # Compute AUC
-        auc = roc_auc_score(self.y_test, self.y_pred)
+        auc = roc_auc_score(self.y_test, self.y_scores)
         
         # Plot ROC curve
         plt.figure(figsize=(8, 6))

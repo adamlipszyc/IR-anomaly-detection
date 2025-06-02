@@ -11,7 +11,17 @@ from log.utils import catch_and_log
 BOX_WIDTH = 0.5
 
 @catch_and_log(Exception, "Plotting boxplot")
-def boxplot(results_df: pd.DataFrame, x: str, y: str, dir_path: str = None, fifty_fifty: bool = True):
+def boxplot(
+    results_df: pd.DataFrame, 
+    x: str, 
+    y: str, 
+    dir_path: str = None, 
+    fifty_fifty: bool = True,
+    show: bool = False,
+    title: str = None,
+    xlabel: str = None,
+    ylabel: str = None,
+    ):
     
     num_x = results_df[x].nunique()
     width = max(10, num_x * BOX_WIDTH)
@@ -22,9 +32,18 @@ def boxplot(results_df: pd.DataFrame, x: str, y: str, dir_path: str = None, fift
         y=y
     )
 
-    plt.title(f"{x.capitalize()} Comparison: {y.capitalize()} Across Splits")
+    if title:
+        plt.title(title)
+    else:
+        plt.title(f"{x.capitalize()} Comparison: {y.capitalize()} Across Splits")
     plt.xticks(rotation=45)
-    plt.ylabel(y)
+    if xlabel:
+        plt.xlabel(xlabel)
+    if ylabel:
+        plt.ylabel(ylabel)
+    else:
+        plt.ylabel(y)
+
     plt.tight_layout()
     if dir_path:
         os.makedirs(dir_path, exist_ok=True)

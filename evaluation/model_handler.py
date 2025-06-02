@@ -4,11 +4,27 @@ import os
 import numpy as np
 from log.utils import catch_and_log
 
+from model_development.models.autoencoder import Autoencoder
+from model_development.models.anoGAN import AnoGAN
+from model_development.models.CNN_anoGAN import CNN_AnoGAN
+from model_development.models.CNN_supervised_1d import CNN1DSupervisedAnomalyDetector
+from model_development.models.CNN_supervised_2d import CNN2DAnomalyDetector
+from model_development.models.model import BaseModel
+
+MODEL_REGISTRY = {
+    "autoencoder": Autoencoder,
+    "anogan": AnoGAN,
+    "cnn_anogan": CNN_AnoGAN,
+    "cnn_supervised_1d": CNN1DSupervisedAnomalyDetector,
+    "cnn_supervised_2d": CNN2DAnomalyDetector
+}
+
 
 class ModelHandler:
-    def __init__(self, model_file_path, scaler_file_path):
+    def __init__(self, model_file_path, model_name, scaler_file_path):
         self.model_path = model_file_path
         self.logger = logging.getLogger(self.__class__.__name__)
+        self.model_name = model_name
 
         #Load the trained model
         self.model = self.load_trained_model()
@@ -18,9 +34,21 @@ class ModelHandler:
 
 
 
+
     # Function to load a trained model using pickle
     @catch_and_log(Exception, "Loading trained model")
     def load_trained_model(self):
+
+        model_class: BaseModel = MODEL_REGISTRY.get(self.model_name)
+        if model_class is not None:
+
+            self.logger.info(f"Using model class: {model_class.__name__}")
+            model = model_class.load(self.model_path)
+
+            self.logger.info("Model successfully loaded from: %s", self.model_path)
+
+            return model
+
         with open(self.model_path, 'rb') as file:
             model = pickle.load(file)
         
@@ -49,28 +77,24 @@ class ModelHandler:
         return scaler_path
     
     @catch_and_log(Exception, "Carrying out prediction")
-    def predict(self, X_test, threshold: bool = False, return_scores: bool = False):
+    def predict(self, X_test, threshold: bool = False):
         """
         Take the already trained anomaly detection model and predict anomalies on the test set.
         Output: 1 for anomaly, 0 for normal.
         """
-        
-        # Predict anomalies in the test data
-        y_pred = self.model.predict(X_test)
-
-        if return_scores:
-            return y_pred
-        
-
         if threshold:
-            sorted_errors = np.sort(y_pred)
-            # Choose 10 quantiles from 10% to 100%
-            quantile_thresholds = np.quantile(sorted_errors, np.linspace(0.0, 1.0, 10))  
-            return [(np.where(y_pred < t, 0.0, 1.0), t) for t in quantile_thresholds]          
+        # Predict anomalies in the test data
+            y_pred = self.model.predict(X_test, threshold)
+            y_scores = self.model.predict(X_test)
         else:
-            y_pred = np.where(y_pred == 1, 0.0, 1.0)  # OneClassSVM returns 1 for normal and -1 for anomaly. We need to map to 0 and 1.
+            y_pred = self.model.predict(X_test)
+            y_scores = -self.model.decision_function(X_test)
+
+
+        if not threshold:
+            y_pred = np.where(y_pred == 1, 0.0, 1.0)  # Base models return 1 for normal and -1 for anomaly. We need to map to 0 and 1.
         
-        return [(y_pred, 1)]
+        return y_pred, y_scores
     
     @catch_and_log(Exception, "Preparing the data")
     def prepare_data(self, X_test: np.ndarray):

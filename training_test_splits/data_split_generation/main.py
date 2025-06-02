@@ -20,7 +20,8 @@ if __name__ == "__main__":
     try:
         stats = {}
         split_generator = TestDataSplitGenerator(stats)
-        split_generator.generate()
+        # split_generator.generate()
+        split_generator.create_anomalous_training_data_per_split()
         make_summary("Test Data Split Generation", stats)
     except:
         log.error(f"Test data split generation failed")

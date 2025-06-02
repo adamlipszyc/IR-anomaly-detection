@@ -9,5 +9,5 @@ DATA_DIR: Path = Path("evaluation/anomalous_data/scenarios")
 
 # Permutation example file paths
 BASE_PERMUTATION_DIR: Path = DATA_DIR.parent
-SIMPLE_SCENARIOS: Path = BASE_PERMUTATION_DIR / "simple_scenarios_validation.csv"
-COMPLEX_SCENARIOS: Path = BASE_PERMUTATION_DIR / "complex_scenarios_validation.csv"
+SIMPLE_SCENARIOS: Path = BASE_PERMUTATION_DIR / "simple_scenarios_split_5.csv"
+COMPLEX_SCENARIOS: Path = BASE_PERMUTATION_DIR / "complex_scenarios_split_5.csv"

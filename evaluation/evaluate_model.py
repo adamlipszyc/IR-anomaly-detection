@@ -14,21 +14,17 @@ from .model_handler import ModelHandler
 from .encoder_handler import EncoderHandler
 from training_test_splits.data_split_generation.config import NUM_SPLITS
 
+thresholding = {"autoencoder", "anogan", "cnn_anogan", "cnn_supervised_1d", "cnn_supervised_2d"}
+
 class AnomalyDetectionEvaluator():
     def __init__(self, args, logger: logging.Logger = None):
         
         self.model_path = MODELS_DIR 
-        self.threshold = args.threshold
-        self.encoder_path = None
         if args.encoder is not None:
-            self.model_path = self.model_path / "hybrid" / f"{args.encoder}_{args.encoding_dim}"
-
-            self.encoder_path = self.model_path / "shared_encoder"
+            self.model_path = self.model_path / "hybrid" / f"{args.encoder}"
 
         self.model_path = self.model_path / args.model_name
 
-        if args.hyperparameter_dir:
-            self.model_path = self.model_path / args.hyperparameter_dir
         
 
         self.scaler_path = SCALERS_DIR 
@@ -45,7 +41,6 @@ class AnomalyDetectionEvaluator():
         #     self.model_path = self.model_path / "model.pkl"
 
         self.encoder_name = args.encoder
-        self.encoding_dim = args.encoding_dim 
         self.ensemble = args.ensemble_voting
         self.model_name = args.model_name
         # self.data_loader = DataLoader(args.split, args.fifty_fifty)
@@ -153,8 +148,6 @@ class AnomalyDetectionEvaluator():
             split_dir = f"split_{split}" 
             model_dir = self.model_path / split_dir
             scaler_dir = self.scaler_path / split_dir
-            if self.encoder_name is not None:
-                encoder_dir = self.encoder_path / split_dir
 
             for fifty_fifty in [True, False]:
                 data_loader = DataLoader(split, fifty_fifty)
@@ -177,21 +170,22 @@ class AnomalyDetectionEvaluator():
                    
                     scaler_path = scaler_dir / "scaler.pkl"
                     
-                    model_handler = ModelHandler(model_path, scaler_path)
+                    model_handler = ModelHandler(model_path, self.model_name, scaler_path)
 
                     X_test_scaled = model_handler.prepare_data(X_test)
 
                     if self.encoder_name is not None:
                         self.logger.info("Hybrid model detected")
 
-                        encoder_path = encoder_dir / "encoder.pkl"
+                        encoder_path = model_dir / "encoder.pkl"
 
                         encoder_handler = EncoderHandler(encoder_path, self.encoder_name)
 
                         X_test_scaled = encoder_handler.encode(X_test_scaled)
 
                     # Predict anomalies
-                    results = model_handler.predict(X_test_scaled, self.threshold)
+
+                    y_pred, y_scores = model_handler.predict(X_test_scaled, self.model_name in thresholding)
 
                     self.stats[self.model_path] = "Success"
                 else:
@@ -200,28 +194,21 @@ class AnomalyDetectionEvaluator():
                     self.logger.error("Not implemented")
 
                 output_dir = self.rebase_dir_path(model_path, MODELS_DIR, RESULTS_DIR, remove_file_name=(not self.ensemble))
-                output_dir = os.path.join(output_dir, "test_50_50" if fifty_fifty else "test_95_5")
-                for y_pred, threshold in results:
-                    if self.threshold and self.model_name == "autoencoder":
-                        output_path = os.path.join(output_dir, f"threshold_{str(threshold)}")
-                    else:
-                        output_path = output_dir
-                    
+                output_dir = os.path.join(output_dir, "test_50_50" if fifty_fifty else "test_95_5")       
 
+                metrics_evaluator = MetricsEvaluator(y_test, y_pred, y_scores, output_dir)
 
-                    metrics_evaluator = MetricsEvaluator(y_test, y_pred, output_path)
+                # Evaluate the model
+                metrics_evaluator.generate_evaluation_metrics()
 
-                    # Evaluate the model
-                    metrics_evaluator.generate_evaluation_metrics()
+                #Save evaluation metrics to excel file
+                metrics_evaluator.export_evaluation_to_excel()
 
-                    #Save evaluation metrics to excel file
-                    metrics_evaluator.export_evaluation_to_excel()
+                # Plot confusion matrix
+                metrics_evaluator.plot_confusion_matrix()
 
-                    # Plot confusion matrix
-                    metrics_evaluator.plot_confusion_matrix()
-
-                    #Plot ROC curve 
-                    metrics_evaluator.plot_roc_curve()
+                #Plot ROC curve 
+                metrics_evaluator.plot_roc_curve()
 
 
         make_summary("Model Evaluation Summary", self.stats)
@@ -243,20 +230,13 @@ def main() -> None:
 
     log = logging.getLogger(__name__)
     parser = argparse.ArgumentParser(description="Evaluate an anomaly detection model")
-    parser.add_argument('--model_name', required=True, type=str, choices=["one_svm", "LOF", "isolation_forest"], help="Name of model algorithm")
+    parser.add_argument('--model_name', required=True, type=str, choices=["one_svm", "LOF", "isolation_forest", "autoencoder", "anogan", "cnn_anogan", "cnn_supervised_2d", "cnn_supervised_1d"], help="Name of model algorithm")
     parser.add_argument('--encoder', type=str, choices=["autoencoder", "pca"], help="Which encoder to use for hybrid models")
-    parser.add_argument('--encoding_dim', type=int, help="Number of dimensions to encode the data to")
 
     parser.add_argument('-e', '--ensemble_voting', action='store_true')
     parser.add_argument('-a', '--augmented_dir_name', type=str, default='', help="Augmented directory name specifying technique and factor")
-    parser.add_argument('--hyperparameter_dir', type=str, help="Hyperparameter directory for complex models")
-    parser.add_argument('--threshold', type=bool, help="Whether to test different thresholds for complex models")
     args = parser.parse_args()
 
-
-    # Ensure both --encoder and --encoding_dim are specified together
-    if (args.encoder is not None) != (args.encoding_dim is not None):
-        parser.error("Both --encoder and --encoding_dim must be specified together.")
 
     evaluator = AnomalyDetectionEvaluator(args)
 

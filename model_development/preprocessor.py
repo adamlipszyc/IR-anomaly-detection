@@ -1,7 +1,7 @@
 import numpy as np
 import os 
 import pickle
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 import logging
 from log.utils import catch_and_log
 
@@ -32,6 +32,7 @@ class Preprocessor:
         
         #reshape the 1d array back to its original shape
         reshaped_data = normalized_array.reshape(data.shape)
+        self.logger.info("Scaler has been successfully fit to data")
     
 
         return reshaped_data
@@ -48,7 +49,6 @@ class Preprocessor:
         
         #Normalize the data 
         array_reshaped = flattened_training_data.reshape(-1, 1)
-        self.scaler = MinMaxScaler()
         normalized_array = self.scaler.transform(array_reshaped).flatten()
         
         #reshape the 1d array back to its original shape

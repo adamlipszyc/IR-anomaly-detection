@@ -17,7 +17,7 @@ class BaseModel(ABC):
         pass
 
     @abstractmethod
-    def predict(self, X_test: np.ndarray) -> np.ndarray:
+    def predict(self, X_test: np.ndarray, threshold: bool = False) -> np.ndarray:
         pass
 
     @abstractmethod

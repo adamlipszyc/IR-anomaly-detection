@@ -54,7 +54,8 @@ def load_results_from_excels(results_dir: str, base: bool) -> Tuple[pd.DataFrame
                 if len(parts) < 4:
                     continue  # Skip malformed paths
                 
-              
+                if "old" in rel_path:
+                    continue #Skip old results
 
                 if parts[0] == "hybrid":
                     if parts[1] == "pre_scale":
@@ -65,8 +66,8 @@ def load_results_from_excels(results_dir: str, base: bool) -> Tuple[pd.DataFrame
 
                     if len(parts) < 6:
                         continue
-                    encoder_parts = parts[-5].split("_")
-                    model = shorten[encoder_parts[0]] + f"_{encoder_parts[1]}+" + shorten[parts[-4]]
+                    encoder = parts[1]
+                    model = shorten[encoder] + f"+" + shorten[parts[2]]
 
                 else:
                     model = shorten[parts[0]]
