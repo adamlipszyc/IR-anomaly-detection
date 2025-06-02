@@ -1,0 +1,7 @@
+{
+    "lr": 0.0001,
+    "batch_size": 32,
+    "num_epochs": 10,
+    "encoding_dim": 256,
+    "threshold": 4.2736524521716194e-07
+}
