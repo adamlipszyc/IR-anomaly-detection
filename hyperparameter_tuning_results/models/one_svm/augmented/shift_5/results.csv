@@ -1,0 +1,6 @@
+,model,split,f2_score,kernel,nu,gamma
+0,kernel_rbf_nu_0.2_gamma_scale/,0,0.8586688578471652,rbf,0.2,scale
+1,kernel_rbf_nu_0.2_gamma_scale/,1,0.8637469586374696,rbf,0.2,scale
+2,kernel_rbf_nu_0.2_gamma_scale/,2,0.8471074380165289,rbf,0.2,scale
+3,kernel_rbf_nu_0.2_gamma_scale/,3,0.8623481781376519,rbf,0.2,scale
+4,kernel_rbf_nu_0.2_gamma_scale/,4,0.8526821457165733,rbf,0.2,scale

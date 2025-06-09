@@ -61,32 +61,3 @@ def compute_scores(model, data_tensor, center):
         distances = torch.sum((encoded - center) ** 2, dim=1)
     return distances
 
-# ========== Step 6: Main Pipeline ==========
-
-def main():
-    # Load and preprocess data
-    csv_path = "training_data/original_data/vectorized_data.csv"  
-    # data = load_data(csv_path)
-    # dataset_tensor, scaler = TensorDataset(data_tensor)
-    # dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
-
-    # # Build and train model
-    # model = Encoder(input_dim=1100, encoding_dim=32)
-    # center = initialize_center(model, dataloader)
-    # train_deep_svdd(model, dataloader, center, epochs=30)
-
-    # # Compute scores
-    # scores = compute_scores(model, data_tensor, center).numpy()
-
-    # # (Optional) Visualize scores (use domain knowledge if you have labels)
-    # plt.hist(scores, bins=50, alpha=0.7)
-    # plt.title("Deep SVDD Anomaly Scores")
-    # plt.xlabel("Score (Distance from Center)")
-    # plt.ylabel("Frequency")
-    # plt.show()
-
-    # # Save scores if needed
-    # np.savetxt("deep_svdd_scores.csv", scores, delimiter=",")
-
-if __name__ == "__main__":
-    main()

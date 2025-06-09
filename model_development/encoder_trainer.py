@@ -1,9 +1,6 @@
 import os
 import pickle
 import json
-from sklearn.svm import OneClassSVM
-from sklearn.ensemble import IsolationForest
-from sklearn.neighbors import LocalOutlierFactor
 import logging
 import numpy as np
 from log.utils import catch_and_log
@@ -50,16 +47,9 @@ class EncoderTrainer:
         os.makedirs(os.path.dirname(encoder_path), exist_ok=True)
 
         
-        encoder.save(encoder_path)
+        encoder.save(encoder_path, num_rows)
         self.logger.info("Saved encoder: %s | Trained on %s rows", encoder_path, num_rows)
 
-
-        # if train_indices:
-        #     indices_path = filepath[:-4] + "_indices.json" #replace .pkl 
-        #     with open(indices_path, "w") as file:
-        #         json.dump(train_indices, file)
-            
-        #     self.logger.info("Saved model indices: %s", indices_path)
 
     def run(self, X: np.ndarray, encoder_path: str, train_indices: dict = None, return_encoder = False):
         """

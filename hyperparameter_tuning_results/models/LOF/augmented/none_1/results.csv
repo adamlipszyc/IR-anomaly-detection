@@ -1,0 +1,6 @@
+,model,split,f2_score,n_neighbors,metric,contamination
+0,n_neighbors_20_metric_manhattan_contamination_0.2/,0,0.856,20,manhattan,0.2
+1,n_neighbors_20_metric_manhattan_contamination_0.2/,1,0.866885784716516,20,manhattan,0.2
+2,n_neighbors_20_metric_manhattan_contamination_0.2/,2,0.8626328699918234,20,manhattan,0.2
+3,n_neighbors_20_metric_manhattan_contamination_0.2/,3,0.8693877551020408,20,manhattan,0.2
+4,n_neighbors_20_metric_manhattan_contamination_0.2/,4,0.8588709677419355,20,manhattan,0.2

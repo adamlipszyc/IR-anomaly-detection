@@ -1,181 +1,601 @@
-,model,split,f2_score
-0,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_64/,0,0.8333333333333334
-1,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_64/,1,0.8333333333333334
-2,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_64/,2,0.8318890814558059
-3,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_64/,3,0.8658536585365854
-4,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_64/,4,0.8333333333333334
-5,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128/,0,0.8527454242928453
-6,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128/,1,0.8333333333333334
-7,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128/,2,0.8519437551695617
-8,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128/,3,0.864448051948052
-9,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128/,4,0.8588709677419355
-10,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256/,0,0.8609271523178808
-11,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256/,1,0.8544562551103843
-12,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256/,2,0.8545603944124898
-13,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256/,3,0.8600823045267489
-14,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256/,4,0.8547351524879615
-15,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_64/,0,0.8602584814216478
-16,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_64/,1,0.8333333333333334
-17,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_64/,2,0.8533653846153846
-18,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_64/,3,0.8333333333333334
-19,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_64/,4,0.8485329103885805
-20,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128/,0,0.8533554266777134
-21,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128/,1,0.8551554828150573
-22,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128/,2,0.8559670781893004
-23,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128/,3,0.859375
-24,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128/,4,0.8554216867469879
-25,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256/,0,0.8558558558558559
-26,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256/,1,0.8502847843775427
-27,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256/,2,0.8525535420098846
-28,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256/,3,0.8607907742998353
-29,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256/,4,0.852
-30,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_64/,0,0.8333333333333334
-31,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_64/,1,0.8333333333333334
-32,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_64/,2,0.8333333333333334
-33,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_64/,3,0.8579638752052545
-34,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_64/,4,0.8333333333333334
-35,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_128/,0,0.8333333333333334
-36,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_128/,1,0.8333333333333334
-37,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_128/,2,0.8581788879935536
-38,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_128/,3,0.8333333333333334
-39,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_128/,4,0.8333333333333334
-40,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_256/,0,0.8602584814216478
-41,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_256/,1,0.852589641434263
-42,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_256/,2,0.857487922705314
-43,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_256/,3,0.8608205953338697
-44,lr_0.0001_batch_size_64_num_epochs_10_encoding_dim_256/,4,0.8498808578236696
-45,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_64/,0,0.8333333333333334
-46,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_64/,1,0.8333333333333334
-47,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_64/,2,0.8333333333333334
-48,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_64/,3,0.8616504854368932
-49,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_64/,4,0.8333333333333334
-50,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_128/,0,0.8595641646489104
-51,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_128/,1,0.8498808578236696
-52,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_128/,2,0.857487922705314
-53,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_128/,3,0.8615136876006442
-54,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_128/,4,0.8498808578236696
-55,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_256/,0,0.8595641646489104
-56,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_256/,1,0.8526821457165733
-57,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_256/,2,0.8567980691874497
-58,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_256/,3,0.8629032258064516
-59,lr_0.0001_batch_size_64_num_epochs_20_encoding_dim_256/,4,0.8485329103885805
-60,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_64/,0,0.859504132231405
-61,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_64/,1,0.8544562551103843
-62,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_64/,2,0.8503679476696647
-63,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_64/,3,0.8607907742998353
-64,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_64/,4,0.8333333333333334
-65,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128/,0,0.8333333333333334
-66,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128/,1,0.8566853482786229
-67,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128/,2,0.8333333333333334
-68,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128/,3,0.8609539207760711
-69,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128/,4,0.8333333333333334
-70,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256/,0,0.8333333333333334
-71,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256/,1,0.8537581699346405
-72,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256/,2,0.8333333333333334
-73,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256/,3,0.8615004122011541
-74,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256/,4,0.8505564387917329
-75,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_64/,0,0.8512330946698489
-76,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_64/,1,0.8544562551103843
-77,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_64/,2,0.8398744113029827
-78,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_64/,3,0.8607907742998353
-79,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_64/,4,0.8533653846153846
-80,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128/,0,0.8333333333333334
-81,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128/,1,0.8558558558558559
-82,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128/,2,0.8588709677419355
-83,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128/,3,0.8600823045267489
-84,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128/,4,0.8379013312451057
-85,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256/,0,0.8438485804416404
-86,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256/,1,0.8551554828150573
-87,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256/,2,0.8514931396287329
-88,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256/,3,0.859375
-89,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256/,4,0.8333333333333334
-90,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_64/,0,0.8602584814216478
-91,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_64/,1,0.8526821457165733
-92,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_64/,2,0.857487922705314
-93,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_64/,3,0.8602584814216478
-94,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_64/,4,0.8333333333333334
-95,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_128/,0,0.8333333333333334
-96,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_128/,1,0.8551554828150573
-97,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_128/,2,0.8333333333333334
-98,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_128/,3,0.8607907742998353
-99,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_128/,4,0.8554216867469879
-100,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_256/,0,0.8333333333333334
-101,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_256/,1,0.8551554828150573
-102,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_256/,2,0.8333333333333334
-103,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_256/,3,0.8607907742998353
-104,lr_0.001_batch_size_64_num_epochs_10_encoding_dim_256/,4,0.8561093247588425
-105,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_64/,0,0.8451290591174022
-106,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_64/,1,0.8551554828150573
-107,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_64/,2,0.8451816745655608
-108,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_64/,3,0.8607907742998353
-109,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_64/,4,0.857487922705314
-110,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_128/,0,0.8572600492206727
-111,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_128/,1,0.8551554828150573
-112,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_128/,2,0.8491343775762572
-113,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_128/,3,0.8615004122011541
-114,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_128/,4,0.8513189448441247
-115,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_256/,0,0.8333333333333334
-116,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_256/,1,0.8551554828150573
-117,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_256/,2,0.8544562551103843
-118,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_256/,3,0.8607907742998353
-119,lr_0.001_batch_size_64_num_epochs_20_encoding_dim_256/,4,0.8398744113029827
-120,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_64/,0,0.8602584814216478
-121,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_64/,1,0.8519108280254777
-122,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_64/,2,0.8581788879935536
-123,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_64/,3,0.8539505187549881
-124,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_64/,4,0.8505564387917329
-125,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128/,0,0.8602584814216478
-126,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128/,1,0.8498808578236696
-127,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128/,2,0.857487922705314
-128,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128/,3,0.8594377510040161
-129,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128/,4,0.8492063492063492
-130,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256/,0,0.848585690515807
-131,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256/,1,0.864448051948052
-132,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256/,2,0.8416252072968491
-133,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256/,3,0.8715220949263502
-134,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256/,4,0.8581788879935536
-135,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_64/,0,0.8533554266777134
-136,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_64/,1,0.8535598705501618
-137,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_64/,2,0.8381742738589212
-138,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_64/,3,0.8665581773799838
-139,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_64/,4,0.8581788879935536
-140,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128/,0,0.8507089241034195
-141,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128/,1,0.8489033306255077
-142,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128/,2,0.8436724565756824
-143,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128/,3,0.8658536585365854
-144,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128/,4,0.8567980691874497
-145,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256/,0,0.8418568056648308
-146,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256/,1,0.8605220228384992
-147,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256/,2,0.8418568056648308
-148,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256/,3,0.8600823045267489
-149,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256/,4,0.8595641646489104
-150,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_64/,0,0.8602584814216478
-151,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_64/,1,0.8506389776357828
-152,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_64/,2,0.857487922705314
-153,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_64/,3,0.8587479935794543
-154,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_64/,4,0.8505564387917329
-155,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_128/,0,0.8602584814216478
-156,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_128/,1,0.8492822966507177
-157,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_128/,2,0.8581788879935536
-158,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_128/,3,0.860128617363344
-159,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_128/,4,0.8498808578236696
-160,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_256/,0,0.8333333333333334
-161,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_256/,1,0.852589641434263
-162,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_256/,2,0.8581788879935536
-163,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_256/,3,0.8608205953338697
-164,lr_0.01_batch_size_64_num_epochs_10_encoding_dim_256/,4,0.8492063492063492
-165,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_64/,0,0.8595641646489104
-166,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_64/,1,0.8519108280254777
-167,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_64/,2,0.857487922705314
-168,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_64/,3,0.8608205953338697
-169,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_64/,4,0.8505564387917329
-170,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_128/,0,0.8609539207760711
-171,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_128/,1,0.852589641434263
-172,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_128/,2,0.8581788879935536
-173,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_128/,3,0.8594377510040161
-174,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_128/,4,0.8492063492063492
-175,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_256/,0,0.8602584814216478
-176,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_256/,1,0.852589641434263
-177,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_256/,2,0.8581788879935536
-178,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_256/,3,0.8608205953338697
-179,lr_0.01_batch_size_64_num_epochs_20_encoding_dim_256/,4,0.8505564387917329
+,model,split,f2_score,lr,batch_size,num_epochs,encoding_dim,hidden_dims,activation
+0,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,0,0.8409658617818485,0.0001,32,10,128,[],relu
+1,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,1,0.8577235772357723,0.0001,32,10,128,[],relu
+2,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,2,0.8443708609271523,0.0001,32,10,128,[],relu
+3,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,3,0.8623481781376519,0.0001,32,10,128,[],relu
+4,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,4,0.8561093247588425,0.0001,32,10,128,[],relu
+5,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,0,0.8506224066390041,0.0001,32,10,128,[],leaky_relu
+6,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,1,0.8595641646489104,0.0001,32,10,128,[],leaky_relu
+7,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,2,0.8491343775762572,0.0001,32,10,128,[],leaky_relu
+8,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,3,0.8686786296900489,0.0001,32,10,128,[],leaky_relu
+9,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,4,0.8528698464025869,0.0001,32,10,128,[],leaky_relu
+10,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,0,0.8595641646489104,0.0001,32,10,128,[1024],relu
+11,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,1,0.8492063492063492,0.0001,32,10,128,[1024],relu
+12,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,2,0.8533653846153846,0.0001,32,10,128,[1024],relu
+13,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,3,0.8587479935794543,0.0001,32,10,128,[1024],relu
+14,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,4,0.8445146014206788,0.0001,32,10,128,[1024],relu
+15,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,0,0.8582089552238806,0.0001,32,10,128,[1024],leaky_relu
+16,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,1,0.8570268074735987,0.0001,32,10,128,[1024],leaky_relu
+17,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,2,0.8484349258649094,0.0001,32,10,128,[1024],leaky_relu
+18,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,3,0.8607907742998353,0.0001,32,10,128,[1024],leaky_relu
+19,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,4,0.8567980691874497,0.0001,32,10,128,[1024],leaky_relu
+20,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,0,0.8602584814216478,0.0001,32,10,128,[512],relu
+21,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,1,0.8505564387917329,0.0001,32,10,128,[512],relu
+22,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,2,0.857487922705314,0.0001,32,10,128,[512],relu
+23,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,3,0.860128617363344,0.0001,32,10,128,[512],relu
+24,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,4,0.8498808578236696,0.0001,32,10,128,[512],relu
+25,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,0,0.8547717842323651,0.0001,32,10,128,[512],leaky_relu
+26,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,1,0.8595641646489104,0.0001,32,10,128,[512],leaky_relu
+27,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,2,0.8505367464905037,0.0001,32,10,128,[512],leaky_relu
+28,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,3,0.8607907742998353,0.0001,32,10,128,[512],leaky_relu
+29,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,4,0.8588709677419355,0.0001,32,10,128,[512],leaky_relu
+30,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",0,0.8567980691874497,0.0001,32,10,128,"[1024, 512]",relu
+31,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",1,0.8519108280254777,0.0001,32,10,128,"[1024, 512]",relu
+32,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",2,0.8547351524879615,0.0001,32,10,128,"[1024, 512]",relu
+33,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",3,0.8635996771589992,0.0001,32,10,128,"[1024, 512]",relu
+34,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",4,0.8498808578236696,0.0001,32,10,128,"[1024, 512]",relu
+35,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8506224066390041,0.0001,32,10,128,"[1024, 512]",leaky_relu
+36,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8637469586374696,0.0001,32,10,128,"[1024, 512]",leaky_relu
+37,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8485099337748344,0.0001,32,10,128,"[1024, 512]",leaky_relu
+38,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8647540983606558,0.0001,32,10,128,"[1024, 512]",leaky_relu
+39,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8566853482786229,0.0001,32,10,128,"[1024, 512]",leaky_relu
+40,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8554216867469879,0.0001,32,10,128,"[2048, 1024, 512]",relu
+41,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8553157474020784,0.0001,32,10,128,"[2048, 1024, 512]",relu
+42,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8561093247588425,0.0001,32,10,128,"[2048, 1024, 512]",relu
+43,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8609539207760711,0.0001,32,10,128,"[2048, 1024, 512]",relu
+44,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.8492063492063492,0.0001,32,10,128,"[2048, 1024, 512]",relu
+45,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8595641646489104,0.0001,32,10,128,"[2048, 1024, 512]",leaky_relu
+46,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8532695374800638,0.0001,32,10,128,"[2048, 1024, 512]",leaky_relu
+47,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8567980691874497,0.0001,32,10,128,"[2048, 1024, 512]",leaky_relu
+48,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8594377510040161,0.0001,32,10,128,"[2048, 1024, 512]",leaky_relu
+49,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8451816745655608,0.0001,32,10,128,"[2048, 1024, 512]",leaky_relu
+50,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,0,0.83889816360601,0.0001,32,10,256,[],relu
+51,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,1,0.8570268074735987,0.0001,32,10,256,[],relu
+52,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,2,0.8559670781893004,0.0001,32,10,256,[],relu
+53,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,3,0.8708094848732625,0.0001,32,10,256,[],relu
+54,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,4,0.8540497193263833,0.0001,32,10,256,[],relu
+55,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,0,0.8581788879935536,0.0001,32,10,256,[],leaky_relu
+56,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,1,0.852589641434263,0.0001,32,10,256,[],leaky_relu
+57,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,2,0.8588709677419355,0.0001,32,10,256,[],leaky_relu
+58,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,3,0.854632587859425,0.0001,32,10,256,[],leaky_relu
+59,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,4,0.8411949685534591,0.0001,32,10,256,[],leaky_relu
+60,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,0,0.8507089241034195,0.0001,32,10,256,[1024],relu
+61,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,1,0.8630470016207455,0.0001,32,10,256,[1024],relu
+62,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,2,0.8415841584158416,0.0001,32,10,256,[1024],relu
+63,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,3,0.8607907742998353,0.0001,32,10,256,[1024],relu
+64,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,4,0.8513189448441247,0.0001,32,10,256,[1024],relu
+65,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,0,0.8595641646489104,0.0001,32,10,256,[1024],leaky_relu
+66,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,1,0.8485329103885805,0.0001,32,10,256,[1024],leaky_relu
+67,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,2,0.8567980691874497,0.0001,32,10,256,[1024],leaky_relu
+68,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,3,0.8615136876006442,0.0001,32,10,256,[1024],leaky_relu
+69,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,4,0.8471892319873318,0.0001,32,10,256,[1024],leaky_relu
+70,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,0,0.848605577689243,0.0001,32,10,256,[512],relu
+71,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,1,0.852589641434263,0.0001,32,10,256,[512],relu
+72,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,2,0.8581788879935536,0.0001,32,10,256,[512],relu
+73,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,3,0.860128617363344,0.0001,32,10,256,[512],relu
+74,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,4,0.8418568056648308,0.0001,32,10,256,[512],relu
+75,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,0,0.8533653846153846,0.0001,32,10,256,[512],leaky_relu
+76,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,1,0.854632587859425,0.0001,32,10,256,[512],leaky_relu
+77,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,2,0.8561093247588425,0.0001,32,10,256,[512],leaky_relu
+78,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,3,0.8635996771589992,0.0001,32,10,256,[512],leaky_relu
+79,lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,4,0.8465189873417721,0.0001,32,10,256,[512],leaky_relu
+80,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",0,0.8609539207760711,0.0001,32,10,256,"[1024, 512]",relu
+81,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",1,0.852589641434263,0.0001,32,10,256,"[1024, 512]",relu
+82,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",2,0.8567980691874497,0.0001,32,10,256,"[1024, 512]",relu
+83,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",3,0.8594377510040161,0.0001,32,10,256,"[1024, 512]",relu
+84,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",4,0.8458498023715415,0.0001,32,10,256,"[1024, 512]",relu
+85,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8602584814216478,0.0001,32,10,256,"[1024, 512]",leaky_relu
+86,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8492822966507177,0.0001,32,10,256,"[1024, 512]",leaky_relu
+87,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8567980691874497,0.0001,32,10,256,"[1024, 512]",leaky_relu
+88,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.857487922705314,0.0001,32,10,256,"[1024, 512]",leaky_relu
+89,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8465189873417721,0.0001,32,10,256,"[1024, 512]",leaky_relu
+90,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8581788879935536,0.0001,32,10,256,"[2048, 1024, 512]",relu
+91,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8512330946698489,0.0001,32,10,256,"[2048, 1024, 512]",relu
+92,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8588709677419355,0.0001,32,10,256,"[2048, 1024, 512]",relu
+93,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8581788879935536,0.0001,32,10,256,"[2048, 1024, 512]",relu
+94,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.8438485804416404,0.0001,32,10,256,"[2048, 1024, 512]",relu
+95,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8602584814216478,0.0001,32,10,256,"[2048, 1024, 512]",leaky_relu
+96,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8478605388272583,0.0001,32,10,256,"[2048, 1024, 512]",leaky_relu
+97,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8567980691874497,0.0001,32,10,256,"[2048, 1024, 512]",leaky_relu
+98,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.856,0.0001,32,10,256,"[2048, 1024, 512]",leaky_relu
+99,"lr_0.0001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8471892319873318,0.0001,32,10,256,"[2048, 1024, 512]",leaky_relu
+100,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,0,0.8333333333333334,0.0001,32,20,128,[],relu
+101,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,1,0.8616504854368932,0.0001,32,20,128,[],relu
+102,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,2,0.847808105872622,0.0001,32,20,128,[],relu
+103,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,3,0.8563074352548037,0.0001,32,20,128,[],relu
+104,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,4,0.8535598705501618,0.0001,32,20,128,[],relu
+105,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,0,0.8478802992518704,0.0001,32,20,128,[],leaky_relu
+106,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,1,0.8581788879935536,0.0001,32,20,128,[],leaky_relu
+107,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,2,0.8498349834983498,0.0001,32,20,128,[],leaky_relu
+108,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,3,0.859375,0.0001,32,20,128,[],leaky_relu
+109,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,4,0.8465189873417721,0.0001,32,20,128,[],leaky_relu
+110,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,0,0.8561928512053201,0.0001,32,20,128,[1024],relu
+111,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,1,0.8523654159869495,0.0001,32,20,128,[1024],relu
+112,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,2,0.8497536945812808,0.0001,32,20,128,[1024],relu
+113,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,3,0.8661740558292282,0.0001,32,20,128,[1024],relu
+114,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,4,0.8532695374800638,0.0001,32,20,128,[1024],relu
+115,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,0,0.8527454242928453,0.0001,32,20,128,[1024],leaky_relu
+116,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,1,0.8588709677419355,0.0001,32,20,128,[1024],leaky_relu
+117,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,2,0.8530612244897959,0.0001,32,20,128,[1024],leaky_relu
+118,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,3,0.8654634946677605,0.0001,32,20,128,[1024],leaky_relu
+119,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,4,0.8526821457165733,0.0001,32,20,128,[1024],leaky_relu
+120,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,0,0.8567980691874497,0.0001,32,20,128,[512],relu
+121,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,1,0.8478605388272583,0.0001,32,20,128,[512],relu
+122,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,2,0.8581788879935536,0.0001,32,20,128,[512],relu
+123,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,3,0.8519108280254777,0.0001,32,20,128,[512],relu
+124,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,4,0.8438485804416404,0.0001,32,20,128,[512],relu
+125,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,0,0.8534554537885096,0.0001,32,20,128,[512],leaky_relu
+126,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,1,0.8623481781376519,0.0001,32,20,128,[512],leaky_relu
+127,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,2,0.8545603944124898,0.0001,32,20,128,[512],leaky_relu
+128,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,3,0.8586688578471652,0.0001,32,20,128,[512],leaky_relu
+129,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,4,0.8554216867469879,0.0001,32,20,128,[512],leaky_relu
+130,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",0,0.8622112211221122,0.0001,32,20,128,"[1024, 512]",relu
+131,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",1,0.8602584814216478,0.0001,32,20,128,"[1024, 512]",relu
+132,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",2,0.847808105872622,0.0001,32,20,128,"[1024, 512]",relu
+133,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",3,0.864045864045864,0.0001,32,20,128,"[1024, 512]",relu
+134,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",4,0.8554216867469879,0.0001,32,20,128,"[1024, 512]",relu
+135,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8465387823185988,0.0001,32,20,128,"[1024, 512]",leaky_relu
+136,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8637469586374696,0.0001,32,20,128,"[1024, 512]",leaky_relu
+137,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8525535420098846,0.0001,32,20,128,"[1024, 512]",leaky_relu
+138,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8607907742998353,0.0001,32,20,128,"[1024, 512]",leaky_relu
+139,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8581788879935536,0.0001,32,20,128,"[1024, 512]",leaky_relu
+140,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.835421888053467,0.0001,32,20,128,"[2048, 1024, 512]",relu
+141,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8623481781376519,0.0001,32,20,128,"[2048, 1024, 512]",relu
+142,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8509771986970684,0.0001,32,20,128,"[2048, 1024, 512]",relu
+143,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8686786296900489,0.0001,32,20,128,"[2048, 1024, 512]",relu
+144,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.8519108280254777,0.0001,32,20,128,"[2048, 1024, 512]",relu
+145,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8430717863105175,0.0001,32,20,128,"[2048, 1024, 512]",leaky_relu
+146,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8595641646489104,0.0001,32,20,128,"[2048, 1024, 512]",leaky_relu
+147,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8450123660346249,0.0001,32,20,128,"[2048, 1024, 512]",leaky_relu
+148,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8579638752052545,0.0001,32,20,128,"[2048, 1024, 512]",leaky_relu
+149,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8532695374800638,0.0001,32,20,128,"[2048, 1024, 512]",leaky_relu
+150,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,0,0.8560794044665012,0.0001,32,20,256,[],relu
+151,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,1,0.8551554828150573,0.0001,32,20,256,[],relu
+152,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,2,0.8532563891178895,0.0001,32,20,256,[],relu
+153,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,3,0.8553157474020784,0.0001,32,20,256,[],relu
+154,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,4,0.8505564387917329,0.0001,32,20,256,[],relu
+155,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,0,0.8513289036544851,0.0001,32,20,256,[],leaky_relu
+156,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,1,0.8539505187549881,0.0001,32,20,256,[],leaky_relu
+157,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,2,0.8537581699346405,0.0001,32,20,256,[],leaky_relu
+158,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,3,0.8586688578471652,0.0001,32,20,256,[],leaky_relu
+159,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,4,0.8554216867469879,0.0001,32,20,256,[],leaky_relu
+160,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,0,0.8609539207760711,0.0001,32,20,256,[1024],relu
+161,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,1,0.8485329103885805,0.0001,32,20,256,[1024],relu
+162,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,2,0.8540497193263833,0.0001,32,20,256,[1024],relu
+163,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,3,0.8629032258064516,0.0001,32,20,256,[1024],relu
+164,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,4,0.8445146014206788,0.0001,32,20,256,[1024],relu
+165,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,0,0.8636363636363636,0.0001,32,20,256,[1024],leaky_relu
+166,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,1,0.8637469586374696,0.0001,32,20,256,[1024],leaky_relu
+167,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,2,0.847808105872622,0.0001,32,20,256,[1024],leaky_relu
+168,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,3,0.8700980392156863,0.0001,32,20,256,[1024],leaky_relu
+169,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,4,0.852,0.0001,32,20,256,[1024],leaky_relu
+170,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,0,0.8595641646489104,0.0001,32,20,256,[512],relu
+171,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,1,0.84251968503937,0.0001,32,20,256,[512],relu
+172,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,2,0.8539505187549881,0.0001,32,20,256,[512],relu
+173,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,3,0.8573717948717948,0.0001,32,20,256,[512],relu
+174,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,4,0.843183609141056,0.0001,32,20,256,[512],relu
+175,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,0,0.8616504854368932,0.0001,32,20,256,[512],leaky_relu
+176,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,1,0.852589641434263,0.0001,32,20,256,[512],leaky_relu
+177,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,2,0.857487922705314,0.0001,32,20,256,[512],leaky_relu
+178,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,3,0.8608205953338697,0.0001,32,20,256,[512],leaky_relu
+179,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,4,0.8385579937304075,0.0001,32,20,256,[512],leaky_relu
+180,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",0,0.85,0.0001,32,20,256,"[1024, 512]",relu
+181,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",1,0.854251012145749,0.0001,32,20,256,"[1024, 512]",relu
+182,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",2,0.8502847843775427,0.0001,32,20,256,"[1024, 512]",relu
+183,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",3,0.8647540983606558,0.0001,32,20,256,"[1024, 512]",relu
+184,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",4,0.8479299363057324,0.0001,32,20,256,"[1024, 512]",relu
+185,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8465387823185988,0.0001,32,20,256,"[1024, 512]",leaky_relu
+186,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8595641646489104,0.0001,32,20,256,"[1024, 512]",leaky_relu
+187,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8552631578947368,0.0001,32,20,256,"[1024, 512]",leaky_relu
+188,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8598207008964955,0.0001,32,20,256,"[1024, 512]",leaky_relu
+189,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8479299363057324,0.0001,32,20,256,"[1024, 512]",leaky_relu
+190,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.835421888053467,0.0001,32,20,256,"[2048, 1024, 512]",relu
+191,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.857487922705314,0.0001,32,20,256,"[2048, 1024, 512]",relu
+192,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8573784006595219,0.0001,32,20,256,"[2048, 1024, 512]",relu
+193,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8722358722358723,0.0001,32,20,256,"[2048, 1024, 512]",relu
+194,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.8498808578236696,0.0001,32,20,256,"[2048, 1024, 512]",relu
+195,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8558558558558559,0.0001,32,20,256,"[2048, 1024, 512]",leaky_relu
+196,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8570268074735987,0.0001,32,20,256,"[2048, 1024, 512]",leaky_relu
+197,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8471074380165289,0.0001,32,20,256,"[2048, 1024, 512]",leaky_relu
+198,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8700980392156863,0.0001,32,20,256,"[2048, 1024, 512]",leaky_relu
+199,"lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8533653846153846,0.0001,32,20,256,"[2048, 1024, 512]",leaky_relu
+200,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,0,0.8354978354978355,0.001,32,10,128,[],relu
+201,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,1,0.8333333333333334,0.001,32,10,128,[],relu
+202,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,2,0.8514931396287329,0.001,32,10,128,[],relu
+203,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,3,0.8333333333333334,0.001,32,10,128,[],relu
+204,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,4,0.8333333333333334,0.001,32,10,128,[],relu
+205,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,0,0.854251012145749,0.001,32,10,128,[],leaky_relu
+206,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,1,0.8539505187549881,0.001,32,10,128,[],leaky_relu
+207,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,2,0.8333333333333334,0.001,32,10,128,[],leaky_relu
+208,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,3,0.8580593424218124,0.001,32,10,128,[],leaky_relu
+209,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,4,0.8333333333333334,0.001,32,10,128,[],leaky_relu
+210,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,0,0.8520365752285952,0.001,32,10,128,[1024],relu
+211,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,1,0.8333333333333334,0.001,32,10,128,[1024],relu
+212,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,2,0.8551554828150573,0.001,32,10,128,[1024],relu
+213,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,3,0.8658536585365854,0.001,32,10,128,[1024],relu
+214,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,4,0.8405341712490181,0.001,32,10,128,[1024],relu
+215,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,0,0.8549432739059968,0.001,32,10,128,[1024],leaky_relu
+216,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,1,0.8333333333333334,0.001,32,10,128,[1024],leaky_relu
+217,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,2,0.8333333333333334,0.001,32,10,128,[1024],leaky_relu
+218,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,3,0.8580593424218124,0.001,32,10,128,[1024],leaky_relu
+219,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,4,0.8333333333333334,0.001,32,10,128,[1024],leaky_relu
+220,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,0,0.8588709677419355,0.001,32,10,128,[512],relu
+221,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,1,0.8554216867469879,0.001,32,10,128,[512],relu
+222,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,2,0.8566853482786229,0.001,32,10,128,[512],relu
+223,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,3,0.8587479935794543,0.001,32,10,128,[512],relu
+224,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,4,0.8333333333333334,0.001,32,10,128,[512],relu
+225,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,0,0.8333333333333334,0.001,32,10,128,[512],leaky_relu
+226,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,1,0.8333333333333334,0.001,32,10,128,[512],leaky_relu
+227,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,2,0.8595641646489104,0.001,32,10,128,[512],leaky_relu
+228,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,3,0.854632587859425,0.001,32,10,128,[512],leaky_relu
+229,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,4,0.8333333333333334,0.001,32,10,128,[512],leaky_relu
+230,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",0,0.8465387823185988,0.001,32,10,128,"[1024, 512]",relu
+231,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",1,0.8508064516129032,0.001,32,10,128,"[1024, 512]",relu
+232,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",2,0.8573784006595219,0.001,32,10,128,"[1024, 512]",relu
+233,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",3,0.8600823045267489,0.001,32,10,128,"[1024, 512]",relu
+234,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",4,0.8438485804416404,0.001,32,10,128,"[1024, 512]",relu
+235,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.85,0.001,32,10,128,"[1024, 512]",leaky_relu
+236,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8609539207760711,0.001,32,10,128,"[1024, 512]",leaky_relu
+237,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.001,32,10,128,"[1024, 512]",leaky_relu
+238,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8686786296900489,0.001,32,10,128,"[1024, 512]",leaky_relu
+239,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.001,32,10,128,"[1024, 512]",leaky_relu
+240,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8576186511240633,0.001,32,10,128,"[2048, 1024, 512]",relu
+241,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8537581699346405,0.001,32,10,128,"[2048, 1024, 512]",relu
+242,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8553719008264463,0.001,32,10,128,"[2048, 1024, 512]",relu
+243,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8661740558292282,0.001,32,10,128,"[2048, 1024, 512]",relu
+244,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.8528698464025869,0.001,32,10,128,"[2048, 1024, 512]",relu
+245,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8579638752052545,0.001,32,10,128,"[2048, 1024, 512]",leaky_relu
+246,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.001,32,10,128,"[2048, 1024, 512]",leaky_relu
+247,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.001,32,10,128,"[2048, 1024, 512]",leaky_relu
+248,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8607907742998353,0.001,32,10,128,"[2048, 1024, 512]",leaky_relu
+249,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8438485804416404,0.001,32,10,128,"[2048, 1024, 512]",leaky_relu
+250,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,0,0.8333333333333334,0.001,32,10,256,[],relu
+251,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,1,0.8333333333333334,0.001,32,10,256,[],relu
+252,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,2,0.8333333333333334,0.001,32,10,256,[],relu
+253,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,3,0.8333333333333334,0.001,32,10,256,[],relu
+254,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,4,0.8565573770491803,0.001,32,10,256,[],relu
+255,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,0,0.8540630182421227,0.001,32,10,256,[],leaky_relu
+256,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,1,0.8485329103885805,0.001,32,10,256,[],leaky_relu
+257,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,2,0.8333333333333334,0.001,32,10,256,[],leaky_relu
+258,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,3,0.8658536585365854,0.001,32,10,256,[],leaky_relu
+259,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,4,0.8588709677419355,0.001,32,10,256,[],leaky_relu
+260,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,0,0.8600823045267489,0.001,32,10,256,[1024],relu
+261,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,1,0.8516707416462918,0.001,32,10,256,[1024],relu
+262,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,2,0.8450704225352113,0.001,32,10,256,[1024],relu
+263,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,3,0.8658536585365854,0.001,32,10,256,[1024],relu
+264,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,4,0.8526821457165733,0.001,32,10,256,[1024],relu
+265,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,0,0.8398950131233596,0.001,32,10,256,[1024],leaky_relu
+266,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,1,0.8623481781376519,0.001,32,10,256,[1024],leaky_relu
+267,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,2,0.8261617900172117,0.001,32,10,256,[1024],leaky_relu
+268,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,3,0.8629232039636664,0.001,32,10,256,[1024],leaky_relu
+269,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,4,0.8509771986970684,0.001,32,10,256,[1024],leaky_relu
+270,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,0,0.8572600492206727,0.001,32,10,256,[512],relu
+271,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,1,0.8581788879935536,0.001,32,10,256,[512],relu
+272,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,2,0.8429752066115702,0.001,32,10,256,[512],relu
+273,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,3,0.8608205953338697,0.001,32,10,256,[512],relu
+274,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,4,0.8492822966507177,0.001,32,10,256,[512],relu
+275,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,0,0.8507089241034195,0.001,32,10,256,[512],leaky_relu
+276,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,1,0.8615136876006442,0.001,32,10,256,[512],leaky_relu
+277,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,2,0.8573717948717948,0.001,32,10,256,[512],leaky_relu
+278,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,3,0.8573717948717948,0.001,32,10,256,[512],leaky_relu
+279,lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,4,0.84251968503937,0.001,32,10,256,[512],leaky_relu
+280,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",0,0.8521303258145363,0.001,32,10,256,"[1024, 512]",relu
+281,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",1,0.8591205211726385,0.001,32,10,256,"[1024, 512]",relu
+282,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",2,0.8333333333333334,0.001,32,10,256,"[1024, 512]",relu
+283,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",3,0.8333333333333334,0.001,32,10,256,"[1024, 512]",relu
+284,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",4,0.8478605388272583,0.001,32,10,256,"[1024, 512]",relu
+285,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8395989974937343,0.001,32,10,256,"[1024, 512]",leaky_relu
+286,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.843183609141056,0.001,32,10,256,"[1024, 512]",leaky_relu
+287,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8549432739059968,0.001,32,10,256,"[1024, 512]",leaky_relu
+288,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8612244897959184,0.001,32,10,256,"[1024, 512]",leaky_relu
+289,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.001,32,10,256,"[1024, 512]",leaky_relu
+290,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8490566037735849,0.001,32,10,256,"[2048, 1024, 512]",relu
+291,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8499600957701516,0.001,32,10,256,"[2048, 1024, 512]",relu
+292,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8360927152317881,0.001,32,10,256,"[2048, 1024, 512]",relu
+293,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8612244897959184,0.001,32,10,256,"[2048, 1024, 512]",relu
+294,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.847255369928401,0.001,32,10,256,"[2048, 1024, 512]",relu
+295,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8605220228384992,0.001,32,10,256,"[2048, 1024, 512]",leaky_relu
+296,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8567980691874497,0.001,32,10,256,"[2048, 1024, 512]",leaky_relu
+297,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.001,32,10,256,"[2048, 1024, 512]",leaky_relu
+298,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.001,32,10,256,"[2048, 1024, 512]",leaky_relu
+299,"lr_0.001_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8385579937304075,0.001,32,10,256,"[2048, 1024, 512]",leaky_relu
+300,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,0,0.8602584814216478,0.001,32,20,128,[],relu
+301,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,1,0.8333333333333334,0.001,32,20,128,[],relu
+302,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,2,0.8333333333333334,0.001,32,20,128,[],relu
+303,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,3,0.8333333333333334,0.001,32,20,128,[],relu
+304,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,4,0.8333333333333334,0.001,32,20,128,[],relu
+305,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,0,0.8333333333333334,0.001,32,20,128,[],leaky_relu
+306,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,1,0.857487922705314,0.001,32,20,128,[],leaky_relu
+307,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,2,0.8340649692712906,0.001,32,20,128,[],leaky_relu
+308,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,3,0.8751027115858668,0.001,32,20,128,[],leaky_relu
+309,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,4,0.8395061728395061,0.001,32,20,128,[],leaky_relu
+310,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,0,0.8369098712446352,0.001,32,20,128,[1024],relu
+311,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,1,0.8595641646489104,0.001,32,20,128,[1024],relu
+312,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,2,0.8333333333333334,0.001,32,20,128,[1024],relu
+313,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,3,0.8333333333333334,0.001,32,20,128,[1024],relu
+314,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,4,0.8503679476696647,0.001,32,20,128,[1024],relu
+315,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,0,0.8333333333333334,0.001,32,20,128,[1024],leaky_relu
+316,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,1,0.8333333333333334,0.001,32,20,128,[1024],leaky_relu
+317,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,2,0.8526821457165733,0.001,32,20,128,[1024],leaky_relu
+318,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,3,0.8654634946677605,0.001,32,20,128,[1024],leaky_relu
+319,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,4,0.8333333333333334,0.001,32,20,128,[1024],leaky_relu
+320,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,0,0.8374384236453202,0.001,32,20,128,[512],relu
+321,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,1,0.8333333333333334,0.001,32,20,128,[512],relu
+322,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,2,0.8549432739059968,0.001,32,20,128,[512],relu
+323,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,3,0.8551554828150573,0.001,32,20,128,[512],relu
+324,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,4,0.8514931396287329,0.001,32,20,128,[512],relu
+325,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,0,0.8485329103885805,0.001,32,20,128,[512],leaky_relu
+326,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,1,0.8333333333333334,0.001,32,20,128,[512],leaky_relu
+327,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,2,0.8461538461538461,0.001,32,20,128,[512],leaky_relu
+328,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,3,0.8586688578471652,0.001,32,20,128,[512],leaky_relu
+329,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,4,0.8333333333333334,0.001,32,20,128,[512],leaky_relu
+330,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",0,0.8451290591174022,0.001,32,20,128,"[1024, 512]",relu
+331,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",1,0.8623481781376519,0.001,32,20,128,"[1024, 512]",relu
+332,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",2,0.8533653846153846,0.001,32,20,128,"[1024, 512]",relu
+333,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",3,0.8333333333333334,0.001,32,20,128,"[1024, 512]",relu
+334,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",4,0.8333333333333334,0.001,32,20,128,"[1024, 512]",relu
+335,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8498808578236696,0.001,32,20,128,"[1024, 512]",leaky_relu
+336,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.001,32,20,128,"[1024, 512]",leaky_relu
+337,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8581788879935536,0.001,32,20,128,"[1024, 512]",leaky_relu
+338,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.001,32,20,128,"[1024, 512]",leaky_relu
+339,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.001,32,20,128,"[1024, 512]",leaky_relu
+340,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8573784006595219,0.001,32,20,128,"[2048, 1024, 512]",relu
+341,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.864448051948052,0.001,32,20,128,"[2048, 1024, 512]",relu
+342,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8518518518518519,0.001,32,20,128,"[2048, 1024, 512]",relu
+343,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8683127572016461,0.001,32,20,128,"[2048, 1024, 512]",relu
+344,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.8333333333333334,0.001,32,20,128,"[2048, 1024, 512]",relu
+345,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8567980691874497,0.001,32,20,128,"[2048, 1024, 512]",leaky_relu
+346,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.001,32,20,128,"[2048, 1024, 512]",leaky_relu
+347,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8501208702659145,0.001,32,20,128,"[2048, 1024, 512]",leaky_relu
+348,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8539505187549881,0.001,32,20,128,"[2048, 1024, 512]",leaky_relu
+349,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.001,32,20,128,"[2048, 1024, 512]",leaky_relu
+350,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,0,0.8495934959349594,0.001,32,20,256,[],relu
+351,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,1,0.8333333333333334,0.001,32,20,256,[],relu
+352,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,2,0.8333333333333334,0.001,32,20,256,[],relu
+353,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,3,0.8661740558292282,0.001,32,20,256,[],relu
+354,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,4,0.8333333333333334,0.001,32,20,256,[],relu
+355,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,0,0.8605220228384992,0.001,32,20,256,[],leaky_relu
+356,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,1,0.8333333333333334,0.001,32,20,256,[],leaky_relu
+357,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,2,0.8340248962655602,0.001,32,20,256,[],leaky_relu
+358,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,3,0.8663967611336032,0.001,32,20,256,[],leaky_relu
+359,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,4,0.8333333333333334,0.001,32,20,256,[],leaky_relu
+360,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,0,0.8333333333333334,0.001,32,20,256,[1024],relu
+361,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,1,0.8333333333333334,0.001,32,20,256,[1024],relu
+362,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,2,0.8511513157894737,0.001,32,20,256,[1024],relu
+363,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,3,0.8683127572016461,0.001,32,20,256,[1024],relu
+364,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,4,0.8333333333333334,0.001,32,20,256,[1024],relu
+365,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,0,0.8333333333333334,0.001,32,20,256,[1024],leaky_relu
+366,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,1,0.8392156862745098,0.001,32,20,256,[1024],leaky_relu
+367,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,2,0.8395368072787428,0.001,32,20,256,[1024],leaky_relu
+368,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,3,0.8629232039636664,0.001,32,20,256,[1024],leaky_relu
+369,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,4,0.8379228953579858,0.001,32,20,256,[1024],leaky_relu
+370,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,0,0.8554817275747508,0.001,32,20,256,[512],relu
+371,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,1,0.8333333333333334,0.001,32,20,256,[512],relu
+372,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,2,0.8616504854368932,0.001,32,20,256,[512],relu
+373,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,3,0.8333333333333334,0.001,32,20,256,[512],relu
+374,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,4,0.8333333333333334,0.001,32,20,256,[512],relu
+375,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,0,0.8354866494401378,0.001,32,20,256,[512],leaky_relu
+376,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,1,0.8595641646489104,0.001,32,20,256,[512],leaky_relu
+377,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,2,0.8333333333333334,0.001,32,20,256,[512],leaky_relu
+378,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,3,0.8333333333333334,0.001,32,20,256,[512],leaky_relu
+379,lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,4,0.857487922705314,0.001,32,20,256,[512],leaky_relu
+380,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",0,0.8595641646489104,0.001,32,20,256,"[1024, 512]",relu
+381,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",1,0.8498808578236696,0.001,32,20,256,"[1024, 512]",relu
+382,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",2,0.8567980691874497,0.001,32,20,256,"[1024, 512]",relu
+383,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",3,0.8333333333333334,0.001,32,20,256,"[1024, 512]",relu
+384,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",4,0.8333333333333334,0.001,32,20,256,"[1024, 512]",relu
+385,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8581788879935536,0.001,32,20,256,"[1024, 512]",leaky_relu
+386,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.001,32,20,256,"[1024, 512]",leaky_relu
+387,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8629032258064516,0.001,32,20,256,"[1024, 512]",leaky_relu
+388,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.001,32,20,256,"[1024, 512]",leaky_relu
+389,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.001,32,20,256,"[1024, 512]",leaky_relu
+390,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8347602739726028,0.001,32,20,256,"[2048, 1024, 512]",relu
+391,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8513189448441247,0.001,32,20,256,"[2048, 1024, 512]",relu
+392,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8469721767594108,0.001,32,20,256,"[2048, 1024, 512]",relu
+393,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8630705394190872,0.001,32,20,256,"[2048, 1024, 512]",relu
+394,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.837245696400626,0.001,32,20,256,"[2048, 1024, 512]",relu
+395,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8549432739059968,0.001,32,20,256,"[2048, 1024, 512]",leaky_relu
+396,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.001,32,20,256,"[2048, 1024, 512]",leaky_relu
+397,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.852589641434263,0.001,32,20,256,"[2048, 1024, 512]",leaky_relu
+398,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.001,32,20,256,"[2048, 1024, 512]",leaky_relu
+399,"lr_0.001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.001,32,20,256,"[2048, 1024, 512]",leaky_relu
+400,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,0,0.8595641646489104,0.01,32,10,128,[],relu
+401,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,1,0.8526821457165733,0.01,32,10,128,[],relu
+402,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,2,0.8501208702659145,0.01,32,10,128,[],relu
+403,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,3,0.8602584814216478,0.01,32,10,128,[],relu
+404,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_relu/,4,0.8333333333333334,0.01,32,10,128,[],relu
+405,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,0,0.8527454242928453,0.01,32,10,128,[],leaky_relu
+406,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,1,0.8539505187549881,0.01,32,10,128,[],leaky_relu
+407,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,2,0.8374792703150912,0.01,32,10,128,[],leaky_relu
+408,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,3,0.8586688578471652,0.01,32,10,128,[],leaky_relu
+409,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,4,0.8581788879935536,0.01,32,10,128,[],leaky_relu
+410,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,0,0.8383490971625107,0.01,32,10,128,[1024],relu
+411,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,1,0.848585690515807,0.01,32,10,128,[1024],relu
+412,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,2,0.8347602739726028,0.01,32,10,128,[1024],relu
+413,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,3,0.8603491271820449,0.01,32,10,128,[1024],relu
+414,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_relu/,4,0.8616504854368932,0.01,32,10,128,[1024],relu
+415,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,0,0.8595641646489104,0.01,32,10,128,[1024],leaky_relu
+416,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,1,0.8512330946698489,0.01,32,10,128,[1024],leaky_relu
+417,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,2,0.8581788879935536,0.01,32,10,128,[1024],leaky_relu
+418,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,3,0.8602584814216478,0.01,32,10,128,[1024],leaky_relu
+419,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,4,0.8333333333333334,0.01,32,10,128,[1024],leaky_relu
+420,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,0,0.8478802992518704,0.01,32,10,128,[512],relu
+421,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,1,0.8595641646489104,0.01,32,10,128,[512],relu
+422,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,2,0.8547351524879615,0.01,32,10,128,[512],relu
+423,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,3,0.8547351524879615,0.01,32,10,128,[512],relu
+424,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_relu/,4,0.8333333333333334,0.01,32,10,128,[512],relu
+425,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,0,0.859504132231405,0.01,32,10,128,[512],leaky_relu
+426,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,1,0.8547351524879615,0.01,32,10,128,[512],leaky_relu
+427,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,2,0.8505367464905037,0.01,32,10,128,[512],leaky_relu
+428,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,3,0.8333333333333334,0.01,32,10,128,[512],leaky_relu
+429,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,4,0.8595641646489104,0.01,32,10,128,[512],leaky_relu
+430,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",0,0.8333333333333334,0.01,32,10,128,"[1024, 512]",relu
+431,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",1,0.8609539207760711,0.01,32,10,128,"[1024, 512]",relu
+432,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",2,0.8436724565756824,0.01,32,10,128,"[1024, 512]",relu
+433,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",3,0.8600823045267489,0.01,32,10,128,"[1024, 512]",relu
+434,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",4,0.8513189448441247,0.01,32,10,128,"[1024, 512]",relu
+435,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8520365752285952,0.01,32,10,128,"[1024, 512]",leaky_relu
+436,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8544562551103843,0.01,32,10,128,"[1024, 512]",leaky_relu
+437,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8530612244897959,0.01,32,10,128,"[1024, 512]",leaky_relu
+438,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.01,32,10,128,"[1024, 512]",leaky_relu
+439,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8581788879935536,0.01,32,10,128,"[1024, 512]",leaky_relu
+440,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8586688578471652,0.01,32,10,128,"[2048, 1024, 512]",relu
+441,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8333333333333334,0.01,32,10,128,"[2048, 1024, 512]",relu
+442,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8537581699346405,0.01,32,10,128,"[2048, 1024, 512]",relu
+443,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8600823045267489,0.01,32,10,128,"[2048, 1024, 512]",relu
+444,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.836591086786552,0.01,32,10,128,"[2048, 1024, 512]",relu
+445,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8333333333333334,0.01,32,10,128,"[2048, 1024, 512]",leaky_relu
+446,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.01,32,10,128,"[2048, 1024, 512]",leaky_relu
+447,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.01,32,10,128,"[2048, 1024, 512]",leaky_relu
+448,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.01,32,10,128,"[2048, 1024, 512]",leaky_relu
+449,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.01,32,10,128,"[2048, 1024, 512]",leaky_relu
+450,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,0,0.8602584814216478,0.01,32,10,256,[],relu
+451,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,1,0.8333333333333334,0.01,32,10,256,[],relu
+452,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,2,0.8581788879935536,0.01,32,10,256,[],relu
+453,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,3,0.8333333333333334,0.01,32,10,256,[],relu
+454,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_relu/,4,0.8333333333333334,0.01,32,10,256,[],relu
+455,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,0,0.8520365752285952,0.01,32,10,256,[],leaky_relu
+456,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,1,0.8333333333333334,0.01,32,10,256,[],leaky_relu
+457,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,2,0.8609539207760711,0.01,32,10,256,[],leaky_relu
+458,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,3,0.8498808578236696,0.01,32,10,256,[],leaky_relu
+459,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,4,0.8588709677419355,0.01,32,10,256,[],leaky_relu
+460,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,0,0.8333333333333334,0.01,32,10,256,[1024],relu
+461,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,1,0.8333333333333334,0.01,32,10,256,[1024],relu
+462,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,2,0.8290155440414507,0.01,32,10,256,[1024],relu
+463,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,3,0.8658536585365854,0.01,32,10,256,[1024],relu
+464,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_relu/,4,0.8518518518518519,0.01,32,10,256,[1024],relu
+465,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,0,0.8333333333333334,0.01,32,10,256,[1024],leaky_relu
+466,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,1,0.8558558558558559,0.01,32,10,256,[1024],leaky_relu
+467,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,2,0.8333333333333334,0.01,32,10,256,[1024],leaky_relu
+468,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,3,0.8333333333333334,0.01,32,10,256,[1024],leaky_relu
+469,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,4,0.8333333333333334,0.01,32,10,256,[1024],leaky_relu
+470,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,0,0.8619281045751634,0.01,32,10,256,[512],relu
+471,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,1,0.8333333333333334,0.01,32,10,256,[512],relu
+472,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,2,0.8505367464905037,0.01,32,10,256,[512],relu
+473,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,3,0.8445146014206788,0.01,32,10,256,[512],relu
+474,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_relu/,4,0.8513189448441247,0.01,32,10,256,[512],relu
+475,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,0,0.8615004122011541,0.01,32,10,256,[512],leaky_relu
+476,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,1,0.8509771986970684,0.01,32,10,256,[512],leaky_relu
+477,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,2,0.8402317880794702,0.01,32,10,256,[512],leaky_relu
+478,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,3,0.8607907742998353,0.01,32,10,256,[512],leaky_relu
+479,lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,4,0.8581788879935536,0.01,32,10,256,[512],leaky_relu
+480,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",0,0.8333333333333334,0.01,32,10,256,"[1024, 512]",relu
+481,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",1,0.8561093247588425,0.01,32,10,256,"[1024, 512]",relu
+482,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",2,0.8526490066225165,0.01,32,10,256,"[1024, 512]",relu
+483,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",3,0.8333333333333334,0.01,32,10,256,"[1024, 512]",relu
+484,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",4,0.8333333333333334,0.01,32,10,256,"[1024, 512]",relu
+485,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8506224066390041,0.01,32,10,256,"[1024, 512]",leaky_relu
+486,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.01,32,10,256,"[1024, 512]",leaky_relu
+487,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8516707416462918,0.01,32,10,256,"[1024, 512]",leaky_relu
+488,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.864448051948052,0.01,32,10,256,"[1024, 512]",leaky_relu
+489,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8526821457165733,0.01,32,10,256,"[1024, 512]",leaky_relu
+490,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8505564387917329,0.01,32,10,256,"[2048, 1024, 512]",relu
+491,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8558558558558559,0.01,32,10,256,"[2048, 1024, 512]",relu
+492,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8333333333333334,0.01,32,10,256,"[2048, 1024, 512]",relu
+493,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8333333333333334,0.01,32,10,256,"[2048, 1024, 512]",relu
+494,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.854632587859425,0.01,32,10,256,"[2048, 1024, 512]",relu
+495,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8333333333333334,0.01,32,10,256,"[2048, 1024, 512]",leaky_relu
+496,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.01,32,10,256,"[2048, 1024, 512]",leaky_relu
+497,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.01,32,10,256,"[2048, 1024, 512]",leaky_relu
+498,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.01,32,10,256,"[2048, 1024, 512]",leaky_relu
+499,"lr_0.01_batch_size_32_num_epochs_10_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.01,32,10,256,"[2048, 1024, 512]",leaky_relu
+500,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,0,0.8588709677419355,0.01,32,20,128,[],relu
+501,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,1,0.8539505187549881,0.01,32,20,128,[],relu
+502,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,2,0.8567980691874497,0.01,32,20,128,[],relu
+503,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,3,0.8602584814216478,0.01,32,20,128,[],relu
+504,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_relu/,4,0.8333333333333334,0.01,32,20,128,[],relu
+505,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,0,0.8595641646489104,0.01,32,20,128,[],leaky_relu
+506,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,1,0.8333333333333334,0.01,32,20,128,[],leaky_relu
+507,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,2,0.8561093247588425,0.01,32,20,128,[],leaky_relu
+508,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,3,0.8333333333333334,0.01,32,20,128,[],leaky_relu
+509,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[]_activation_leaky_relu/,4,0.8492063492063492,0.01,32,20,128,[],leaky_relu
+510,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,0,0.8633387888707038,0.01,32,20,128,[1024],relu
+511,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,1,0.8333333333333334,0.01,32,20,128,[1024],relu
+512,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,2,0.8471074380165289,0.01,32,20,128,[1024],relu
+513,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,3,0.8587479935794543,0.01,32,20,128,[1024],relu
+514,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_relu/,4,0.8333333333333334,0.01,32,20,128,[1024],relu
+515,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,0,0.8609539207760711,0.01,32,20,128,[1024],leaky_relu
+516,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,1,0.8526821457165733,0.01,32,20,128,[1024],leaky_relu
+517,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,2,0.857487922705314,0.01,32,20,128,[1024],leaky_relu
+518,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,3,0.8602584814216478,0.01,32,20,128,[1024],leaky_relu
+519,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024]_activation_leaky_relu/,4,0.8505564387917329,0.01,32,20,128,[1024],leaky_relu
+520,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,0,0.8340535868625756,0.01,32,20,128,[512],relu
+521,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,1,0.8333333333333334,0.01,32,20,128,[512],relu
+522,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,2,0.8347826086956521,0.01,32,20,128,[512],relu
+523,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,3,0.861781848459617,0.01,32,20,128,[512],relu
+524,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_relu/,4,0.8333333333333334,0.01,32,20,128,[512],relu
+525,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,0,0.8478605388272583,0.01,32,20,128,[512],leaky_relu
+526,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,1,0.8519108280254777,0.01,32,20,128,[512],leaky_relu
+527,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,2,0.8581788879935536,0.01,32,20,128,[512],leaky_relu
+528,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,3,0.860128617363344,0.01,32,20,128,[512],leaky_relu
+529,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[512]_activation_leaky_relu/,4,0.8451816745655608,0.01,32,20,128,[512],leaky_relu
+530,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",0,0.8333333333333334,0.01,32,20,128,"[1024, 512]",relu
+531,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",1,0.84251968503937,0.01,32,20,128,"[1024, 512]",relu
+532,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",2,0.8269065981148244,0.01,32,20,128,"[1024, 512]",relu
+533,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",3,0.8708094848732625,0.01,32,20,128,"[1024, 512]",relu
+534,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_relu/",4,0.8455882352941176,0.01,32,20,128,"[1024, 512]",relu
+535,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8333333333333334,0.01,32,20,128,"[1024, 512]",leaky_relu
+536,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.01,32,20,128,"[1024, 512]",leaky_relu
+537,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.01,32,20,128,"[1024, 512]",leaky_relu
+538,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.01,32,20,128,"[1024, 512]",leaky_relu
+539,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.01,32,20,128,"[1024, 512]",leaky_relu
+540,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8505564387917329,0.01,32,20,128,"[2048, 1024, 512]",relu
+541,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8333333333333334,0.01,32,20,128,"[2048, 1024, 512]",relu
+542,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8381742738589212,0.01,32,20,128,"[2048, 1024, 512]",relu
+543,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.859375,0.01,32,20,128,"[2048, 1024, 512]",relu
+544,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.8514931396287329,0.01,32,20,128,"[2048, 1024, 512]",relu
+545,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8333333333333334,0.01,32,20,128,"[2048, 1024, 512]",leaky_relu
+546,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.01,32,20,128,"[2048, 1024, 512]",leaky_relu
+547,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.01,32,20,128,"[2048, 1024, 512]",leaky_relu
+548,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.01,32,20,128,"[2048, 1024, 512]",leaky_relu
+549,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_128_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.01,32,20,128,"[2048, 1024, 512]",leaky_relu
+550,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,0,0.8333333333333334,0.01,32,20,256,[],relu
+551,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,1,0.8533653846153846,0.01,32,20,256,[],relu
+552,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,2,0.8581788879935536,0.01,32,20,256,[],relu
+553,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,3,0.8333333333333334,0.01,32,20,256,[],relu
+554,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_relu/,4,0.8505564387917329,0.01,32,20,256,[],relu
+555,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,0,0.8595641646489104,0.01,32,20,256,[],leaky_relu
+556,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,1,0.8333333333333334,0.01,32,20,256,[],leaky_relu
+557,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,2,0.8588709677419355,0.01,32,20,256,[],leaky_relu
+558,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,3,0.8333333333333334,0.01,32,20,256,[],leaky_relu
+559,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[]_activation_leaky_relu/,4,0.8505564387917329,0.01,32,20,256,[],leaky_relu
+560,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,0,0.8381984987489575,0.01,32,20,256,[1024],relu
+561,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,1,0.8333333333333334,0.01,32,20,256,[1024],relu
+562,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,2,0.8489033306255077,0.01,32,20,256,[1024],relu
+563,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,3,0.860128617363344,0.01,32,20,256,[1024],relu
+564,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_relu/,4,0.8333333333333334,0.01,32,20,256,[1024],relu
+565,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,0,0.8340461933276304,0.01,32,20,256,[1024],leaky_relu
+566,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,1,0.8554817275747508,0.01,32,20,256,[1024],leaky_relu
+567,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,2,0.8333333333333334,0.01,32,20,256,[1024],leaky_relu
+568,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,3,0.8594377510040161,0.01,32,20,256,[1024],leaky_relu
+569,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,4,0.8516707416462918,0.01,32,20,256,[1024],leaky_relu
+570,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,0,0.8412322274881516,0.01,32,20,256,[512],relu
+571,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,1,0.8333333333333334,0.01,32,20,256,[512],relu
+572,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,2,0.8450704225352113,0.01,32,20,256,[512],relu
+573,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,3,0.8595641646489104,0.01,32,20,256,[512],relu
+574,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_relu/,4,0.8544562551103843,0.01,32,20,256,[512],relu
+575,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,0,0.8588709677419355,0.01,32,20,256,[512],leaky_relu
+576,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,1,0.8333333333333334,0.01,32,20,256,[512],leaky_relu
+577,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,2,0.8561093247588425,0.01,32,20,256,[512],leaky_relu
+578,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,3,0.8609539207760711,0.01,32,20,256,[512],leaky_relu
+579,lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[512]_activation_leaky_relu/,4,0.8333333333333334,0.01,32,20,256,[512],leaky_relu
+580,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",0,0.8573784006595219,0.01,32,20,256,"[1024, 512]",relu
+581,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",1,0.8333333333333334,0.01,32,20,256,"[1024, 512]",relu
+582,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",2,0.8526821457165733,0.01,32,20,256,"[1024, 512]",relu
+583,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",3,0.8622112211221122,0.01,32,20,256,"[1024, 512]",relu
+584,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_relu/",4,0.8492063492063492,0.01,32,20,256,"[1024, 512]",relu
+585,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",0,0.8333333333333334,0.01,32,20,256,"[1024, 512]",leaky_relu
+586,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.01,32,20,256,"[1024, 512]",leaky_relu
+587,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.01,32,20,256,"[1024, 512]",leaky_relu
+588,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.01,32,20,256,"[1024, 512]",leaky_relu
+589,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.01,32,20,256,"[1024, 512]",leaky_relu
+590,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",0,0.8595641646489104,0.01,32,20,256,"[2048, 1024, 512]",relu
+591,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",1,0.8333333333333334,0.01,32,20,256,"[2048, 1024, 512]",relu
+592,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",2,0.8553157474020784,0.01,32,20,256,"[2048, 1024, 512]",relu
+593,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",3,0.8629032258064516,0.01,32,20,256,"[2048, 1024, 512]",relu
+594,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_relu/",4,0.8333333333333334,0.01,32,20,256,"[2048, 1024, 512]",relu
+595,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",0,0.8333333333333334,0.01,32,20,256,"[2048, 1024, 512]",leaky_relu
+596,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",1,0.8333333333333334,0.01,32,20,256,"[2048, 1024, 512]",leaky_relu
+597,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",2,0.8333333333333334,0.01,32,20,256,"[2048, 1024, 512]",leaky_relu
+598,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",3,0.8333333333333334,0.01,32,20,256,"[2048, 1024, 512]",leaky_relu
+599,"lr_0.01_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[2048, 1024, 512]_activation_leaky_relu/",4,0.8333333333333334,0.01,32,20,256,"[2048, 1024, 512]",leaky_relu

@@ -10,7 +10,7 @@ from log.utils import catch_and_log
 from plotting.utils import boxplot
 from ..config import RESULTS_DIR
 from .config import COMPARISON_DIR
-
+from model_development.config import base_models
 
 num_splits = 5
 
@@ -20,7 +20,11 @@ shorten = {
     "isolation_forest": "IF",
     "one_svm": "OSVM",
     "LOF": "LOF",
-    "pca": "PCA"
+    "pca": "PCA",
+    "cnn_anogan": "CNN_ANOGAN",
+    "anogan": "MLP_ANOGAN",
+    "cnn_supervised_2d": "CNN_CLASSIFIER",
+    "lstm": "LSTM_CLASSIFIER"
 }
 
 
@@ -56,6 +60,7 @@ def load_results_from_excels(results_dir: str, base: bool) -> Tuple[pd.DataFrame
                 
                 if "old" in rel_path:
                     continue #Skip old results
+
 
                 if parts[0] == "hybrid":
                     if parts[1] == "pre_scale":

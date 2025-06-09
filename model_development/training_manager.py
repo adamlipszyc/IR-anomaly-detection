@@ -14,7 +14,7 @@ from .base_model_trainer import BaseModelTrainer
 from .encoder_trainer import EncoderTrainer
 from .data_loader import DataLoader 
 from data_augmentation.data_augmenter import DataAugmenter
-from .config import AUGMENTED_DATA_DIR, OUTPUT_MODEL_PREFIX, SAMPLES_PER_FILE, NUM_BATCHES, SEED, TRAINING_TESTS_SPLITS_DIRECTORY, HYPERPARAMETER_FILEPATH, VALIDATION_DATA_DIR, base_models
+from .config import AUGMENTED_DATA_DIR, OUTPUT_MODEL_PREFIX, SAMPLES_PER_FILE, NUM_BATCHES, SEED, TRAINING_TESTS_SPLITS_DIRECTORY, HYPERPARAMETER_FILEPATH, VALIDATION_DATA_DIR, base_models, OPTIMAL_HYPERPARAMETER_FILEPATH
 from training_test_splits.data_split_generation.config import NUM_SPLITS
 from log.utils import catch_and_log, make_summary
 from training_test_splits.data_split_generation.test_data_split_generator import TestDataSplitGenerator
@@ -24,7 +24,7 @@ from plotting.utils import boxplot
 
 
 
-supervised_models = {"cnn_supervised_1d", "cnn_supervised_2d"}
+supervised_models = {"cnn_supervised_1d", "cnn_supervised_2d", "lstm"}
 
 class TrainingManager:
     def __init__(self, args):
@@ -46,6 +46,8 @@ class TrainingManager:
             self.models.append("cnn_supervised_2d")
         if self.args.cnn_supervised_1d:
             self.models.append("cnn_supervised_1d")
+        if self.args.lstm:
+            self.models.append("lstm")
 
         self.model_args = args.model_args
 
@@ -57,7 +59,7 @@ class TrainingManager:
         self.data_loader = DataLoader(AUGMENTED_DATA_DIR, SAMPLES_PER_FILE)
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    def load_hyperparameter_config(self, file_path=HYPERPARAMETER_FILEPATH):
+    def load_hyperparameter_config(self, file_path=OPTIMAL_HYPERPARAMETER_FILEPATH):
         with open(file_path, 'r') as f:
             return json.load(f)
     
@@ -88,11 +90,17 @@ class TrainingManager:
             best_performance = -float('inf')  # To track the best performance
             best_threshold = 0.5  # Initialize with a default threshold
 
-            if model_type in base_models and self.encoder_name is None or not self.args.hyperparameter_tuning:
+            if not self.args.hyperparameter_tuning:
                 self.train_single_model(model_type)
                 continue
             # Get hyperparameter combinations for the current model
-            param_grid = self.hyperparameters.get(model_type if model_type not in base_models else "hybrid", {}) 
+            param_grid = self.hyperparameters.get(model_type, {}) 
+
+            if self.encoder_name is not None:
+                param_grid = {
+                    **param_grid,
+                    **self.hyperparameters.get("hybrid", {})
+                }
             
 
             # Generate all combinations of hyperparameters
@@ -110,7 +118,7 @@ class TrainingManager:
                 # Store this config in the model directory
                 models_dir = "models/"
                 model_config = f"{'_'.join(f'{k}_{v}' for k, v in param_dict.items())}/"
-                model_config_dir = f"{model_type}/hyperparameter_tuning/{model_config}"
+                model_config_dir = f"{model_type}/hyperparameter_tuning/{augmented_dir}{model_config}"
 
                 
                 avg_val_performance = 0
@@ -123,8 +131,14 @@ class TrainingManager:
 
                 split_results = []
 
+                param_dict_copy = param_dict.copy()
+
+                if self.encoder_name is not None:
+                    param_dict_copy.pop("encoding_dim")
+                    
+
                 for split in range(1, NUM_SPLITS + 1):
-                    dir_suffix = augmented_dir + f"split_{split}/"
+                    dir_suffix = f"split_{split}/"
                     split_dir = os.path.join(TRAINING_TESTS_SPLITS_DIRECTORY, f"split_{split}")
                     training_data_location = os.path.join(split_dir, "train.csv")
                     df = self.data_loader.load_original_data(training_data_location)
@@ -145,8 +159,7 @@ class TrainingManager:
                             random_state=split,  # Ensures reproducibility across runs
                             stratify=combined_df["label"]  # keeps class balance
                         )
-                        train_labels = train_data.iloc[:,-1]
-                        train_data = train_data.iloc[:,:-1]
+                        
                         
                     else:
                         # Train-validation split logic
@@ -156,7 +169,7 @@ class TrainingManager:
                         [(train_data, val_data,  val_data_95)] = TestDataSplitGenerator().generate_splits(df, anomalous_df, n_splits=1, train_size=0.9)
                         train_labels = None
 
-                    self.logger.info(f"Training data shape: {train_data.values.shape}, Labels: {np.bincount(train_labels) if train_labels is not None else "None"}")
+                    
 
                     X_val_test = val_data.iloc[:, :-1].values.astype(float)  # all columns except last
                     y_val_test = val_data.iloc[:, -1].values.astype(int)     # last column = label (0 or 1)
@@ -165,7 +178,14 @@ class TrainingManager:
 
 
                     if self.args.augment_techniques != ["none"] and self.args.augment_factor is not None:
+                        
                         train_data = DataAugmenter().augment_dataset(train_data, self.args.augment_techniques, self.args.augment_factor)
+                    
+                    if model_type in supervised_models:
+                        train_labels = train_data.iloc[:,-1]
+                        train_data = train_data.iloc[:,:-1]
+
+                    self.logger.info(f"Training data shape: {train_data.values.shape}, Labels: {np.bincount(train_labels) if train_labels is not None else "None"}")
 
                     # Preprocess data
                     preprocessor = Preprocessor()
@@ -188,7 +208,7 @@ class TrainingManager:
                     preprocessor.save(scaler_path)
 
                     # Train model with current hyperparameters
-                    trainer = BaseModelTrainer(model_type, param_dict, self.stats)
+                    trainer = BaseModelTrainer(model_type, param_dict_copy, self.stats)
                     model_path = model_dir + "model.pkl"
                     model = trainer.run(X_train_scaled, model_path, y=train_labels, train_indices=self.train_indices, return_model=True)
 
@@ -199,35 +219,31 @@ class TrainingManager:
                     all_reconstruction_errors.append(reconstruction_errors)
                     all_ground_truths.append(y_val_test)
                 
-                if model_type not in base_models:
-                    # Optimize threshold across all validation splits
-                    optimized_threshold, avg_f2 = self.optimize_threshold(all_reconstruction_errors, all_ground_truths)
+                
+                # Optimize threshold across all validation splits
+                optimized_threshold, avg_f2 = self.optimize_threshold(all_reconstruction_errors, all_ground_truths)
 
                 f2_raw_scores = []
                 # Compute per-split F2 using the global threshold
                 for i, (split_errors, split_truths) in enumerate(zip(all_reconstruction_errors, all_ground_truths)):
 
-                    if model_type not in base_models:
-                        # Apply global threshold
-                        split_preds = (split_errors >= optimized_threshold).astype(int)
-                    else:
-                        split_preds =  np.where(split_errors == 1, 0.0, 1.0)
+                    
+                    # Apply global threshold
+                    split_preds = (split_errors >= optimized_threshold).astype(int)
                     
                     # Compute F2 score
                     f2 = fbeta_score(split_truths, split_preds, beta=2, pos_label=1)
                     
                     f2_raw_scores.append(f2)
-                    f2_scores.append({
+                    result = {
                         "model": model_config,
                         "split": i,
-                        "f2_score": f2
-                    })
-                
-                if model_type in base_models:
-                    avg_f2 = np.mean(f2_raw_scores)
-                    optimized_threshold = None
+                        "f2_score": f2,
+                        **param_dict, 
+                    }
+                    f2_scores.append(result)
+                    
 
-                performance_data.append((param_dict, avg_f2, optimized_threshold))
 
                 # Track best performance and configuration
                 if avg_f2 > best_performance:
@@ -236,26 +252,38 @@ class TrainingManager:
                     best_threshold = optimized_threshold
 
             
+
             hyperprameter_results = pd.DataFrame(f2_scores)
-            x = "model" 
-            y = "f2_score"
-            hyperparameter_results_dir = "hyperparameter_tuning_results/" + dir_prefix + model_type + "/" + augmented_dir
-            boxplot(hyperprameter_results, x, y, dir_path=hyperparameter_results_dir, fifty_fifty=True, title=f"Hyperparameter Comparison ({self.encoder_name + " + " if self.encoder_name is not None else ""}{model_type})", xlabel="Hyper-parameter configuration")
-            hyperprameter_results.to_csv(hyperparameter_results_dir + "/results.csv")
+            if 'hidden_dims' in hyperprameter_results.columns:
+                hyperprameter_results['hidden_dims'] = hyperprameter_results['hidden_dims'].astype(str)
+
+            if 'out_channels' in hyperprameter_results.columns:
+                hyperprameter_results['out_channels'] = hyperprameter_results['out_channels'].astype(str)
 
             # Log and display the best hyperparameter configuration for the model
             self.logger.info(f"Best configuration for {model_type}: {best_config} with F2 score: {best_performance} and threshold: {best_threshold}")
+            hyperparameter_results_dir = "hyperparameter_tuning_results/" + dir_prefix + model_type + "/" + augmented_dir
+            
+            os.makedirs(hyperparameter_results_dir, exist_ok=True)
+            hyperprameter_results.to_csv(hyperparameter_results_dir + "/results.csv")
+            
+            x = "model" 
+            y = "f2_score"
+            boxplot(hyperprameter_results, x, y, dir_path=hyperparameter_results_dir, fifty_fifty=True, title=f"Hyperparameter Comparison ({self.encoder_name + " + " if self.encoder_name is not None else ""}{model_type})", xlabel="Hyper-parameter configuration")
+            for k in best_config.keys():
+                boxplot(hyperprameter_results, k, y, dir_path=hyperparameter_results_dir, fifty_fifty=True, title=f"Hyperparmeter {k} comparison ({self.encoder_name + " + " if self.encoder_name is not None else ""}{model_type})", xlabel=f"{k}")
 
             # Now evaluate on the test set with the best configuration
             if best_threshold is not None:
                 best_config["threshold"] = best_threshold
+            
             self.model_args = best_config
             self.train_single_model(model_type)
 
     @catch_and_log(Exception, "Obtaining reconstruction errors")
     def get_reconstruction_errors(self, model, X_val_scaled):
         # Reconstruct data using the autoencoder model and return reconstruction errors
-        reconstruction_errors = model.predict(X_val_scaled)
+        reconstruction_errors, _ = model.predict(X_val_scaled)
         return reconstruction_errors
 
     @catch_and_log(Exception, "Optimising threshold")
@@ -276,7 +304,7 @@ class TrainingManager:
 
         # Normalize the threshold range to be between min and max error
         # We will search for thresholds in the normalized range [0, 1] and then map it back to the original range.
-        thresholds = np.linspace(0.0, 1.0, 1000)  # 1000 thresholds between 0 and 1
+        thresholds = np.linspace(0.0, 1.0, 10000)  # 1000 thresholds between 0 and 1
 
         best_f2 = -float('inf')
         best_threshold = 0.5  # Default threshold
@@ -322,6 +350,10 @@ class TrainingManager:
         else:
             augmented_dir = ""
 
+        args_dict_copy = self.model_args.copy()
+
+        if self.encoder_name is not None:
+            args_dict_copy.pop("encoding_dim")
 
         for split in range(1, NUM_SPLITS + 1):
             split_dir = os.path.join(TRAINING_TESTS_SPLITS_DIRECTORY, f"split_{split}")
@@ -342,20 +374,17 @@ class TrainingManager:
                 print("Data shape: ", combined_df.shape)
                 shuffled_df = combined_df.sample(frac=1).reset_index(drop=True)
                 train_data = shuffled_df
-                train_labels = train_data.iloc[:,-1]
-                train_data = train_data.iloc[:,:-1]
-                
             else:
                 train_data = df
                 train_labels = None
 
             if self.args.augment_techniques != ["none"] and self.args.augment_factor is not None:
                 train_data = DataAugmenter().augment_dataset(train_data, self.args.augment_techniques, self.args.augment_factor)
-                
-            # # Split train/test
-            # indices = np.random.choice(df.index, size=int(0.8 * len(df)), replace=False)
-            # train_data = df.loc[indices]
-            # self.train_indices[ORIGINAL_DATA_FILE_PATH] = indices.tolist()
+            
+            if model_type in supervised_models:
+                train_labels = train_data.iloc[:,-1]
+                train_data = train_data.iloc[:,:-1]
+            
 
             dir_suffix = augmented_dir + f"split_{split}/"
 
@@ -389,11 +418,13 @@ class TrainingManager:
             if self.model_args:
                 # Prepare hyperparameters to save in JSON format
 
+                hyperparameter_dir = model_dir + augmented_dir
+
                 # Create model_dir if it doesn't exist
-                os.makedirs(model_dir, exist_ok=True)
+                os.makedirs(hyperparameter_dir, exist_ok=True)
 
                 # Define the path for the config JSON file
-                config_file_path = os.path.join(model_dir, "hyperparameters.json")
+                config_file_path = os.path.join(hyperparameter_dir, "hyperparameters.json")
 
                 # Save the hyperparameters to a JSON file
                 with open(config_file_path, 'w') as json_file:
@@ -402,7 +433,7 @@ class TrainingManager:
                 # model_dir += f"{self.model_args["lr"]}_{self.model_args["batch_size"]}_{self.model_args["num_epochs"]}_{self.model_args["encoding_dim"]}/"
             model_dir += dir_suffix
             # preprocessor.save(model_dir + f"scaler_{model_name}.pkl")
-            trainer = BaseModelTrainer(model_type, self.model_args, self.stats)
+            trainer = BaseModelTrainer(model_type, args_dict_copy, self.stats)
             model_path = model_dir + f"{model_name}.pkl"
             trainer.run(X_scaled, model_path, y=train_labels, train_indices=self.train_indices)
 

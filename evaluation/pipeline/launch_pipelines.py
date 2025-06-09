@@ -8,7 +8,7 @@ from .evaluation_pipeline_runner import EvaluationPipelineRunner
 
 
 def autoencoder_parameters():
-    base_models = ["anogan"] #"isolation_forest", "one_svm", "LOF"]
+    base_models = ["cnn_anogan"] #"isolation_forest", "one_svm", "LOF"]
     lrs = [0.1, 0.01, 0.001]
     batch_sizes = [32, 64, 128, 256]
     num_epochs_choices = [10, 20, 50]
@@ -26,17 +26,16 @@ def autoencoder_parameters():
     augment_factors = [None] #1, 2, 3, 4, 5]
 
 def launch_pipelines():
-    base_models = ["cnn_supervised_2d"] #"isolation_forest", "one_svm", "LOF"]
+    base_models = ["isolation_forest", "one_svm"]
     encoders = [None]
     augment_techniques_list = [
-        None,
-        # ["none"],
-        # ["magnitude"],
-        # ["shift"],
-        # ["noise"],
-        # ["magnitude", "shift"]
+        ["noise"],
+        # # ["magnitude", "shift"],
+        # # ["magnitude", "noise"],
+        # # ["shift", "noise"],
+        # # ["magnitude", "shift", "noise"]
     ]
-    augment_factors = [None] #1, 2, 3, 4, 5]
+    augment_factors = [2, 3, 4, 5]
 
 
     configs = []

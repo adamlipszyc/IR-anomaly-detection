@@ -1,0 +1,64 @@
+{
+    "one_svm": {
+        "kernel": ["rbf"], 
+        "nu": [0.2], 
+        "gamma": ["scale"]
+    },
+    "isolation_forest": {
+        "n_estimators": [200],
+        "max_samples": [1.0],
+        "contamination": [0.1]
+    },
+    "autoencoder": {
+        "lr": [0.0001],
+        "batch_size": [32],
+        "num_epochs": [20],
+        "encoding_dim": [256],
+        "hidden_dims": [[1024]],
+        "activation": ["leaky_relu"]
+    },
+    "LOF": {
+        "n_neighbors": [20],
+        "metric": ["manhattan"],
+        "contamination": [0.2]
+    },
+    "hybrid": {
+        "encoding_dim": [64, 128, 256]
+    },
+    "anogan": {
+        "lr": [0.0001],
+        "latent_dim": [128, 256],
+        "n_steps": [100],
+        "lambda_weight": [0.1, 0.5, 0.9],
+        "hidden_dims": [[1024, 512], [2048, 1024, 512]]
+    },
+    "cnn_anogan": {
+        "lr": [0.0001],
+        "latent_dim": [128],
+        "n_steps": [50],
+        "lambda_weight": [0.1],
+        "hidden_dims": [[256, 128, 64, 32]]
+    },
+    "cnn_supervised_2d": {
+        "lr": [0.0001, 0.001, 0.01],
+        "num_epochs": [10, 20],
+        "kernel_size": [5, 10, 50],
+        "out_channels": [[32], [32, 64], [32, 64, 128]],
+        "activation": ["relu", "leaky_relu"],
+        "fc1_size": [32, 64, 128]
+    },
+    "cnn_supervised_1d": {
+        "lr": [0.0001, 0.001, 0.01],
+        "num_epochs": [10, 20, 50],
+        "kernel_size": [5, 10, 20, 50]
+    },
+    "lstm": {
+        "hidden_size": [32, 64, 128],
+        "num_layers": [2, 3],
+        "bidirectional": [true, false],
+        "dropout": [0.0, 0.1],
+        "lr": [0.0001, 0.001, 0.01],
+        "batch_size": [32],
+        "num_epochs": [10, 20]
+    }
+}

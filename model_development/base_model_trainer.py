@@ -10,6 +10,9 @@ from log.utils import catch_and_log
 from .models.autoencoder import Autoencoder
 from .models.pca import PCAencoder
 from .models.encoder import Encoder
+from .models.IF import IsolationForestModel
+from .models.lof import LOFModel
+from .models.osvm import OneSVMModel
 from .models.anoGAN import AnoGAN
 from .models.CNN_anoGAN import CNN_AnoGAN
 from .models.CNN_supervised_1d import CNN1DSupervisedAnomalyDetector
@@ -49,13 +52,13 @@ class BaseModelTrainer:
             return model
 
         if self.model_type == "one_svm":
-            model = OneClassSVM(nu=0.01, kernel="rbf", gamma="scale")
+            model = OneSVMModel(**self.model_args)
         elif self.model_type == "isolation_forest":
-            model = IsolationForest(contamination=0.05)
+            model = IsolationForestModel(**self.model_args)
             #contamination is what proportion of the data the model should expect to be anomalous during testing 
             #this has no effect during training
         elif self.model_type == "LOF":
-            model = LocalOutlierFactor(n_neighbors=20, contamination=0.05, novelty=True)
+            model = LOFModel(**self.model_args)
         elif self.model_type == "autoencoder":
             model = Autoencoder(**self.model_args)
         elif self.model_type == "anogan":
@@ -77,12 +80,8 @@ class BaseModelTrainer:
         """
         os.makedirs(os.path.dirname(model_path), exist_ok=True)
 
-        if self.model_type not in base_models:
-            model.save(model_path, num_rows)
-            return
-
-        with open(model_path, "wb") as file:
-            pickle.dump(model, file)
+       
+        model.save(model_path, num_rows)
         
 
         self.logger.info("Saved model: %s | Trained on %s rows", model_path, num_rows)

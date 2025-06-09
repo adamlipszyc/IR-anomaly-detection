@@ -1,6 +1,6 @@
-,model,split,f2_score
-0,lr_0.0002_latent_dim_100/,0,0.8333333333333334
-1,lr_0.0002_latent_dim_100/,1,0.8333333333333334
-2,lr_0.0002_latent_dim_100/,2,0.8333333333333334
-3,lr_0.0002_latent_dim_100/,3,0.8333333333333334
-4,lr_0.0002_latent_dim_100/,4,0.8333333333333334
+,model,split,f2_score,lr,latent_dim,n_steps,lambda_weight,hidden_dims
+0,lr_0.0001_latent_dim_128_n_steps_50_lambda_weight_0.1_hidden_dims_[1024]/,0,0.8339828526890102,0.0001,128,50,0.1,[1024]
+1,lr_0.0001_latent_dim_128_n_steps_50_lambda_weight_0.1_hidden_dims_[1024]/,1,0.8333333333333334,0.0001,128,50,0.1,[1024]
+2,lr_0.0001_latent_dim_128_n_steps_50_lambda_weight_0.1_hidden_dims_[1024]/,2,0.8333333333333334,0.0001,128,50,0.1,[1024]
+3,lr_0.0001_latent_dim_128_n_steps_50_lambda_weight_0.1_hidden_dims_[1024]/,3,0.8333333333333334,0.0001,128,50,0.1,[1024]
+4,lr_0.0001_latent_dim_128_n_steps_50_lambda_weight_0.1_hidden_dims_[1024]/,4,0.8333333333333334,0.0001,128,50,0.1,[1024]

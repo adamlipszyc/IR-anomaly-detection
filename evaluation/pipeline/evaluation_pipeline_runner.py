@@ -20,6 +20,7 @@ class EvaluationPipelineRunner:
             model_args["batch_size"] = self.config.batch_size
         if self.config.num_epochs:
             model_args["num_epochs"] = self.config.num_epochs
+        
 
 
 
@@ -30,6 +31,7 @@ class EvaluationPipelineRunner:
             "autoencoder": "autoencoder" in self.config.base_models,
             "anogan": "anogan" in self.config.base_models,
             "cnn_anogan": "cnn_anogan" in self.config.base_models,
+            "lstm": "lstm" in self.config.base_models,
             "cnn_supervised_2d": "cnn_supervised_2d" in self.config.base_models,
             "cnn_supervised_1d": "cnn_supervised_1d" in self.config.base_models,
             "train_ensemble": self.config.train_ensemble,

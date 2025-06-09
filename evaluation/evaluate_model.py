@@ -185,7 +185,7 @@ class AnomalyDetectionEvaluator():
 
                     # Predict anomalies
 
-                    y_pred, y_scores = model_handler.predict(X_test_scaled, self.model_name in thresholding)
+                    y_pred, y_scores = model_handler.predict(X_test_scaled, threshold=True)
 
                     self.stats[self.model_path] = "Success"
                 else:
@@ -230,7 +230,7 @@ def main() -> None:
 
     log = logging.getLogger(__name__)
     parser = argparse.ArgumentParser(description="Evaluate an anomaly detection model")
-    parser.add_argument('--model_name', required=True, type=str, choices=["one_svm", "LOF", "isolation_forest", "autoencoder", "anogan", "cnn_anogan", "cnn_supervised_2d", "cnn_supervised_1d"], help="Name of model algorithm")
+    parser.add_argument('--model_name', required=True, type=str, choices=["one_svm", "LOF", "isolation_forest", "autoencoder", "anogan", "cnn_anogan", "cnn_supervised_2d", "cnn_supervised_1d", "lstm"], help="Name of model algorithm")
     parser.add_argument('--encoder', type=str, choices=["autoencoder", "pca"], help="Which encoder to use for hybrid models")
 
     parser.add_argument('-e', '--ensemble_voting', action='store_true')

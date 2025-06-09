@@ -10,6 +10,8 @@ SEED = 42                                # Reproducibility
 
 HYPERPARAMETER_FILEPATH = "model_development/hyperparameters.json"
 
+OPTIMAL_HYPERPARAMETER_FILEPATH = "model_development/optimal_hyperparameters.json"
+
 VALIDATION_DATA_DIR = "evaluation/anomalous_data/"
 
 base_models = {"one_svm", "isolation_forest", "LOF"}

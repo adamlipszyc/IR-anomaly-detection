@@ -31,7 +31,7 @@ class PCAencoder(Encoder):
     
 
     @catch_and_log(Exception, "Saving PCA encoder")
-    def save(self, path: str):
+    def save(self, path: str, num_rows: int = None):
         """
         Saves the PCA encoder to the specified file path
         """
@@ -46,7 +46,7 @@ class PCAencoder(Encoder):
         with open(path, "wb") as f:
             pickle.dump(state, f)
 
-        self.logger.info(f"PCA encoder saved to {path}")
+        self.logger.info("Saved PCA-encoder model to %s | Trained on %d rows", path, num_rows)
     
     @classmethod
     def load(cls, path: str):

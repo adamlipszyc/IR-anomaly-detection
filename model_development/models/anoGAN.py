@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import pandas as pd
+import os 
 import pickle
 import numpy as np
 import logging
@@ -9,11 +11,11 @@ from log.utils import catch_and_log
 
 # Generator network: MLP mapping latent vector z to 1100-d output
 class Generator(nn.Module):
-    def __init__(self, latent_dim=100, output_dim=1100):
+    def __init__(self, latent_dim=128, hidden_dims=[], output_dim=1100):
         super(Generator, self).__init__()
         self.latent_dim = latent_dim
         # Define a series of linear layers with increasing dimensionality
-        hidden_dims = [128, 256, 512]  # you can adjust as needed
+        # hidden_dims = [128, 256, 512]  # adjust as needed
         layers = []
         in_dim = latent_dim
         for h in hidden_dims:
@@ -23,8 +25,6 @@ class Generator(nn.Module):
             in_dim = h
         # Final output layer to desired output_dim
         layers.append(nn.Linear(in_dim, output_dim))
-        # We'll apply Tanh to bound output (assuming normalized data in [-1,1])
-        layers.append(nn.Tanh())
         self.model = nn.Sequential(*layers)
 
     def forward(self, z):
@@ -34,9 +34,9 @@ class Generator(nn.Module):
 # Discriminator network: MLP mapping 1100-d input to probability of being real.
 # Also yields an intermediate feature representation for feature matching.
 class Discriminator(nn.Module):
-    def __init__(self, input_dim=1100):
+    def __init__(self, input_dim=1100, hidden_dims=[]):
         super(Discriminator, self).__init__()
-        hidden_dims = [512, 256, 128]  # decreasing hidden feature sizes
+        # hidden_dims = [512, 256, 128]  # decreasing hidden feature sizes
         layers = []
         in_dim = input_dim
         # First layer (no BatchNorm on first layer as per DCGAN practice)
@@ -66,11 +66,11 @@ class Discriminator(nn.Module):
 
 # AnoGAN model class integrating generator and discriminator
 class AnoGAN(BaseModel):  # Assuming BaseModel provides necessary base functionality
-    def __init__(self, latent_dim=100, input_dim=1100, lr=0.0002, beta1=0.5, beta2=0.999, threshold = None, device=None):
+    def __init__(self, latent_dim=128, input_dim=1100, hidden_dims = [], lr=0.0001, beta1=0.5, beta2=0.999, n_steps=100, lambda_weight = 0.1, threshold = None, device=None):
         super().__init__()
         # Model components
-        self.G = Generator(latent_dim=latent_dim, output_dim=input_dim)
-        self.D = Discriminator(input_dim=input_dim)
+        self.G = Generator(latent_dim=latent_dim, hidden_dims=hidden_dims, output_dim=input_dim)
+        self.D = Discriminator(input_dim=input_dim, hidden_dims=hidden_dims)
         # Save latent_dim for use in inference
         self.latent_dim = latent_dim
         self.input_dim = input_dim
@@ -87,9 +87,14 @@ class AnoGAN(BaseModel):  # Assuming BaseModel provides necessary base functiona
         self.history = {"D_loss": [], "G_loss": []}
         self.threshold = threshold
         self.logger = logging.getLogger(self.__class__.__name__)
-    
+        self.n_steps = n_steps 
+        self.lambda_weight = lambda_weight
+        self.lr = lr 
+        self.latent_dim = latent_dim
+        self.hidden_dims = hidden_dims
+
     @catch_and_log(Exception, "Fitting the AnoGAN model")
-    def fit(self, X, epochs=20, batch_size=64, verbose=True):
+    def fit(self, X, epochs=20, batch_size=32, verbose=True):
         """
         Train the GAN on the given data X (only normal data for AnoGAN).
         X can be a NumPy array or torch Tensor of shape (N, input_dim).
@@ -153,8 +158,7 @@ class AnoGAN(BaseModel):  # Assuming BaseModel provides necessary base functiona
             if verbose:
                 print(f"Epoch {epoch}/{epochs} - D_loss: {avg_d_loss:.4f}, G_loss: {avg_g_loss:.4f}")
     
-    @catch_and_log(Exception, "Optimizing Z during prediction")
-    def _optimize_z(self, x, n_steps=500, lr=1e-2, lambda_weight=0.1):
+    def _optimize_z(self, x, n_steps=100, lr=1e-2, lambda_weight=0.1):
         """
         Given a single input sample x (tensor), optimize a latent vector z to minimize
         the AnoGAN mapping loss. Returns the optimized z and the corresponding losses.
@@ -206,25 +210,20 @@ class AnoGAN(BaseModel):  # Assuming BaseModel provides necessary base functiona
         # Iterate over samples (optimize each one)
         for i in range(X.size(0)):
             x = X[i:i+1]  # single sample
-            _, total_loss, res_loss, feat_loss, x_gen = self._optimize_z(x, n_steps=500, lr=1e-2, lambda_weight=0.1)
+            _, total_loss, res_loss, feat_loss, x_gen = self._optimize_z(x, n_steps=self.n_steps, lr=1e-2, lambda_weight=self.lambda_weight)
             anomaly_scores.append(total_loss)
             outputs.append(x_gen.cpu().numpy())
             residual_losses.append(res_loss)
             feature_losses.append(feat_loss)
         anomaly_scores = np.array(anomaly_scores)
-        # if return_stats:
-        #     # Return detailed results
-        #     outputs = np.concatenate(outputs, axis=0)
-        #     return anomaly_scores, outputs, np.array(residual_losses), np.array(feature_losses)
-        # else:
 
-
+        thresholded_scores = None
         if threshold:
             if self.threshold is None:
                 raise ValueError("Threshold must be added for thresholding")
-            return (anomaly_scores > self.threshold).astype(int)
+            thresholded_scores = (anomaly_scores > self.threshold).astype(int)
 
-        return anomaly_scores
+        return anomaly_scores, thresholded_scores
     
     @catch_and_log(Exception, "Saving AnoGAN model")
     def save(self, path: str, num_rows: int):
@@ -233,9 +232,16 @@ class AnoGAN(BaseModel):  # Assuming BaseModel provides necessary base functiona
             'G': self.G.state_dict(),
             'D': self.D.state_dict(),
             'latent_dim': self.latent_dim,
-            'input_dim': self.input_dim,
-            'threshold': self.threshold
+            'threshold': self.threshold,
+            'lr': self.lr,
+            'lambda_weight': self.lambda_weight,
+            'n_steps': self.n_steps,
+            'hidden_dims': self.hidden_dims
         }
+
+        history = pd.DataFrame(self.history)
+        history.to_csv(os.path.join(os.path.dirname(path), "loss_history.csv"), index=False)
+
         with open(path, 'wb') as f:
             pickle.dump(state, f)
         self.logger.info("Saved MLP-AnoGAN model to %s | Trained on %d rows", path, num_rows)
@@ -246,7 +252,7 @@ class AnoGAN(BaseModel):  # Assuming BaseModel provides necessary base functiona
         with open(path, 'rb') as f:
             state = pickle.load(f)
 
-        model = cls(latent_dim=state['latent_dim'], input_dim=state['input_dim'], threshold=state['threshold'])
+        model = cls(latent_dim=state['latent_dim'], lr=state["lr"], lambda_weight=state["lambda_weight"], n_steps=state["n_steps"], hidden_dims=state["hidden_dims"] ,threshold=state['threshold'])
         model.G.load_state_dict(state['G'])
         model.D.load_state_dict(state['D'])
         model.G.to(model.device)

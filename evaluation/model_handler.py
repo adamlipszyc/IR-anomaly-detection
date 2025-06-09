@@ -9,14 +9,23 @@ from model_development.models.anoGAN import AnoGAN
 from model_development.models.CNN_anoGAN import CNN_AnoGAN
 from model_development.models.CNN_supervised_1d import CNN1DSupervisedAnomalyDetector
 from model_development.models.CNN_supervised_2d import CNN2DAnomalyDetector
+from model_development.models.lstm import LSTMAnomalyDetector
 from model_development.models.model import BaseModel
+from model_development.models.IF import IsolationForestModel
+from model_development.models.lof import LOFModel
+from model_development.models.osvm import OneSVMModel
+from model_development.config import base_models
 
 MODEL_REGISTRY = {
     "autoencoder": Autoencoder,
     "anogan": AnoGAN,
     "cnn_anogan": CNN_AnoGAN,
     "cnn_supervised_1d": CNN1DSupervisedAnomalyDetector,
-    "cnn_supervised_2d": CNN2DAnomalyDetector
+    "cnn_supervised_2d": CNN2DAnomalyDetector,
+    "isolation_forest": IsolationForestModel,
+    "LOF": LOFModel,
+    "one_svm": OneSVMModel,
+    "lstm": LSTMAnomalyDetector
 }
 
 
@@ -84,14 +93,10 @@ class ModelHandler:
         """
         if threshold:
         # Predict anomalies in the test data
-            y_pred = self.model.predict(X_test, threshold)
-            y_scores = self.model.predict(X_test)
+            y_scores, y_pred = self.model.predict(X_test, threshold)
         else:
             y_pred = self.model.predict(X_test)
             y_scores = -self.model.decision_function(X_test)
-
-
-        if not threshold:
             y_pred = np.where(y_pred == 1, 0.0, 1.0)  # Base models return 1 for normal and -1 for anomaly. We need to map to 0 and 1.
         
         return y_pred, y_scores

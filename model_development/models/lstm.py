@@ -1,17 +1,19 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import pickle
+import os
+import csv
 from torch.utils.data import DataLoader, TensorDataset
 from .model import BaseModel
 
 class LSTMAnomalyDetector(nn.Module, BaseModel):
     """
-    An LSTM-based model for supervised anomaly detection in time series data.
+    An LSTM-based model for supervised anomaly detection.
     This model uses an LSTM (or stacked LSTMs) to learn temporal patterns from sequences 
     (e.g., interest rate swap trading behavior) and outputs an anomaly probability for each sequence.
-    Inherits from BaseModel and implements fit, predict, save, and load methods.
     """
-    def __init__(self, input_size=2, hidden_size=64, num_layers=2, bidirectional=True, dropout=0.3, learning_rate=0.001):
+    def __init__(self, input_size=2, hidden_size=64, num_layers=2, bidirectional=True, dropout=0.3, num_epochs=20, batch_size=32, lr=0.001, threshold=None ):
         super().__init__()  # initialize BaseModel if needed
         # Store configuration
         self.hidden_size = hidden_size
@@ -34,8 +36,15 @@ class LSTMAnomalyDetector(nn.Module, BaseModel):
         self.sigmoid = nn.Sigmoid()
 
         # Define the optimizer (Adam is a good default for LSTMs) and loss function (binary cross-entropy).
-        self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
-        self.criterion = nn.BCELoss()  # Binary Cross Entropy Loss for binary classification
+        self.optimizer = optim.Adam(self.parameters(), lr=lr)
+        self.criterion = nn.BCEWithLogitsLoss()  # Binary Cross Entropy Loss for binary classification
+
+        self.threshold = threshold
+        self.num_epochs = num_epochs 
+        self.batch_size = batch_size
+        self.dropout = dropout 
+        self.lr = lr
+        self.loss_history = []
 
         # Move model to GPU if available for faster training
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -47,6 +56,10 @@ class LSTMAnomalyDetector(nn.Module, BaseModel):
         :param x: Input tensor of shape (batch, seq_len, input_size).
         :return: Output tensor of shape (batch, 1) with anomaly probabilities.
         """
+
+        batch_size = x.size(0)
+        # Reshape from (batch, 1100) → (batch, 550, 2)
+        x = x.view(batch_size, 550, 2)
         # x is expected to be a float tensor of shape (batch_size, sequence_length, num_features)
         # Pass through LSTM. We only need the final hidden state for classification.
         # out_seq shape: (batch, seq_len, num_directions*hidden_size) [if batch_first=True]
@@ -66,12 +79,11 @@ class LSTMAnomalyDetector(nn.Module, BaseModel):
             # h_n is of shape (num_layers, batch, hidden_size). Take the last layer (index -1).
             final_hidden = h_n[-1]  # shape (batch, hidden_size)
         # Pass the final hidden state through the fully connected layer to get logits.
-        logits = self.fc(final_hidden)  # shape (batch, 1)
-        # Apply sigmoid to get anomaly probability between 0 and 1.
-        prob = self.sigmoid(logits)    # shape (batch, 1)
-        return prob  # This is the anomaly score (probability of being anomalous).
+        return self.fc(final_hidden)  # shape (batch, 1)
+        
 
-    def fit(self, X_train, y_train, epochs=20, batch_size=32, verbose=True):
+
+    def fit(self, X_train, y_train, verbose=True):
         """
         Train the LSTM model on the given training data.
         :param X_train: Training features, shape (N, seq_len, input_size), e.g., N sequences of length 550.
@@ -93,10 +105,10 @@ class LSTMAnomalyDetector(nn.Module, BaseModel):
         if y_tensor.dim() == 1:
             y_tensor = y_tensor.unsqueeze(1)
         train_dataset = TensorDataset(X_tensor, y_tensor)
-        train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+        train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         
         # Training loop
-        for epoch in range(1, epochs+1):
+        for epoch in range(1, self.num_epochs+1):
             epoch_loss = 0.0
             for batch_X, batch_y in train_loader:
                 # Move data to the same device as model
@@ -113,7 +125,8 @@ class LSTMAnomalyDetector(nn.Module, BaseModel):
             # Optionally print the average loss for this epoch
             if verbose:
                 avg_loss = epoch_loss / len(train_loader)
-                print(f"Epoch {epoch}/{epochs} - Training loss: {avg_loss:.4f}")
+                self.loss_history.append(avg_loss)
+                print(f"Epoch {epoch}/{self.num_epochs} - Training loss: {avg_loss:.4f}")
         return self  # enable method chaining if desired
 
     def predict(self, X, threshold=None):
@@ -132,23 +145,57 @@ class LSTMAnomalyDetector(nn.Module, BaseModel):
         X_tensor = torch.tensor(X, dtype=torch.float32).to(device)
         with torch.no_grad():
             scores = self.forward(X_tensor)  # shape (M, 1) tensor of anomaly probabilities
+            scores = torch.sigmoid(scores)
+
         scores = scores.cpu().numpy()  # move to CPU and convert to numpy for output
+
+        thresholded_scores = None
         if threshold is not None:
+            if self.threshold is None:
+                raise ValueError("Threshold required")
             # Apply threshold to get binary labels (anomaly if score >= threshold)
-            return (scores >= threshold).astype(int).flatten()
-        else:
-            return scores.flatten()  # return the anomaly probability for each sequence
+            thresholded_scores = (scores >= threshold).astype(int).flatten()
 
-    def save(self, filepath):
-        """
-        Save the model parameters to the given file path.
-        """
-        torch.save(self.state_dict(), filepath)
+        return scores, thresholded_scores
+    
+    def save(self, path: str, num_rows: int = None):
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        state = {
+            'state_dict': self.state_dict(),
+            'hidden_size': self.hidden_size,
+            'num_layers': self.num_layers,
+            'bidirectional': self.bidirectional,
+            'dropout': self.dropout,
+            'num_epochs': self.num_epochs,
+            'batch_size': self.batch_size,
+            'lr': self.lr,
+            'threshold': self.threshold
+        }
 
-    def load(self, filepath):
-        """
-        Load model parameters from the given file path.
-        """
-        # Load the state dict into the model instance.
-        self.load_state_dict(torch.load(filepath, map_location=torch.device('cpu')))
-        self.eval()  # set to evaluation mode after loading (good practice)
+        with open(os.path.join(os.path.dirname(path), "losses.csv"), "w") as f:
+            writer = csv.writer(f)
+            print(self.loss_history)
+            writer.writerow(self.loss_history) 
+
+        with open(path, 'wb') as f:
+            pickle.dump(state, f)
+        print(f"Saved LSTM model to {path} | Trained on {num_rows if num_rows else '?'} rows")
+
+    @classmethod
+    def load(cls, path: str):
+        with open(path, 'rb') as f:
+            state = pickle.load(f)
+        model = cls(
+            hidden_size=state['hidden_size'],
+            num_layers=state['num_layers'],
+            bidirectional=state['bidirectional'],
+            dropout=state['dropout'],
+            num_epochs=state['num_epochs'],
+            batch_size=state['batch_size'],
+            lr=state['lr'],
+            threshold=state['threshold']
+        )
+        model.load_state_dict(state['state_dict'])
+        model.eval()
+        return model
+
