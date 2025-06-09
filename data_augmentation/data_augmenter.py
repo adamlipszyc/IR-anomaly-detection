@@ -12,7 +12,6 @@ class DataAugmenter:
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    @catch_and_log(Exception, "Augmenting magnitude")
     def augment_magnitude(self, vector: pd.Series) -> List[pd.Series]:
         """Randomly scales nonzero values"""
 
@@ -36,7 +35,6 @@ class DataAugmenter:
 
         return augmented_results
 
-    @catch_and_log(Exception, "Shifting vector")
     def augment_shift(self, vector: pd.Series, max_results: int = 99999999) -> List[np.ndarray]:
         """ 
         Shifts vector according to first non-zero value and last-non zero 
@@ -98,7 +96,6 @@ class DataAugmenter:
 
         return augmented_rows
 
-    @catch_and_log(Exception, "Adding noise (vectorized)")
     def augment_noise_vectorized(self, vector: pd.Series, noise_level: float = 0.1, num_augmentations: int = 1) -> List[pd.Series]:
         """Extremely fast, fully vectorized noise augmentation."""
         
@@ -210,24 +207,48 @@ class DataAugmenter:
         target_size = len(data) * factor
         num_needed = target_size - len(data)
         per_sample = num_needed // len(data)
+
+        has_label = "label" in data.columns
+        feature_cols = data.columns.drop("label") if has_label else data.columns
         
         for index, row in data.iterrows():
             augmented_samples = []
 
+            row_features = row[feature_cols]
+
+            augmented_samples.append(row_features.copy())
+
             if "magnitude" in techniques:
-                augmented_samples += self.augment_magnitude(row)
+                augmented_samples += self.augment_magnitude(row_features)
 
             if "shift" in techniques:
-                augmented_samples += [pd.Series(x) for x in self.augment_shift(row, max_results=per_sample)]
+                augmented_samples += [pd.Series(x) for x in self.augment_shift(row_features, max_results=per_sample)]
 
             if "noise" in techniques:
-                augmented_samples += self.augment_noise_vectorized(row)
+                augmented_samples += self.augment_noise_vectorized(row_features)
 
             # Only keep what we need
             sampled = random.sample(augmented_samples, min(per_sample, len(augmented_samples)))
-            augmented.append(pd.DataFrame(sampled))
 
-        return pd.concat(augmented, ignore_index=True).iloc[:target_size]
+            # Convert to DataFrame and reattach label if present
+            if has_label:
+                label_value = row["label"]
+                df_sampled = pd.DataFrame(sampled)
+                df_sampled["label"] = label_value
+                augmented.append(df_sampled)
+            else:
+                augmented.append(pd.DataFrame(sampled))
+
+
+        augmented_df = pd.concat(augmented, ignore_index=True).iloc[:target_size]
+
+        # Ensure label is the last column
+        if "label" in augmented_df.columns:
+            label_col = augmented_df.pop("label")
+            augmented_df["label"] = label_col  
+        
+        return augmented_df
+
 
 
         

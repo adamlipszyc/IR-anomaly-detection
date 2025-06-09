@@ -31,7 +31,15 @@ size_factors = [1, 2, 3, 4, 5]  # e.g., 2133, 4266, ..., 10665
 
 EXPERIMENT_DIR = "data_augmentation/experiment_results/"
 
-RESULTS_DIR = "evaluation/results/isolation_forest/augmented/"
+MODEL_TYPE = "one_svm"
+
+NAMING_DIC = {
+    "isolation_forest": "IF",
+    "one_svm": "OSVM",
+    "LOF": "LOF"
+}
+
+RESULTS_DIR = f"evaluation/results/{MODEL_TYPE}/augmented/"
 
 @catch_and_log(Exception, "Running experiment")
 def run_experiments():
@@ -169,7 +177,7 @@ def main() -> None:
                     x, 
                     y, 
                     hue="techniques", 
-                    title=f"Model {y} vs Augmentation {x.capitalize()}", 
+                    title=f"{NAMING_DIC[MODEL_TYPE]} Model {y} vs Augmentation {x.capitalize()}", 
                     xlabel="Training Set Increase Size Factor (Augmented)",
                     ylabel=f"{y[:2]} Score",
                     dir_path=EXPERIMENT_DIR,
