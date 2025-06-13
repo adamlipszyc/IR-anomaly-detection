@@ -31,12 +31,13 @@ size_factors = [1, 2, 3, 4, 5]  # e.g., 2133, 4266, ..., 10665
 
 EXPERIMENT_DIR = "data_augmentation/experiment_results/"
 
-MODEL_TYPE = "one_svm"
+MODEL_TYPE = "autoencoder"
 
 NAMING_DIC = {
     "isolation_forest": "IF",
     "one_svm": "OSVM",
-    "LOF": "LOF"
+    "LOF": "LOF",
+    "autoencoder": "AE"
 }
 
 RESULTS_DIR = f"evaluation/results/{MODEL_TYPE}/augmented/"

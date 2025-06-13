@@ -407,8 +407,8 @@ class TrainingManager:
                 X_scaled = encoded_data
             
         
-            
-            scaler_path = "scalers/" + dir_suffix + "scaler.pkl"
+            supervised_scaler = "supervised/" if model_type in supervised_models else ""
+            scaler_path = "scalers/" + supervised_scaler + dir_suffix + "scaler.pkl"
             preprocessor.save(scaler_path)
 
             # Train selected model
