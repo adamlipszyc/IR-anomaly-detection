@@ -1,0 +1,6 @@
+,model,split,f2_score,lr,batch_size,num_epochs,encoding_dim,hidden_dims,activation
+0,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,0,0.8466453674121406,0.0001,32,20,256,[1024],leaky_relu
+1,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,1,0.8563311688311688,0.0001,32,20,256,[1024],leaky_relu
+2,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,2,0.8333333333333334,0.0001,32,20,256,[1024],leaky_relu
+3,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,3,0.8597662771285476,0.0001,32,20,256,[1024],leaky_relu
+4,lr_0.0001_batch_size_32_num_epochs_20_encoding_dim_256_hidden_dims_[1024]_activation_leaky_relu/,4,0.8290598290598291,0.0001,32,20,256,[1024],leaky_relu
