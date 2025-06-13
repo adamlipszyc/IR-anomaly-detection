@@ -1,0 +1,6 @@
+{
+    "n_neighbors": 20,
+    "metric": "manhattan",
+    "contamination": 0.2,
+    "threshold": -40.57810569600773
+}

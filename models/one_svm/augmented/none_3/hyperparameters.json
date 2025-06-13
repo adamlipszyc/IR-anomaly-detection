@@ -1,0 +1,6 @@
+{
+    "kernel": "rbf",
+    "nu": 0.2,
+    "gamma": "scale",
+    "threshold": -33.667141611688955
+}

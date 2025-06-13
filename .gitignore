@@ -13,8 +13,4 @@ __pycache__/
 hyperparameter_results/
 hyperparameter_tuning/
 old_tests/
-old_without_adaptive_thresholding/
-**/model.pkl
-**/scaler.pkl
-evaluation/results/
 old/

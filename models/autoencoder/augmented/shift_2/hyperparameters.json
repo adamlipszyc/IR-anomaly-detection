@@ -1,0 +1,11 @@
+{
+    "lr": 0.0001,
+    "batch_size": 32,
+    "num_epochs": 20,
+    "encoding_dim": 256,
+    "hidden_dims": [
+        1024
+    ],
+    "activation": "leaky_relu",
+    "threshold": 6.641817754789459e-07
+}

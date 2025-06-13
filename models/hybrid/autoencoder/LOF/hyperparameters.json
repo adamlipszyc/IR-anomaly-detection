@@ -1,3 +1,7 @@
 {
-    "encoding_dim": 16
+    "n_neighbors": 50,
+    "metric": "manhattan",
+    "contamination": 0.1,
+    "encoding_dim": 256,
+    "threshold": -2.015644317412927
 }

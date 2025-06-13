@@ -1,0 +1,6 @@
+{
+    "n_estimators": 200,
+    "max_samples": 1.0,
+    "contamination": 0.1,
+    "threshold": -0.018723815346941647
+}

@@ -1,3 +1,7 @@
 {
-    "encoding_dim": 64
+    "kernel": "rbf",
+    "nu": 0.2,
+    "gamma": "auto",
+    "encoding_dim": 256,
+    "threshold": -3.320118055266435e-05
 }

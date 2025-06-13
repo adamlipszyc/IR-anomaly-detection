@@ -1,3 +1,7 @@
 {
-    "encoding_dim": 16
+    "n_estimators": 100,
+    "max_samples": 0.5,
+    "contamination": 0.2,
+    "encoding_dim": 64,
+    "threshold": -0.038544820114209684
 }

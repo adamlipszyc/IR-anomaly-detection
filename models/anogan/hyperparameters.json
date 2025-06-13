@@ -1,5 +1,12 @@
 {
-    "lr": 0.0002,
-    "latent_dim": 100,
-    "threshold": 341.84106131560424
+    "lr": 0.0001,
+    "latent_dim": 256,
+    "n_steps": 100,
+    "lambda_weight": 0.5,
+    "hidden_dims": [
+        2048,
+        1024,
+        512
+    ],
+    "threshold": 285.4313503066615
 }

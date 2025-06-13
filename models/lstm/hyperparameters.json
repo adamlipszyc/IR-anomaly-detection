@@ -1,0 +1,10 @@
+{
+    "lr": 0.0001,
+    "batch_size": 32,
+    "num_epochs": 10,
+    "threshold": 0.49865751141774106,
+    "dropout": 0.0,
+    "hidden_size": 128,
+    "bidirectional": true,
+    "num_layers": 2
+}

@@ -1,0 +1,6 @@
+{
+    "lr": 0.0001,
+    "num_epochs": 50,
+    "kernel_size": 10,
+    "threshold": 0.499663858800321
+}

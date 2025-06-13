@@ -1,6 +1,13 @@
 {
     "lr": 0.0001,
-    "num_epochs": 50,
+    "num_epochs": 20,
     "kernel_size": 5,
-    "threshold": 0.5002409853973427
+    "threshold": 0.24187670674922765,
+    "activation": "relu",
+    "fc1_size": 128,
+    "out_channels": [
+        32,
+        64,
+        128
+    ]
 }
