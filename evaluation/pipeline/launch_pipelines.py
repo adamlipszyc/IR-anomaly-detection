@@ -26,16 +26,20 @@ def autoencoder_parameters():
     augment_factors = [None] #1, 2, 3, 4, 5]
 
 def launch_pipelines():
-    base_models = ["isolation_forest", "one_svm"]
+    base_models = ["cnn_anogan"]
     encoders = [None]
     augment_techniques_list = [
-        ["noise"],
+        None
+        # ["none"],
+        # ["shift"],
+        # ["magnitude"],
+        # ["noise"],
         # # ["magnitude", "shift"],
         # # ["magnitude", "noise"],
         # # ["shift", "noise"],
         # # ["magnitude", "shift", "noise"]
     ]
-    augment_factors = [2, 3, 4, 5]
+    augment_factors = [None] #1, 2, 3, 4, 5]
 
 
     configs = []

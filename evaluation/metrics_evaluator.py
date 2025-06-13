@@ -126,6 +126,15 @@ class MetricsEvaluator:
         plt.yticks(tick_marks, ['Normal', 'Anomaly'])
         plt.xlabel('Predicted Label')
         plt.ylabel('True Label')
+
+        # Add text annotations
+        thresh = cm.max() / 2
+        for i in range(cm.shape[0]):
+            for j in range(cm.shape[1]):
+                plt.text(j, i, format(cm[i, j], 'd'),
+                            ha="center", va="center",
+                            color="white" if cm[i, j] > thresh else "black")
+
         plt.tight_layout()
         plt.savefig(os.path.join(self.output_dir, "Confusion_Matrix.png"))
         # plt.show()

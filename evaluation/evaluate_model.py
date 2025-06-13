@@ -14,7 +14,13 @@ from .model_handler import ModelHandler
 from .encoder_handler import EncoderHandler
 from training_test_splits.data_split_generation.config import NUM_SPLITS
 
+import pandas as pd
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 thresholding = {"autoencoder", "anogan", "cnn_anogan", "cnn_supervised_1d", "cnn_supervised_2d"}
+supervised_models = {"cnn_supervised_1d", "cnn_supervised_2d", "lstm"}
 
 class AnomalyDetectionEvaluator():
     def __init__(self, args, logger: logging.Logger = None):
@@ -28,6 +34,8 @@ class AnomalyDetectionEvaluator():
         
 
         self.scaler_path = SCALERS_DIR 
+        if args.model_name in supervised_models:
+            self.scaler_path = self.scaler_path / "supervised"
         if args.augmented_dir_name:
             self.model_path = self.model_path / "augmented" / args.augmented_dir_name
             self.scaler_path = self.scaler_path / "augmented" / args.augmented_dir_name
@@ -129,6 +137,56 @@ class AnomalyDetectionEvaluator():
                             used_indices[path] = indices
         
         return used_indices
+    
+
+    def plot_tsne_encoded(self, data, labels, path, anomalous_label=1, predicted_labels=None):
+        print("Performing t-SNE dimensionality reduction...")
+        tsne = TSNE(n_components=2)
+        tsne_results = tsne.fit_transform(data)
+
+        # Create DataFrame
+        tsne_df = pd.DataFrame(data=tsne_results, columns=['tsne_component_1', 'tsne_component_2'])
+        tsne_df['true_label'] = labels if isinstance(labels, np.ndarray) else np.array(labels)
+
+        if predicted_labels is not None:
+            tsne_df['pred_label'] = predicted_labels if isinstance(predicted_labels, np.ndarray) else np.array(predicted_labels)
+
+            def classify(row):
+                if row['true_label'] == anomalous_label:
+                    return 'TP' if row['pred_label'] == anomalous_label else 'FN'
+                else:
+                    return 'FP' if row['pred_label'] == anomalous_label else 'TN'
+
+            tsne_df['classification'] = tsne_df.apply(classify, axis=1)
+
+            palette = {'TP': 'red', 'FN': 'orange', 'FP': 'purple', 'TN': 'blue'}
+            legend_title = 'Prediction Outcome'
+        else:
+            tsne_df['classification'] = tsne_df['true_label'].apply(
+                lambda x: 'Anomalous' if x == anomalous_label else 'Normal'
+            )
+            palette = {'Normal': 'blue', 'Anomalous': 'red'}
+            legend_title = 'Label'
+
+        # Plotting
+        plt.figure(figsize=(12, 10))
+        sns.scatterplot(
+            x='tsne_component_1',
+            y='tsne_component_2',
+            hue='classification',
+            palette=palette,
+            data=tsne_df,
+            legend='full',
+            alpha=0.7
+        )
+        plt.title('t-SNE Visualization of Anomalies vs. Normals')
+        plt.xlabel('t-SNE Component 1')
+        plt.ylabel('t-SNE Component 2')
+        plt.grid(True)
+        plt.legend(title=legend_title)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        plt.savefig(path)
+        # plt.show()
 
     @catch_and_log(Exception, "Evaluating model")
     def evaluate_model(self):
@@ -183,6 +241,11 @@ class AnomalyDetectionEvaluator():
 
                         X_test_scaled = encoder_handler.encode(X_test_scaled)
 
+                        path = self.rebase_dir_path(model_path, MODELS_DIR, RESULTS_DIR, remove_file_name=(not self.ensemble))
+                        path = os.path.join(path, "test_50_50" if fifty_fifty else "test_95_5")  
+                        path = os.path.join(path, "tsne_encoded_data.png")
+
+                        self.plot_tsne_encoded(X_test_scaled, y_test, path)
                     # Predict anomalies
 
                     y_pred, y_scores = model_handler.predict(X_test_scaled, threshold=True)
@@ -195,6 +258,8 @@ class AnomalyDetectionEvaluator():
 
                 output_dir = self.rebase_dir_path(model_path, MODELS_DIR, RESULTS_DIR, remove_file_name=(not self.ensemble))
                 output_dir = os.path.join(output_dir, "test_50_50" if fifty_fifty else "test_95_5")       
+
+                self.plot_tsne_encoded(X_test, y_test, os.path.join(output_dir, "tsne_results.png"), predicted_labels=y_pred)
 
                 metrics_evaluator = MetricsEvaluator(y_test, y_pred, y_scores, output_dir)
 

@@ -23,8 +23,8 @@ shorten = {
     "pca": "PCA",
     "cnn_anogan": "CNN_ANOGAN",
     "anogan": "MLP_ANOGAN",
-    "cnn_supervised_2d": "CNN_CLASSIFIER",
-    "lstm": "LSTM_CLASSIFIER"
+    # "cnn_supervised_2d": "CNN_CLASSIFIER",
+    # "lstm": "LSTM_CLASSIFIER"
 }
 
 
@@ -75,6 +75,8 @@ def load_results_from_excels(results_dir: str, base: bool) -> Tuple[pd.DataFrame
                     model = shorten[encoder] + f"+" + shorten[parts[2]]
 
                 else:
+                    if parts[0] not in shorten:
+                        continue
                     model = shorten[parts[0]]
                     
 
