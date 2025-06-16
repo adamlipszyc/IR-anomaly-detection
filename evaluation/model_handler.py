@@ -7,7 +7,6 @@ from log.utils import catch_and_log
 from model_development.models.autoencoder import Autoencoder
 from model_development.models.anoGAN import AnoGAN
 from model_development.models.CNN_anoGAN import CNN_AnoGAN
-from model_development.models.CNN_supervised_1d import CNN1DSupervisedAnomalyDetector
 from model_development.models.CNN_supervised_2d import CNN2DAnomalyDetector
 from model_development.models.lstm import LSTMAnomalyDetector
 from model_development.models.model import BaseModel
@@ -20,7 +19,6 @@ MODEL_REGISTRY = {
     "autoencoder": Autoencoder,
     "anogan": AnoGAN,
     "cnn_anogan": CNN_AnoGAN,
-    "cnn_supervised_1d": CNN1DSupervisedAnomalyDetector,
     "cnn_supervised_2d": CNN2DAnomalyDetector,
     "isolation_forest": IsolationForestModel,
     "LOF": LOFModel,
