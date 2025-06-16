@@ -5,6 +5,9 @@ import logging
 from .CNN_supervised_base import BaseCNNAnomalyDetector
 
 
+#DEPRECATED, HAS NOT BEEN USED IN THIS STUDY # 
+
+
 class CNN1DSupervisedAnomalyDetector(BaseCNNAnomalyDetector):
     def __init__(self, kernel_size = 5, num_epochs=10, lr=0.001, threshold = None):
         super().__init__()
@@ -22,8 +25,7 @@ class CNN1DSupervisedAnomalyDetector(BaseCNNAnomalyDetector):
         # After conv2 + pool: length = seq_len/8
         pooled_len = 1100 // 8  # 1100//8 = 137 (assuming seq_len divisible by 2 twice)
         conv2_channels = 64
-        # If using conv3 + pool:
-        # pooled_len = seq_len // 8 (approx 68), conv3_channels = 128
+    
         # Define fully connected layers
         self.fc1 = nn.Linear(conv2_channels * pooled_len, 64)   # hidden dense layer
         self.fc_out = nn.Linear(64, 1)                          # output layer (single score)

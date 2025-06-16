@@ -1,21 +1,14 @@
 import os
-import pickle
-import json
-from sklearn.svm import OneClassSVM
-from sklearn.ensemble import IsolationForest
-from sklearn.neighbors import LocalOutlierFactor
+
 import logging
 import numpy as np
 from log.utils import catch_and_log
 from .models.autoencoder import Autoencoder
-from .models.pca import PCAencoder
-from .models.encoder import Encoder
 from .models.IF import IsolationForestModel
 from .models.lof import LOFModel
 from .models.osvm import OneSVMModel
 from .models.anoGAN import AnoGAN
 from .models.CNN_anoGAN import CNN_AnoGAN
-from .models.CNN_supervised_1d import CNN1DSupervisedAnomalyDetector
 from .models.CNN_supervised_2d import CNN2DAnomalyDetector
 from .models.lstm import LSTMAnomalyDetector
 
@@ -38,9 +31,7 @@ class BaseModelTrainer:
         self.logger.info("Training model")
 
         if y is not None:
-            if self.model_type == "cnn_supervised_1d":
-                model = CNN1DSupervisedAnomalyDetector(**self.model_args)
-            elif self.model_type == "cnn_supervised_2d":
+            if self.model_type == "cnn_supervised_2d":
                 model = CNN2DAnomalyDetector(**self.model_args)
             elif self.model_type == "lstm":
                 model = LSTMAnomalyDetector(**self.model_args)

@@ -59,7 +59,7 @@ class TrainingManager:
         self.data_loader = DataLoader(AUGMENTED_DATA_DIR, SAMPLES_PER_FILE)
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    def load_hyperparameter_config(self, file_path=OPTIMAL_HYPERPARAMETER_FILEPATH):
+    def load_hyperparameter_config(self, file_path=HYPERPARAMETER_FILEPATH):
         with open(file_path, 'r') as f:
             return json.load(f)
     
@@ -440,6 +440,8 @@ class TrainingManager:
     @catch_and_log(Exception, "Training ensemble models")
     def train_ensemble_batches(self):
 
+        #DEPRACATED - DO NOT USE#
+
         for split in range(1, NUM_SPLITS + 1):
             csv_files = glob.glob(os.path.join(AUGMENTED_DATA_DIR, "*.csv"))
             if not csv_files:
@@ -483,9 +485,11 @@ class TrainingManager:
 
     def run(self):
         if self.args.train_ensemble:
-            self.train_ensemble_batches()
-            make_summary("Training Model Summary", self.stats)
-            return 
+            raise ValueError("Train ensemble is depracated")
+
+            # self.train_ensemble_batches()
+            # make_summary("Training Model Summary", self.stats)
+            # return 
 
         
         self.train_model_with_hyperparameter_tuning()

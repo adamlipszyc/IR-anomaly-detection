@@ -26,7 +26,7 @@ def autoencoder_parameters():
     augment_factors = [None] #1, 2, 3, 4, 5]
 
 def launch_pipelines():
-    base_models = ["cnn_anogan"]
+    base_models = ["isolation_forest"]
     encoders = [None]
     augment_techniques_list = [
         None

@@ -15,7 +15,6 @@ class Generator(nn.Module):
         super(Generator, self).__init__()
         self.latent_dim = latent_dim
         # Define a series of linear layers with increasing dimensionality
-        # hidden_dims = [128, 256, 512]  # adjust as needed
         layers = []
         in_dim = latent_dim
         for h in hidden_dims:
@@ -36,7 +35,7 @@ class Generator(nn.Module):
 class Discriminator(nn.Module):
     def __init__(self, input_dim=1100, hidden_dims=[]):
         super(Discriminator, self).__init__()
-        # hidden_dims = [512, 256, 128]  # decreasing hidden feature sizes
+
         layers = []
         in_dim = input_dim
         # First layer (no BatchNorm on first layer as per DCGAN practice)
@@ -65,7 +64,7 @@ class Discriminator(nn.Module):
         
 
 # AnoGAN model class integrating generator and discriminator
-class AnoGAN(BaseModel):  # Assuming BaseModel provides necessary base functionality
+class AnoGAN(BaseModel): 
     def __init__(self, latent_dim=128, input_dim=1100, hidden_dims = [], lr=0.0001, beta1=0.5, beta2=0.999, n_steps=100, lambda_weight = 0.1, threshold = None, device=None):
         super().__init__()
         # Model components

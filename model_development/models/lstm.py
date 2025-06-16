@@ -31,9 +31,6 @@ class LSTMAnomalyDetector(nn.Module, BaseModel):
         lstm_out_dim = hidden_size * (2 if bidirectional else 1)
         # Define a fully connected layer that maps the LSTM final hidden state to a single anomaly score.
         self.fc = nn.Linear(lstm_out_dim, 1)
-        # Define a sigmoid activation for output to obtain a probability (0 to 1).
-        # (Alternatively, we could omit this and use nn.BCEWithLogitsLoss for stability.)
-        self.sigmoid = nn.Sigmoid()
 
         # Define the optimizer (Adam is a good default for LSTMs) and loss function (binary cross-entropy).
         self.optimizer = optim.Adam(self.parameters(), lr=lr)

@@ -89,6 +89,7 @@ class AnomalyDetectionEvaluator():
 
     @catch_and_log(Exception, "Carrying out ensemble voting")
     def ensemble_voting(self, X_test):
+        #DEPRECATED DO NOT USE#
         file_paths = glob.glob(os.path.join(self.model_path, "batch_model_*.pkl"))
         if len(file_paths) == 0:
             raise RuntimeError("No CSV files found in directory.")
